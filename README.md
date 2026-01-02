@@ -24,8 +24,60 @@ Each project is contained in its own folder (or file) with a descriptive name. I
 ## 📋 The List (1-100)
 
 *Below is the list of projects. Checked items (✅) are completed.*
-- [ ] 01. Hello World with a Twist
+  - [ ] 01. Hello World with a Twist
 
+  - [ ] 02. Library Management System
+    
+      - Classes: Book (title, author, isbn, status), Member (name, borrowed_list), Library.
+      - Features: add_book, lend_book (check status), return_book.
+
+  - [ ] 03. Banking System Simulation
+    
+      - Classes: Account (parent), SavingsAccount (min balance), CurrentAccount (overdraft).
+      - Features: deposit, withdraw, secure __balance encapsulation.
+
+  - [ ] 04. Text-Based RPG Game
+    
+      - Classes: Character (parent), Hero & Monster (children).
+      - Features: Polymorphic attack(), turn-based while loop battle.
+
+  - [ ] 05. Smart Parking Lot
+    
+      - Classes: Vehicle (plate, type), Ticket (timestamp), ParkingLot.
+      - Features: Calculate fee based on time, manage spot availability.
+
+  - [ ] 06. Deck of Cards (Blackjack/War)
+    
+      - Classes: Card (suit, rank), Deck (list of cards), Hand.
+      - Features: shuffle(), deal(), compare hand values.
+
+  - [ ] 07. Employee Payroll System
+    
+      - Classes: Employee (abstract), FullTime (fixed), Contract (hourly).
+      - Features: calculate_salary() override, process list of employees.
+
+  - [ ] 08. Quiz Application
+    
+      - Classes: Question (text, answer), Quiz (score tracking).
+      - Features: Validate input (A/B/C/D), show final percentage.
+
+  - [ ] 09. Inventory Management System
+    
+      - Classes: Product (id, price, stock), Store.
+      - Features: Low stock alerts, save/load from file (File I/O).
+
+  - [ ] 10. Expense Tracker
+    
+      - Classes: Expense (amount, category), Tracker.
+      - Features: Filter by category, sum totals, simple data persistence.
+
+  - [ ] 11. Vending Machine Simulation
+    
+      - Classes: Item, VendingMachine (state mapping).
+      - Features: insert_money, select_item, dispense_change logic.
+
+
+      
 ## 🛠️ Getting Started
 
 1.  **Clone the repository:**
