@@ -19,7 +19,15 @@ class book:
             print(f" TOTAL COPIES     :: {self.copies}")
             print(f" AVAILABLE COPIES :: {self.available_copies}")
             print("="*30 + "\n")
-            
+    
+    def add_a_book(self):
+        default_books[id] = {
+        "title": self.name,
+        "author": self.id,
+        "genre": self.genre,
+        "copies": self.copies,
+        "available": self.available_copies
+    },
     
 #seperate book functions
 def get_book(userbook):
@@ -32,9 +40,26 @@ def get_book(userbook):
                 break
             elif bookfound == False :
                 print("Book Not found")
+                
+def get_student(student_entry):
+        for id,name in default_students.items():
+            student_name = name["name"]
+            studentfound = False 
+            if student_entry.lower() == student_name.name.lower() or student_entry.lower()== id:
+                studentfound = True
+                return student_name
+                break
+            elif studentfound == False :
+                print("Wrong Student Entry Please Enter Correct Name or ID")
 
-
-
+def borrow_book(book,student_entry):
+        get_student(student_entry)
+        if get_book(book).available_copies > 0 :
+            bklist = get_student(student_entry).bk
+            bklist.append(book)
+            print(f"You have borrowed a {get_book(user_book).name} written by {get_book(user_book).author}")
+        else :
+            print("Book Unavailable")
         
 class student:
     def __init__(self,name,id,course,year,bk=[]):
@@ -152,7 +177,9 @@ while True:
     choice = int(input("Please enter your choice -- :: "))
 
     if choice == 1:
-        pass
+        user_book = str(input("Enter the name of the book you want to borrow  ::  "))
+        student_entry = input("Enter you name  :: ")
+        borrow_book(user_book,student_entry)
     elif choice == 2:
         pass
     elif choice == 3:
@@ -168,6 +195,7 @@ while True:
         copies = input("Enter the copies of the book  ::  ")
         available_copies = input("Enter the available copies of the book  ::  ")
         name = book(name,id,author,genre,copies,available_copies)
+        name.add_a_book()
     elif choice == 6:
         pass
     elif choice == 7:
@@ -182,3 +210,5 @@ while True:
         pass
     elif choice == 12:
         pass
+    
+    print("\n\n\n\n")
