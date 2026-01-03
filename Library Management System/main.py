@@ -49,7 +49,7 @@ def get_student(student_entry):
                 studentfound = True
                 return student_name
                 break
-            elif studentfound == False :
+            if studentfound == False :
                 print("Wrong Student Entry Please Enter Correct Name or ID")
 
 def borrow_book(book,student_entry):
@@ -235,7 +235,7 @@ while True:
         year = int(input("Enter the year of the student  ::  "))
         books = int(input("Enter the no of books borrowed by student  ::  "))
         books_br=[]
-        for i in range (1,books):
+        for i in range (0,books):
             books_br.append(input(f"Enter the name of the book {i}  ::  "))
         student_regestration = student(name,id,course,year,books_br)
         student_regestration.add_a_student()
