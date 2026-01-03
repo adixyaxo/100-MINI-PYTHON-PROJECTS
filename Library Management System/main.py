@@ -106,52 +106,52 @@ default_students = {
 
 for id,name in default_students.items():
     name["name"] = student(name["name"],id,name["course"],name["year"],name["borrowed_books"])
+while True:
+    print("""--Welcome To The Library Management System--
 
-print("""--Welcome To The Library Management System--
+    What would you like to do ?
+    01-Borrow a book
+    02-Return a book
+    03-Know about a book
+    04-Know about a student
+    05-Add a new book
+    06-Register a new student
+    07-Display all books
+    08-Search for a book
+    09-Check overdue books / Fines
+    10-View lending history
+    11-Reserve a book
+    12-Save & Exit""")
+    choice = int(input("Please enter your choice -- :: "))
 
-What would you like to do ?
-01-Borrow a book
-02-Return a book
-03-Know about a book
-04-Know about a student
-05-Add a new book
-06-Register a new student
-07-Display all books
-08-Search for a book
-09-Check overdue books / Fines
-10-View lending history
-11-Reserve a book
-12-Save & Exit""")
-choice = int(input("Please enter your choice -- :: "))
-
-if choice == 1:
-    pass
-elif choice == 2:
-    pass
-elif choice == 3:
-    user_book = str(input("Enter the name of the book you want to know about  ::  "))
-    for id,info in default_books.items():
-        infotitle = info["title"]
-        if user_book.lower() == infotitle.name.lower():
-            print(infotitle.about())
-            break
-        else:
-            print("Not found")
-elif choice == 4:
-    pass
-elif choice == 5:
-    pass
-elif choice == 6:
-    pass
-elif choice == 7:
-    pass
-elif choice == 8:
-    pass
-elif choice == 9:
-    pass
-elif choice == 10:
-    pass
-elif choice == 11:
-    pass
-elif choice == 12:
-    pass
+    if choice == 1:
+        user_borrow = input("Enter the book that you want to borrow")
+    elif choice == 2:
+        pass
+    elif choice == 3:
+        user_book = str(input("Enter the name of the book you want to know about  ::  "))
+        for id,info in default_books.items():
+            infotitle = info["title"]
+            if user_book.lower() == infotitle.name.lower():
+                print(infotitle.about())
+                break
+            else:
+                print("Book Not found")
+    elif choice == 4:
+        pass
+    elif choice == 5:
+        pass
+    elif choice == 6:
+        pass
+    elif choice == 7:
+        pass
+    elif choice == 8:
+        pass
+    elif choice == 9:
+        pass
+    elif choice == 10:
+        pass
+    elif choice == 11:
+        pass
+    elif choice == 12:
+        pass
