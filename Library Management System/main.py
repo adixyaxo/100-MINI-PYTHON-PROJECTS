@@ -81,6 +81,15 @@ class student:
         self.year = year
         self.bk = bk
         
+    def about(self):
+        print("--- Student Details ---")
+        print(f"Name:   {self.name}")
+        print(f"ID:     {self.id}")
+        print(f"Course: {self.course}")
+        print(f"Year:   {self.year}")
+        print(f"Books:  {self.bk}")
+        print("-----------------------")
+        
 
 #default books and students
 # --- Random Default Data ---
@@ -200,7 +209,8 @@ while True:
         user_book = str(input("Enter the name of the book you want to know about  ::  "))
         get_book(user_book).about()
     elif choice == 4:
-        pass
+        user_student = str(input("Enter the name of the student you want to know about  ::  "))
+        get_student(user_student).about()
     elif choice == 5:
         name = input("Enter the name of the book  ::  ")
         id = input("Enter the id of the book  ::  ")
