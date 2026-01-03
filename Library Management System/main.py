@@ -89,6 +89,14 @@ class student:
         print(f"Year:   {self.year}")
         print(f"Books:  {self.bk}")
         print("-----------------------")
+    
+    def add_a_student(self):
+        default_students[id] ={
+        "name": self.name,
+        "course": self.course,
+        "year": self.year,
+        "borrowed_books": self.bk # Has 'To Kill a Mockingbird'
+    }
         
 
 #default books and students
@@ -221,7 +229,14 @@ while True:
         name = book(name,id,author,genre,copies,available_copies)
         name.add_a_book()
     elif choice == 6:
-        pass
+        name = input("Enter the name of the student  ::  ")
+        id = input("Enter the id of the student  ::  ")
+        course = input("Enter the course of the student  ::  ")
+        year = int(input("Enter the year of the student  ::  "))
+        books = int(input("Enter the no of books borrowed by student  ::  "))
+        books_br = [for i in range (1,books) input(f"Enter the name of the book {i}")]
+        student_regestration = student(name,id,course,year,books_br)
+        student_regestration.add_a_student()
     elif choice == 7:
         pass
     elif choice == 8:
