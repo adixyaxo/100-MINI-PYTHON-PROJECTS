@@ -1,11 +1,11 @@
 class book:
-    def __init__(self,name,s_no,author,genre,copies,status):
+    def __init__(self,name,s_no,author,genre,copies,available_copies):
         self.name=name
         self.s_no=s_no
         self.author=author
         self.genre = genre
         self.copies=copies
-        self.status=status
+        self.available_copies=available_copies
     
     def about(self):
             print("\n" + "="*30)
@@ -17,7 +17,7 @@ class book:
             print(f" ISBN/ID   :: {self.s_no}")
             print("-" * 30)
             print(f" TOTAL COPIES     :: {self.copies}")
-            print(f" AVAILABLE COPIES :: {self.status}")
+            print(f" AVAILABLE COPIES :: {self.available_copies}")
             print("="*30 + "\n")
             
     
@@ -32,9 +32,6 @@ def get_book(userbook):
                 break
             elif bookfound == False :
                 print("Book Not found")
-
-
-
 
 
 
@@ -164,7 +161,13 @@ while True:
     elif choice == 4:
         pass
     elif choice == 5:
-        pass
+        name = input("Enter the name of the book  ::  ")
+        id = input("Enter the id of the book  ::  ")
+        author = input("Enter the author of the book  ::  ")
+        genre = input("Enter the genre of the book  ::  ")
+        copies = input("Enter the copies of the book  ::  ")
+        available_copies = input("Enter the available copies of the book  ::  ")
+        name = book(name,id,author,genre,copies,available_copies)
     elif choice == 6:
         pass
     elif choice == 7:
