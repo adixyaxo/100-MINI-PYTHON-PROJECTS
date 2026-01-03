@@ -19,6 +19,25 @@ class book:
             print(f" TOTAL COPIES     :: {self.copies}")
             print(f" AVAILABLE COPIES :: {self.status}")
             print("="*30 + "\n")
+            
+    
+#seperate book functions
+def get_book(userbook):
+        for id,info in default_books.items():
+            infotitle = info["title"]
+            bookfound = False 
+            if userbook.lower() == infotitle.name.lower():
+                bookfound = True
+                return infotitle
+                break
+            elif bookfound == False :
+                print("Book Not found")
+
+
+
+
+
+
         
 class student:
     def __init__(self,name,id,course,year,bk=[]):
@@ -106,6 +125,17 @@ default_students = {
 
 for id,name in default_students.items():
     name["name"] = student(name["name"],id,name["course"],name["year"],name["borrowed_books"])
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 while True:
     print("""--Welcome To The Library Management System--
 
@@ -125,18 +155,12 @@ while True:
     choice = int(input("Please enter your choice -- :: "))
 
     if choice == 1:
-        user_borrow = input("Enter the book that you want to borrow")
+        pass
     elif choice == 2:
         pass
     elif choice == 3:
         user_book = str(input("Enter the name of the book you want to know about  ::  "))
-        for id,info in default_books.items():
-            infotitle = info["title"]
-            if user_book.lower() == infotitle.name.lower():
-                print(infotitle.about())
-                break
-            else:
-                print("Book Not found")
+        get_book(user_book).about()
     elif choice == 4:
         pass
     elif choice == 5:
