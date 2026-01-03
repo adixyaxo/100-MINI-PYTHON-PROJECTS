@@ -234,7 +234,9 @@ while True:
         course = input("Enter the course of the student  ::  ")
         year = int(input("Enter the year of the student  ::  "))
         books = int(input("Enter the no of books borrowed by student  ::  "))
-        books_br = [for i in range (1,books) input(f"Enter the name of the book {i}")]
+        books_br=[]
+        for i in range (1,books):
+            books_br.append(input(f"Enter the name of the book {i}  ::  "))
         student_regestration = student(name,id,course,year,books_br)
         student_regestration.add_a_student()
     elif choice == 7:
