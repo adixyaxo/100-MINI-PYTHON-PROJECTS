@@ -62,14 +62,16 @@ def borrow_book(book,student_entry):
             print("Book Unavailable")
         
 def return_book(book,student_entry):
-        bklist = get_student(student_entry).bk
-        try:
-            bklist.remove(book)
-        except ValueError as e:
-            print("You dont have that book you want to return")
+    error = None
+    bklist = get_student(student_entry).bk
+    try:
+        bklist.remove(book)
+    except ValueError as e:
+        print("You dont have that book you want to return")
+        error = e
+    if error == None:
         get_book(book).available_copies += 1
         print(f"You have returned {get_book(user_book).name} written by {get_book(user_book).author}")
-
 
 class student:
     def __init__(self,name,id,course,year,bk=[]):
