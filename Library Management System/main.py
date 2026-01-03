@@ -57,10 +57,20 @@ def borrow_book(book,student_entry):
         if get_book(book).available_copies > 0 :
             bklist = get_student(student_entry).bk
             bklist.append(book)
-            print(f"You have borrowed a {get_book(user_book).name} written by {get_book(user_book).author}")
-        else :
+            print(f"You have borrowed {get_book(user_book).name} written by {get_book(user_book).author}")
+        else:
             print("Book Unavailable")
         
+def return_book(book,student_entry):
+        bklist = get_student(student_entry).bk
+        try:
+            bklist.remove(book)
+        except ValueError as e:
+            print("You dont have that book you want to return")
+        get_book(book).available_copies += 1
+        print(f"You have returned {get_book(user_book).name} written by {get_book(user_book).author}")
+
+
 class student:
     def __init__(self,name,id,course,year,bk=[]):
         self.name=name
@@ -129,7 +139,7 @@ default_students = {
         "name": "Rahul Sharma",
         "course": "B.Tech Mechanical",
         "year": 2,
-        "borrowed_books": ["978-0201616224"]  # Has 'The Pragmatic Programmer'
+        "borrowed_books": ["The Pragmatic Programmer"]  # Has 'The Pragmatic Programmer'
     },
     "STU-003": {
         "name": "Priya Singh",
@@ -141,7 +151,7 @@ default_students = {
         "name": "Vikram Malhotra",
         "course": "BBA",
         "year": 3,
-        "borrowed_books": ["978-0061120084"] # Has 'To Kill a Mockingbird'
+        "borrowed_books": ["To Kill a Mockingbird"] # Has 'To Kill a Mockingbird'
     }
 }
 
@@ -181,7 +191,9 @@ while True:
         student_entry = input("Enter you name  :: ")
         borrow_book(user_book,student_entry)
     elif choice == 2:
-        pass
+        user_book = str(input("Enter the name of the book you want to return  ::  "))
+        student_entry = input("Enter you name  :: ")
+        return_book(user_book,student_entry)
     elif choice == 3:
         user_book = str(input("Enter the name of the book you want to know about  ::  "))
         get_book(user_book).about()
