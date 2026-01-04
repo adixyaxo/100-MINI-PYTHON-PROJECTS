@@ -37,7 +37,8 @@ def get_book(userbook):
         for id,info in default_books.items():
             infotitle = info["title"]
             bookfound = False 
-            if userbook.lower() == infotitle.name.lower():
+            userbook_str = str(userbook)
+            if userbook_str.lower() == infotitle.name.lower():
                 bookfound = True
                 return infotitle
                 break
@@ -48,18 +49,19 @@ def get_student(student_entry):
         for id,name in default_students.items():
             student_name = name["name"]
             studentfound = False 
-            if student_entry.lower() == student_name.name.lower() or student_entry.lower()== id:
+            student_entry_str = str(student_entry)
+            if student_entry_str.lower() == student_name.name.lower() or student_entry_str == id:
                 studentfound = True
                 return student_name
                 break
             if studentfound == False :
                 print("Wrong Student Entry Please Enter Correct Name or ID")
 
-def borrow_book(book,student_entry):
+def borrow_book(book_,student_entry):
         get_student(student_entry)
-        if get_book(book).available_copies > 0 :
+        if get_book(book_).available_copies > 0 :
             bklist = get_student(student_entry).bk
-            bklist.append(book)
+            bklist[book_] = 10
             print(f"You have borrowed {get_book(user_book).name} written by {get_book(user_book).author}")
         else:
             print("Book Unavailable")
@@ -81,6 +83,14 @@ def display_all_books():
     for id,info in default_books.items():
         print(f"Name : {info["title"].name}  ::  ID :: {id}  ::  Available : {info["available"]}\n")
 
+def reserve_a_book(book_,student_entry):
+        get_student(student_entry)
+        if get_book(book_).available_copies > 0 :
+            bklist = get_student(student_entry).bk
+            bklist.append(book_)
+            print(f"You have reserved {get_book(user_book).name} written by {get_book(user_book).author}")
+        else:
+            print("Book Unavailable")
 
 
 
@@ -217,25 +227,35 @@ while True:
     07-Display all books
     08-Search for a book
     09-Check overdue books / Fines
-    10-View lending history
-    11-Reserve a book
-    12-Save & Exit""")
-    choice = int(input("Please enter your choice -- :: "))
+    10-Reserve a book
+    0-Exit""")
+    
+    try :
+        choice = int(input("Please enter your choice -- :: "))
+    except ValueError as e:
+        print("Please only enter numbers")
+        continue
+    
     print("\n\n")
+    
     if choice == 1:
         user_book = str(input("Enter the name of the book you want to borrow  ::  "))
         student_entry = input("Enter you name  :: ")
         borrow_book(user_book,student_entry)
+        
     elif choice == 2:
         user_book = str(input("Enter the name of the book you want to return  ::  "))
         student_entry = input("Enter you name  :: ")
         return_book(user_book,student_entry)
+        
     elif choice == 3:
         user_book = str(input("Enter the name of the book you want to know about  ::  "))
         get_book(user_book).about()
+        
     elif choice == 4:
         user_student = str(input("Enter the name of the student you want to know about  ::  "))
         get_student(user_student).about()
+        
     elif choice == 5:
         name = input("Enter the name of the book  ::  ")
         id = input("Enter the id of the book  ::  ")
@@ -245,6 +265,7 @@ while True:
         available_copies = input("Enter the available copies of the book  ::  ")
         name = book(name,id,author,genre,copies,available_copies)
         name.add_a_book()
+        
     elif choice == 6:
         name = input("Enter the name of the student  ::  ")
         id = input("Enter the id of the student  ::  ")
@@ -256,13 +277,16 @@ while True:
             books_br[input(f"Enter the name of the book {i}  ::  ")] = input("Enter the date book was taken  ::  ")
         student_regestration = student(name,id,course,year,books_br)
         student_regestration.add_a_student()
+        
     elif choice == 7:
         display_all_books()
+        
     elif choice == 8:
         user_search = input("Enter the name of the book you want to search for  ::  ")
         x = get_book(user_search)
         if x != None:
             x.about()   
+            
     elif choice == 9:
         enter_name = input("Enter you name  ::  ")
         book_enter = input("Enter the name of the book you want to find  ::  ")
@@ -274,11 +298,16 @@ while True:
             print("You have to return the book today")
         else:
             print(f"You have {(0-date_due)} days of overdue and your fine is ruppes {0-(date_due)*fine_per_day}")
+            
     elif choice == 10:
-        pass
-    elif choice == 11:
-        pass
-    elif choice == 12:
-        pass
+        student_enter = print("Enter your name  ::  ")
+        book_enter = print("Enter the name of the book you want to reserve  ::  ")
+        reserve_a_book(book_enter,student_enter)
+        
+    elif choice == 0:
+        print("Exiting Programme .........")
+        break
+    else:
+        print("Wrong Choice Please Try again")
     
     print("\n\n\n\n")
