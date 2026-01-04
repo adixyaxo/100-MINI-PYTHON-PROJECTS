@@ -25,10 +25,10 @@ class book:
     
     def add_a_book(self):
         # ### ERROR: 'id' is not defined in this function's scope. It will try to use the global 'id' from the initialization loop at the bottom, which is not safe.
-        default_books[id] = { 
+        default_books[self.s_no] = { 
         "title": self, 
         # ### ERROR: The 'book' class does not have a 'self.id' attribute initialized in __init__ (you used self.s_no).
-        "author": self.id, 
+        "author": self.s_no, 
         "genre": self.genre,
         "copies": self.copies,
         "available": self.available_copies
@@ -66,7 +66,7 @@ def borrow_book(book_,student_entry):
                 print(f"You have borrowed {get_book(book_).name} written by {get_book(book_).author}")
             else:
                 print("Book Unavailable")
-        except (ValueError,KeyError) as e :
+        except (ValueError,KeyError,AttributeError) as e :
             print("Book not found")
             
 def return_book(book_,student_entry):
@@ -98,7 +98,7 @@ def reserve_a_book(book_,student_entry):
 
 
 class student:
-    def __init__(self,name,id,course,year,bk={}):
+    def __init__(self,name,id,course,year,bk=None):
         self.name=name
         self.id = id
         self.course = course
