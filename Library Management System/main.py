@@ -32,78 +32,66 @@ class book:
         "genre": self.genre,
         "copies": self.copies,
         "available": self.available_copies
-    }, # ### SYNTAX: This trailing comma makes this dictionary a 'tuple'. Remove the comma.
+    }
     
 #seperate book functions
 def get_book(userbook):
+        bookfound = False 
         for id,info in default_books.items():
             infotitle = info["title"]
-            bookfound = False 
             userbook_str = str(userbook)
             if userbook_str.lower() == infotitle.name.lower():
                 bookfound = True
                 return infotitle
-                # ### LOGIC: 'break' is unreachable here because 'return' exits the function immediately.
-                break 
-            # ### LOGIC: This check is INSIDE the loop. It will print "Book Not found" for every single book that doesn't match until it finds the right one. This should be outside the loop.
-            if bookfound == False :
-                print("Book Not found")
+        if bookfound == False :
+            print("Book Not found")
                 
 def get_student(student_entry):
-        for id,name in default_students.items():
-            student_name = name["name"]
-            studentfound = False 
-            student_entry_str = str(student_entry)
-            # ### ERROR: You are checking 'student_name.name'. In your dictionary setup, 'name["name"]' IS the student object. So 'student_name.name' works, but the variable naming is confusing.
-            if student_entry_str.lower() == student_name.name.lower() or student_entry_str == id:
-                studentfound = True
-                return student_name
-                break
-            # ### LOGIC: Same issue as above. This will print "Wrong Student" multiple times while looping.
-            if studentfound == False :
-                print("Wrong Student Entry Please Enter Correct Name or ID")
+    studentfound = True
+    for id,name in default_students.items():
+        student_name = name["name"]
+        studentfound = False 
+        student_entry_str = str(student_entry)
+        if student_entry_str.lower() == student_name.name.lower() or student_entry_str == id:
+            return student_name
+    if studentfound == False :
+        print("Wrong Student Entry Please Enter Correct Name or ID")
 
 def borrow_book(book_,student_entry):
         get_student(student_entry)
-        # ### CRITICAL: If get_book returns None (book not found), accessing .available_copies will crash the program.
-        if get_book(book_).available_copies > 0 :
-            bklist = get_student(student_entry).bk
-            # ### LOGIC: You are setting the value to integer 10. Later you treat this as a date. You should probably store the actual date string here.
-            bklist[book_] = 10 
-            # ### ERROR: 'user_book' is not defined in this function. You named the argument 'book_'. 'user_book' only works because it exists globally in the main loop (bad practice).
-            print(f"You have borrowed {get_book(user_book).name} written by {get_book(user_book).author}")
-        else:
-            print("Book Unavailable")
-        
-def return_book(book,student_entry):
+        try:
+            if get_book(book_).available_copies > 0 :
+                bklist = get_student(student_entry).bk
+                bklist[book_] = 10 
+                print(f"You have borrowed {get_book(book_).name} written by {get_book(book_).author}")
+            else:
+                print("Book Unavailable")
+        except (ValueError,KeyError) as e :
+            print("Book not found")
+            
+def return_book(book_,student_entry):
     error = None
-    # ### CRITICAL: If get_student returns None, .bk will crash.
-    bklist = get_student(student_entry).bk
     try:
-        # ### CRITICAL: 'bklist' is a Dictionary. Dictionaries do not have a .remove() method (that is for lists). You need 'del bklist[book]' or 'bklist.pop(book)'.
-        bklist.remove(book) 
+        bklist = get_student(student_entry).bk
+        bklist.pop(book_) 
     except ValueError as e:
         print("You dont have that book you want to return")
         error = e
     if error == None:
-        get_book(book).available_copies += 1
-        # ### ERROR: Again, 'user_book' is not defined here. Use the argument 'book'.
-        print(f"You have returned {get_book(user_book).name} written by {get_book(user_book).author}")
+        get_book(book_).available_copies += 1
+        print(f"You have returned {get_book(book_).name} written by {get_book(book_).author}")
 
 def display_all_books():
     print("ALL books are listed below ::\n")
     for id,info in default_books.items():
-        # ### SYNTAX ERROR: You cannot use double quotes (") inside an f-string that is already wrapped in double quotes. Use single quotes for the keys: info['title'].name
-        print(f"Name : {info["title"].name}  ::  ID :: {id}  ::  Available : {info["available"]}\n")
+        print(f"Name : {info['title'].name}  ::  ID :: {id}  ::  Available : {info['available']}\n")
 
 def reserve_a_book(book_,student_entry):
         get_student(student_entry)
         if get_book(book_).available_copies > 0 :
             bklist = get_student(student_entry).bk
-            # ### CRITICAL: 'bklist' is a Dictionary. .append() is a List method. This will crash.
-            bklist.append(book_) 
-            # ### ERROR: 'user_book' is not defined here. Use 'book_'.
-            print(f"You have reserved {get_book(user_book).name} written by {get_book(user_book).author}")
+            bklist[book_] = 10
+            print(f"You have reserved {get_book(book_).name} written by {get_book(book_).author}")
         else:
             print("Book Unavailable")
 
@@ -120,8 +108,7 @@ class student:
     def bookdate(self,b_k):
         try:
             return self.bk[b_k] or self.bk[b_k.lower()]
-        # ### SYNTAX: 'ValueError and KeyError' evaluates to just 'KeyError'. To catch both, use a tuple: (ValueError, KeyError).
-        except ValueError and KeyError as e: 
+        except (ValueError,KeyError) as e: #'ValueError and KeyError' evaluates to just 'KeyError'. To catch both, use a tuple: (ValueError, KeyError).
             return e
         
     def about(self):
@@ -134,8 +121,7 @@ class student:
         print("-----------------------")
     
     def add_a_student(self):
-        # ### ERROR: 'id' is not defined in this scope.
-        default_students[id] ={ 
+        default_students[self.id] ={ 
         "name": self, 
         "course": self.course,
         "year": self.year,
@@ -268,12 +254,17 @@ while True:
     elif choice == 3:
         user_book = str(input("Enter the name of the book you want to know about  ::  "))
         # ### CRITICAL: If get_book returns None (not found), this throws 'AttributeError: 'NoneType' object has no attribute 'about''.
-        get_book(user_book).about()
+        try :
+            get_book(user_book).about()
+        except (AttributeError,ValueError) as e:
+            print("Book not found")
         
     elif choice == 4:
         user_student = str(input("Enter the name of the student you want to know about  ::  "))
-        # ### CRITICAL: Same here. If get_student returns None, this crashes.
-        get_student(user_student).about()
+        try :
+            get_student(user_student).about()
+        except (AttributeError,ValueError) as e:
+            print("Student not found")
         
     elif choice == 5:
         name = input("Enter the name of the book  ::  ")
@@ -283,7 +274,6 @@ while True:
         copies = input("Enter the copies of the book  ::  ")
         available_copies = input("Enter the available copies of the book  ::  ")
         name = book(name,id,author,genre,copies,available_copies)
-        # ### LOGIC: The add_a_book method will fail because it relies on the global 'id' variable which is currently set to the last student ID from the loop above, not the new 'id' you just input.
         name.add_a_book()
         
     elif choice == 6:
@@ -296,7 +286,6 @@ while True:
         for i in range (1,books+1):
             books_br[input(f"Enter the name of the book {i}  ::  ")] = input("Enter the date book was taken  ::  ")
         student_regestration = student(name,id,course,year,books_br)
-        # ### LOGIC: Same logic error as choice 5. 'add_a_student' uses a stale global 'id'.
         student_regestration.add_a_student()
         
     elif choice == 7:
@@ -311,8 +300,11 @@ while True:
     elif choice == 9:
         enter_name = input("Enter you name  ::  ")
         book_enter = input("Enter the name of the book you want to find  ::  ")
-        # ### CRITICAL: 'get_student(...).bookdate(...)' might return an error object (e) or a number. If it returns the error object, int() will crash.
-        date_due = int(get_student(enter_name).bookdate(book_enter.lower())) - return_days
+        try :
+            date_due = int(get_student(enter_name).bookdate(book_enter.lower())) - return_days
+        except ValueError as e:
+            print("Wrong Values error")
+            continue
         print("\n\t::")
         if date_due > 0 :
             print(f"You have {date_due} days to return the book")
@@ -322,15 +314,14 @@ while True:
             print(f"You have {(0-date_due)} days of overdue and your fine is ruppes {0-(date_due)*fine_per_day}")
             
     elif choice == 10:
-        # ### BUG: 'print' returns None. 'student_enter' will be None. You must use 'input()' here.
-        student_enter = print("Enter your name  ::  ")
-        # ### BUG: Same as above. 'book_enter' will be None.
-        book_enter = print("Enter the name of the book you want to reserve  ::  ")
+        student_enter = input("Enter your name  ::  ")
+        book_enter = input("Enter the name of the book you want to reserve  ::  ")
         reserve_a_book(book_enter,student_enter)
         
     elif choice == 0:
         print("Exiting Programme .........")
         break
+    
     else:
         print("Wrong Choice Please Try again")
     
