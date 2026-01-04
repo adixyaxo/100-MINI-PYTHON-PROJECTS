@@ -1,6 +1,3 @@
-
-return_days = 7 # enter the no of days a student can keep a book borrowed
-fine_per_day = 100
 class book:
     def __init__(self,name,s_no,author,genre,copies,available_copies):
         self.name=name 
@@ -94,8 +91,8 @@ class student:
     
     def bookdate(self,b_k):
         try:
-            return self.bk[b_k] or self.bk[b_k.lower()]
-        except ValueError and KeyError as e:
+            return self.bk[b_k]
+        except ValueError as e:
             return e
         
     def about(self):
@@ -266,14 +263,7 @@ while True:
     elif choice == 9:
         enter_name = input("Enter you name  ::  ")
         book_enter = input("Enter the name of the book you want to find  ::  ")
-        date_due = int(get_student(enter_name).bookdate(book_enter.lower())) - return_days
-        print("\n\t::")
-        if date_due > 0 :
-            print(f"You have {date_due} days to return the book")
-        elif date_due == 0:
-            print("You have to return the book today")
-        else:
-            print(f"You have {(0-date_due)} days of overdue and your fine is ruppes {0-(date_due)*fine_per_day}")
+        print(get_student(enter_name).bookdate(book_enter))
     elif choice == 10:
         pass
     elif choice == 11:
