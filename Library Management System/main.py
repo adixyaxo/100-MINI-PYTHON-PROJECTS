@@ -1,6 +1,6 @@
 class book:
     def __init__(self,name,s_no,author,genre,copies,available_copies):
-        self.name=name
+        self.name=name 
         self.s_no=s_no
         self.author=author
         self.genre = genre
@@ -22,7 +22,7 @@ class book:
     
     def add_a_book(self):
         default_books[id] = {
-        "title": self.name,
+        "title": self, # critical fix we are using self (the object) instead of self.name as self is an object and self.name is a string
         "author": self.id,
         "genre": self.genre,
         "copies": self.copies,
@@ -92,7 +92,7 @@ class student:
     
     def add_a_student(self):
         default_students[id] ={
-        "name": self.name,
+        "name": self, # critical fix we are using self (the object) instead of self.name as self is an object and self.name is a string
         "course": self.course,
         "year": self.year,
         "borrowed_books": self.bk # Has 'To Kill a Mockingbird'
