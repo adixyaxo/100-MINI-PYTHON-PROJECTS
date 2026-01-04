@@ -209,14 +209,6 @@ for id,name in default_students.items():
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
 while True:
     print("""--Welcome To The Library Management System--
 
