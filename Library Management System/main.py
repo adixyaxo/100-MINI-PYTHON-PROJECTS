@@ -73,6 +73,14 @@ def return_book(book,student_entry):
         get_book(book).available_copies += 1
         print(f"You have returned {get_book(user_book).name} written by {get_book(user_book).author}")
 
+def display_all_books():
+    print("ALL books are listed below ::\n")
+    for id,info in default_books.items():
+        print(f"Name : {info["title"].name}  ::  ID :: {id}  ::  Available : {info["available"]}\n")
+
+
+
+
 class student:
     def __init__(self,name,id,course,year,bk=[]):
         self.name=name
@@ -204,7 +212,7 @@ while True:
     11-Reserve a book
     12-Save & Exit""")
     choice = int(input("Please enter your choice -- :: "))
-
+    print("\n\n")
     if choice == 1:
         user_book = str(input("Enter the name of the book you want to borrow  ::  "))
         student_entry = input("Enter you name  :: ")
@@ -240,7 +248,7 @@ while True:
         student_regestration = student(name,id,course,year,books_br)
         student_regestration.add_a_student()
     elif choice == 7:
-        pass
+        display_all_books()
     elif choice == 8:
         pass
     elif choice == 9:
