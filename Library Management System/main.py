@@ -38,7 +38,7 @@ def get_book(userbook):
                 bookfound = True
                 return infotitle
                 break
-            elif bookfound == False :
+            if bookfound == False :
                 print("Book Not found")
                 
 def get_student(student_entry):
@@ -250,7 +250,10 @@ while True:
     elif choice == 7:
         display_all_books()
     elif choice == 8:
-        pass
+        user_search = input("Enter the name of the book you want to search for  ::  ")
+        x = get_book(user_search)
+        if x != None:
+            x.about()   
     elif choice == 9:
         pass
     elif choice == 10:
