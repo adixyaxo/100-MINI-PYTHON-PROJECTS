@@ -24,9 +24,9 @@ Each project is contained in its own folder (or file) with a descriptive name. I
 ## 📋 The List (1-100)
 
 *Below is the list of projects. Checked items (✅) are completed.*
-  - [ ] 01. Hello World with a Twist
+  - [x] 01. Hello World with a Twist
 
-  - [ ] 02. Library Management System
+  - [x] 02. Library Management System
     
       - Classes: Book (title, author, isbn, status), Member (name, borrowed_list), Library.
       - Features: add_book, lend_book (check status), return_book.
