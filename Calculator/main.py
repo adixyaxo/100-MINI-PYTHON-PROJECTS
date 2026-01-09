@@ -9,7 +9,9 @@ def main():
         n = num.strip()
         for operator in operators:
             if operator==n:
-                print("opearator")
+                if operator == '+':
+                    pass
+
 
 if (__name__ == "__main__"):
     main()
