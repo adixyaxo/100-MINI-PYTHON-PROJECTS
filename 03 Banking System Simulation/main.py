@@ -38,6 +38,21 @@ class current_account(account):
 aditya = savings_account("aditya",727,10000,10,21)
 aditya.getinfo()
 
+
+def create_account():
+    name = input("Please Enter Your Name  ::  ")
+    amount = input("Enter the amount you want to deposit in your account  ::  ")
+    loan = 0
+    type = input("Enter what type of account do you want to create\n1. Savings Account\n2. Current Account\nYOUR CHOICE  ::  ")
+    
+    if type=='1' or type.strip().lower() == 'savings account' or type.strip().lower() == 'savingsaccount' or type.strip().lower() == 'saving account' or type.strip().lower() == 'savingaccount' or type.strip().lower() == 'savings' or type.strip().lower() == 'saving':
+        saving_intrest = 10
+        accountno = 1
+        account = savings_account(name,accountno,amount,loan,saving_intrest)
+    
+
+
+
 def main():
     print("""
     ________________________________________________
