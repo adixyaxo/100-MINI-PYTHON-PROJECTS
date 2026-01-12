@@ -44,7 +44,7 @@ class current_account(account):
         df = pandas.DataFrame(self.account_info,index=[0])
         df.to_excel(f"accounts/current/{self.account_no}.xlsx",index=False)
         
-accountnos = (pandas.read_excel("accounts.xlsx"))
+accountnos = (pandas.read_excel("accounts_list.xlsx"))
 accountnos = set(accountnos[0])
 
 def random_acc_no():
@@ -88,18 +88,20 @@ def login():
     user_name = input("ENTER YOUR NAME  ::  ")
     global user_account_no_global
     user_account_no_global = input("ENTER YOUR ACCOUNT NO  ::  ")
+    user_account_no_global = int(user_account_no_global.strip().lower().replace(" ","").replace(",",""))
     user_pin = input("ENTER YOUR 4 DIGIT PIN  ::  ")
     type = input("ENTER YOUR ACCOUNT TYPE\n1. Savings Account\n2. Current Account\nYOUR CHOICE  ::  ")
+    global user_path
     if type=='1' or type.strip().lower() == 'savings account' or type.strip().lower() == 'savingsaccount' or type.strip().lower() == 'saving account' or type.strip().lower() == 'savingaccount' or type.strip().lower() == 'savings' or type.strip().lower() == 'saving':
-        global user_path 
         user_path = f"accounts/saving/{user_account_no_global}.xlsx"
     elif type=='2' or type.strip().lower() == 'current account' or type.strip().lower() == 'currentaccount' or type.strip().lower() == 'currents account' or type.strip().lower() == 'currentsaccount' or type.strip().lower() == 'currents' or type.strip().lower() == 'current':
-        global user_path
         user_path = f"accounts/current/{user_account_no_global}.xlsx"
     try:
         account_file = pandas.read_excel(user_path)
         account_name = account_file['NAME'][0]
         account_pin = account_file['PIN'][0]
+        account_pin = account_pin.strip().lower().replace(" ","").replace(",","")
+        account_pin = int(account_pin)
         if user_name == account_name and user_pin == account_pin:
             print("LOGIN SUCCESSFUL")
         else:
