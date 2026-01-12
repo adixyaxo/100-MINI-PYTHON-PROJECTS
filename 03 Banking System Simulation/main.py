@@ -65,6 +65,8 @@ def create_account():
     loan = 0
     type = input("Enter what type of account do you want to create\n1. Savings Account\n2. Current Account\nYOUR CHOICE  ::  ")
     pin = input("Set a 4 digit pin for your account  ::  ")
+    
+    
     if type=='1' or type.strip().lower() == 'savings account' or type.strip().lower() == 'savingsaccount' or type.strip().lower() == 'saving account' or type.strip().lower() == 'savingaccount' or type.strip().lower() == 'savings' or type.strip().lower() == 'saving':
         saving_intrest = 10
         accountno = random_acc_no()
@@ -72,6 +74,7 @@ def create_account():
         accountnos.add(accountno)
         save_account_nos()
         account = savings_account(name,accountno,amount,loan,saving_intrest,pin)
+        
     elif type=='2' or type.strip().lower() == 'current account' or type.strip().lower() == 'currentaccount' or type.strip().lower() == 'currents account' or type.strip().lower() == 'currentsaccount' or type.strip().lower() == 'currents' or type.strip().lower() == 'current':
         current_intrest = 0
         accountno = random_acc_no()
@@ -84,10 +87,11 @@ def create_account():
         
 def login():
     user_name = input("ENTER YOUR NAME  ::  ")
-    user_account_no = input("ENTER YOUR ACCOUNT NO  ::  ")
+    global user_account_no_global
+    user_account_no_global = input("ENTER YOUR ACCOUNT NO  ::  ")
     user_pin = input("ENTER YOUR 4 DIGIT PIN  ::  ")
     try:
-        account_file = pandas.read_excel(f"03 Banking System Simulation/accounts/{user_account_no}.xlsx")
+        account_file = pandas.read_excel(f"03 Banking System Simulation/accounts/{user_account_no_global}.xlsx")
         account_name = account_file['NAME'][0]
         account_pin = str(account_file['PIN'][0])
         if user_name == account_name and user_pin == account_pin:
@@ -96,8 +100,16 @@ def login():
             print("LOGIN FAILED PLEASE CHECK YOUR CREDENTIALS")
     except Exception as e:
         print("ACCOUNT NOT FOUND PLEASE CHECK YOUR ACCOUNT NO")
-        
     
+def deposit():
+    if login() == "LOGIN SUCCESSFUL":
+        deposit_amount = input("ENTER THE AMOUNT YOU WANT TO DEPOSIT  ::  ")
+        account_file = pandas.read_excel(f"03 Banking System Simulation/accounts/{user_account_no_global}.xlsx")
+        account_balance = account_file['BALANCE'][0]
+        account_balance = int(account_balance) + int(deposit_amount)
+        account_file['BALANCE'][0] = account_balance
+        account_file.to_excel(f"03 Banking System Simulation/accounts/{user_account_no_global}.xlsx",index=False)
+        print(f"YOU HAVE SUCCESSFULLY DEPOSITED {deposit_amount} TO YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
 
 
 def save_account_nos():
