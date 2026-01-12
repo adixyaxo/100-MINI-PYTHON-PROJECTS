@@ -10,10 +10,6 @@ class account:
         self.balance = balance
         self.loan = loan
         self.account_info =  {'NAME' : self.name,'ACCOUNT NO' : self.account_no,'BALANCE' : self.balance,'LOAN' : self.loan}
-    
-    def save_info(self):
-        df = pandas.DataFrame(self.account_info,index=[0])
-        df.to_excel(f"03 Banking System Simulation/accounts/{self.account_no}.xlsx",index=False)
 
     def getinfo(self):
         print(f"NAME :: {self.name}\nBALANCE :: {self.balance}\nLOAN :: {self.loan}")
@@ -30,7 +26,7 @@ class savings_account(account):
     
     def save_info(self):
         df = pandas.DataFrame(self.account_info,index=[0])
-        df.to_excel(f"03 Banking System Simulation/accounts/{self.account_no}.xlsx",index=False)
+        df.to_excel(f"03 Banking System Simulation/accounts/saving/{self.account_no}.xlsx",index=False)
         
 class current_account(account):
     def __init__(self,name,account_no,balance,loan,intrest):
@@ -44,7 +40,7 @@ class current_account(account):
         
     def save_info(self):
         df = pandas.DataFrame(self.account_info,index=[0])
-        df.to_excel(f"03 Banking System Simulation/accounts/{self.account_no}.xlsx",index=False)
+        df.to_excel(f"03 Banking System Simulation/accounts/current/{self.account_no}.xlsx",index=False)
         
 aditya = savings_account("aditya",727,10000,10,21)
 aditya.getinfo()
@@ -72,7 +68,16 @@ def create_account():
         print(f"Your generated account no is {accountno}")
         accountnos.add(accountno)
         save_account_nos()
-
+        account = savings_account(name,accountno,amount,loan,saving_intrest)
+    elif type=='2' or type.strip().lower() == 'current account' or type.strip().lower() == 'currentaccount' or type.strip().lower() == 'currents account' or type.strip().lower() == 'currentsaccount' or type.strip().lower() == 'currents' or type.strip().lower() == 'current':
+        current_intrest = 0
+        accountno = random_acc_no()
+        print(f"Your generated account no is {accountno}")
+        accountnos.add(accountno)
+        save_account_nos()
+        account = current_account(name,accountno,amount,loan,current_intrest)
+    else:
+        print("WRONG CHOICE TRY AGAIN LATER")
         
 def save_account_nos():
     accountno_df = pandas.DataFrame(accountnos)
@@ -120,6 +125,20 @@ def main():
     
     if user_choice_int == 1:
         create_account()
+    elif user_choice_int == 2:
+        pass
+    elif user_choice_int == 3:
+        pass
+    elif user_choice_int == 4:
+        pass   
+    elif user_choice_int == 5:
+        pass
+    elif user_choice_int == 6:
+        pass
+    elif user_choice_int == 7:
+        print("THANK YOU FOR USING IRON BANK SYSTEM")
+        time.sleep(2)
+        exit()
     
 if __name__ == '__main__':
     main()
