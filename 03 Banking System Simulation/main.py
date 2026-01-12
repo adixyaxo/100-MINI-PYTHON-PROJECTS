@@ -28,7 +28,7 @@ class savings_account(account):
     
     def save_info(self):
         df = pandas.DataFrame(self.account_info,index=[0])
-        df.to_excel(f"03 Banking System Simulation/accounts/saving/{self.account_no}.xlsx",index=False)
+        df.to_excel(f"accounts/saving/{self.account_no}.xlsx",index=False)
         
 class current_account(account):
     def __init__(self,name,account_no,balance,loan,intrest,pin):
@@ -42,13 +42,13 @@ class current_account(account):
         
     def save_info(self):
         df = pandas.DataFrame(self.account_info,index=[0])
-        df.to_excel(f"03 Banking System Simulation/accounts/current/{self.account_no}.xlsx",index=False)
+        df.to_excel(f"accounts/current/{self.account_no}.xlsx",index=False)
         
-aditya = savings_account("aditya",727,10000,10,21)
+aditya = savings_account("aditya",727,10000,10,21,1234)
 aditya.getinfo()
 
 accountnos = (pandas.read_excel("accounts.xlsx"))
-accountnos = tuple(accountnos[0])
+accountnos = set(accountnos[0])
 
 def random_acc_no():
     accountno = random.randint(1,1000000)
@@ -74,6 +74,7 @@ def create_account():
         accountnos.add(accountno)
         save_account_nos()
         account = savings_account(name,accountno,amount,loan,saving_intrest,pin)
+        account.save_info()
         
     elif type=='2' or type.strip().lower() == 'current account' or type.strip().lower() == 'currentaccount' or type.strip().lower() == 'currents account' or type.strip().lower() == 'currentsaccount' or type.strip().lower() == 'currents' or type.strip().lower() == 'current':
         current_intrest = 0
@@ -82,6 +83,7 @@ def create_account():
         accountnos.add(accountno)
         save_account_nos()
         account = current_account(name,accountno,amount,loan,current_intrest,pin)
+        account.save_info()
     else:
         print("WRONG CHOICE TRY AGAIN LATER")
         
@@ -91,7 +93,7 @@ def login():
     user_account_no_global = input("ENTER YOUR ACCOUNT NO  ::  ")
     user_pin = input("ENTER YOUR 4 DIGIT PIN  ::  ")
     try:
-        account_file = pandas.read_excel(f"03 Banking System Simulation/accounts/{user_account_no_global}.xlsx")
+        account_file = pandas.read_excel(f"accounts/{user_account_no_global}.xlsx")
         account_name = account_file['NAME'][0]
         account_pin = str(account_file['PIN'][0])
         if user_name == account_name and user_pin == account_pin:
@@ -104,74 +106,75 @@ def login():
 def deposit():
     if login() == "LOGIN SUCCESSFUL":
         deposit_amount = input("ENTER THE AMOUNT YOU WANT TO DEPOSIT  ::  ")
-        account_file = pandas.read_excel(f"03 Banking System Simulation/accounts/{user_account_no_global}.xlsx")
+        account_file = pandas.read_excel(f"accounts/{user_account_no_global}.xlsx")
         account_balance = account_file['BALANCE'][0]
         account_balance = int(account_balance) + int(deposit_amount)
         account_file['BALANCE'][0] = account_balance
-        account_file.to_excel(f"03 Banking System Simulation/accounts/{user_account_no_global}.xlsx",index=False)
+        account_file.to_excel(f"accounts/{user_account_no_global}.xlsx",index=False)
         print(f"YOU HAVE SUCCESSFULLY DEPOSITED {deposit_amount} TO YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
 
 
 def save_account_nos():
     accountno_df = pandas.DataFrame(accountnos)
-    accountno_df.to_excel(f"03 Banking System Simulation/accounts.xlsx",index=False)
+    accountno_df.to_excel(f"accounts.xlsx",index=False)
 
 def main():
-    print("""
-    ________________________________________________
-    |                                              |
-    |          $$$  IRON BANK SYSTEM  $$$          |
-    |______________________________________________|
-    |                                              |
-    |   1. Create Account      2. Login            |
-    |   3. Deposit             4. Withdraw         |
-    |   5. Check Balance       6. Transaction Log  |
-    |   7. Exit                                    |
-    |______________________________________________|
-    """)
+    while True:
+        print("""
+        ________________________________________________
+        |                                              |
+        |          $$$  IRON BANK SYSTEM  $$$          |
+        |______________________________________________|
+        |                                              |
+        |   1. Create Account      2. Login            |
+        |   3. Deposit             4. Withdraw         |
+        |   5. Check Balance       6. Transaction Log  |
+        |   7. Exit                                    |
+        |______________________________________________|
+        """)
 
-    user_choice = input("ENTER YOUR CHOICE :: ")
-    try:
-        user_choice_int = int(user_choice)
-    except Exception as e:
-        pass
-    
-    user_choice = user_choice.strip()
-    
-    if user_choice.lower() == 'create account' or user_choice.lower() == 'createaccount':
-        user_choice_int = 1
-    elif user_choice.lower() == 'login':
-        user_choice_int = 2
-    elif user_choice.lower() == 'deposit':
-        user_choice_int = 3
-    elif user_choice.lower() == 'withdraw':
-        user_choice_int = 4
-    elif user_choice.lower() == 'check balance' or user_choice.lower() == 'checkbalance':
-        user_choice_int = 5
-    elif user_choice.lower() == 'transaction log' or user_choice.lower() == 'transactionlog':
-        user_choice_int = 6
-    elif user_choice.lower() == 'exit':
-        user_choice_int = 7
-    
-    if user_choice_int !=1 and user_choice_int !=2 and user_choice_int !=3 and user_choice_int !=4 and user_choice_int !=5 and user_choice_int !=6 and user_choice_int !=7:
-        print("PLEASE ONLY ENTER FROM ABOVE CHOICES")
-    
-    if user_choice_int == 1:
-        create_account()
-    elif user_choice_int == 2:
-        login()
-    elif user_choice_int == 3:
+        user_choice = input("ENTER YOUR CHOICE :: ")
+        try:
+            user_choice_int = int(user_choice)
+        except Exception as e:
+            pass
         
-    elif user_choice_int == 4:
-        pass   
-    elif user_choice_int == 5:
-        pass
-    elif user_choice_int == 6:
-        pass
-    elif user_choice_int == 7:
-        print("THANK YOU FOR USING IRON BANK SYSTEM")
-        time.sleep(2)
-        exit()
+        user_choice = user_choice.strip()
+        
+        if user_choice.lower() == 'create account' or user_choice.lower() == 'createaccount':
+            user_choice_int = 1
+        elif user_choice.lower() == 'login':
+            user_choice_int = 2
+        elif user_choice.lower() == 'deposit':
+            user_choice_int = 3
+        elif user_choice.lower() == 'withdraw':
+            user_choice_int = 4
+        elif user_choice.lower() == 'check balance' or user_choice.lower() == 'checkbalance':
+            user_choice_int = 5
+        elif user_choice.lower() == 'transaction log' or user_choice.lower() == 'transactionlog':
+            user_choice_int = 6
+        elif user_choice.lower() == 'exit':
+            user_choice_int = 7
+        
+        if user_choice_int !=1 and user_choice_int !=2 and user_choice_int !=3 and user_choice_int !=4 and user_choice_int !=5 and user_choice_int !=6 and user_choice_int !=7:
+            print("PLEASE ONLY ENTER FROM ABOVE CHOICES")
+        
+        if user_choice_int == 1:
+            create_account()
+        elif user_choice_int == 2:
+            login()
+        elif user_choice_int == 3:
+            deposit()
+        elif user_choice_int == 4:
+            pass   
+        elif user_choice_int == 5:
+            pass
+        elif user_choice_int == 6:
+            pass
+        elif user_choice_int == 7:
+            print("THANK YOU FOR USING IRON BANK SYSTEM")
+            time.sleep(2)
+            exit()
     
 if __name__ == '__main__':
     main()
