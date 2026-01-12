@@ -4,19 +4,21 @@ import datetime
 import openpyxl
 import random
 class account:
-    def __init__(self,name,account_no,balance,loan,):
+    def __init__(self,name,account_no,balance,loan,pin):
         self.name = name
         self.account_no = account_no
         self.balance = balance
         self.loan = loan
-        self.account_info =  {'NAME' : self.name,'ACCOUNT NO' : self.account_no,'BALANCE' : self.balance,'LOAN' : self.loan}
+        self.pin = pin
+        self.type = None
+        self.account_info =  {'NAME' : self.name,'ACCOUNT NO' : self.account_no,'BALANCE' : self.balance,'LOAN' : self.loan, 'PIN' : self.pin , 'CREATED AT' : datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"), }
 
     def getinfo(self):
         print(f"NAME :: {self.name}\nBALANCE :: {self.balance}\nLOAN :: {self.loan}")
 
 class savings_account(account):
-    def __init__(self,name,account_no,balance,loan,intrest):
-        super().__init__(name,account_no,balance,loan)
+    def __init__(self,name,account_no,balance,loan,intrest,pin):
+        super().__init__(name,account_no,balance,loan,pin)
         self.intrest = intrest
         self.account_info["Account Type"] = "Savings Account"
         
@@ -29,8 +31,8 @@ class savings_account(account):
         df.to_excel(f"03 Banking System Simulation/accounts/saving/{self.account_no}.xlsx",index=False)
         
 class current_account(account):
-    def __init__(self,name,account_no,balance,loan,intrest):
-        super().__init__(name,account_no,balance,loan)
+    def __init__(self,name,account_no,balance,loan,intrest,pin):
+        super().__init__(name,account_no,balance,loan,pin)
         self.intrest = intrest
         self.account_info["Account Type"] = "Current Account"
         
@@ -44,38 +46,39 @@ class current_account(account):
         
 aditya = savings_account("aditya",727,10000,10,21)
 aditya.getinfo()
-    
+
+accountnos = (pandas.read_excel("accounts.xlsx"))
+accountnos = tuple(accountnos[0])
+
 def random_acc_no():
     accountno = random.randint(1,1000000)
-    for item in accountsnos:
+    for item in accountnos:
         if accountno == item:
             return random_acc_no()
         else:
             return accountno
     
-accountnos = (pandas.read_excel("accounts.xlsx"))
-accountnos = tuple(accountnos[0])
 
 def create_account():
     name = input("Please Enter Your Name  ::  ")
     amount = input("Enter the amount you want to deposit in your account  ::  ")
     loan = 0
     type = input("Enter what type of account do you want to create\n1. Savings Account\n2. Current Account\nYOUR CHOICE  ::  ")
-    
+    pin = input("Set a 4 digit pin for your account  ::  ")
     if type=='1' or type.strip().lower() == 'savings account' or type.strip().lower() == 'savingsaccount' or type.strip().lower() == 'saving account' or type.strip().lower() == 'savingaccount' or type.strip().lower() == 'savings' or type.strip().lower() == 'saving':
         saving_intrest = 10
         accountno = random_acc_no()
         print(f"Your generated account no is {accountno}")
         accountnos.add(accountno)
         save_account_nos()
-        account = savings_account(name,accountno,amount,loan,saving_intrest)
+        account = savings_account(name,accountno,amount,loan,saving_intrest,pin)
     elif type=='2' or type.strip().lower() == 'current account' or type.strip().lower() == 'currentaccount' or type.strip().lower() == 'currents account' or type.strip().lower() == 'currentsaccount' or type.strip().lower() == 'currents' or type.strip().lower() == 'current':
         current_intrest = 0
         accountno = random_acc_no()
         print(f"Your generated account no is {accountno}")
         accountnos.add(accountno)
         save_account_nos()
-        account = current_account(name,accountno,amount,loan,current_intrest)
+        account = current_account(name,accountno,amount,loan,current_intrest,pin)
     else:
         print("WRONG CHOICE TRY AGAIN LATER")
         
