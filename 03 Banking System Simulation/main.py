@@ -82,6 +82,24 @@ def create_account():
     else:
         print("WRONG CHOICE TRY AGAIN LATER")
         
+def login():
+    user_name = input("ENTER YOUR NAME  ::  ")
+    user_account_no = input("ENTER YOUR ACCOUNT NO  ::  ")
+    user_pin = input("ENTER YOUR 4 DIGIT PIN  ::  ")
+    try:
+        account_file = pandas.read_excel(f"03 Banking System Simulation/accounts/{user_account_no}.xlsx")
+        account_name = account_file['NAME'][0]
+        account_pin = str(account_file['PIN'][0])
+        if user_name == account_name and user_pin == account_pin:
+            print("LOGIN SUCCESSFUL")
+        else:
+            print("LOGIN FAILED PLEASE CHECK YOUR CREDENTIALS")
+    except Exception as e:
+        print("ACCOUNT NOT FOUND PLEASE CHECK YOUR ACCOUNT NO")
+        
+    
+
+
 def save_account_nos():
     accountno_df = pandas.DataFrame(accountnos)
     accountno_df.to_excel(f"03 Banking System Simulation/accounts.xlsx",index=False)
@@ -108,7 +126,7 @@ def main():
     
     user_choice = user_choice.strip()
     
-    if user_choice.lower() == 'create account':
+    if user_choice.lower() == 'create account' or user_choice.lower() == 'createaccount':
         user_choice_int = 1
     elif user_choice.lower() == 'login':
         user_choice_int = 2
@@ -129,9 +147,9 @@ def main():
     if user_choice_int == 1:
         create_account()
     elif user_choice_int == 2:
-        pass
+        login()
     elif user_choice_int == 3:
-        pass
+        
     elif user_choice_int == 4:
         pass   
     elif user_choice_int == 5:
