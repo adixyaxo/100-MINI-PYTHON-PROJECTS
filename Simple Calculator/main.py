@@ -5,7 +5,7 @@ def main():
             try:
                 number_1 = int(input("PLEASE ENTER THE FIRST NUMBER  ::  "))
                 number_2 = int(input("PLEASE ENTER THE SECOND NUMBER  ::  "))
-                operation = input("ENTER THE OPERATION YOU WANT TO PERFORM\n1.Addition :: +\n2.Subtraction :: -\n3.Multiplication :: x or *\n4.Division :: /\nENTER exit TO LEAVE/EXIT THE PROGRAMME")
+                operation = input("ENTER THE OPERATION YOU WANT TO PERFORM\n1.Addition :: +\n2.Subtraction :: -\n3.Multiplication :: x or *\n4.Division :: /\nENTER exit TO LEAVE/EXIT THE PROGRAMME   ::  ")
                 operation = operation.strip().lower()
                 if operation == '+' or operation == '1' or operation == 'add' or operation == 'addition':
                     print(number_1+number_2)

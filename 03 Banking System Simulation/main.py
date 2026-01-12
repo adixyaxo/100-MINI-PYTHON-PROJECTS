@@ -2,6 +2,7 @@ import pandas
 import time
 import datetime
 import openpyxl
+import random
 class account:
     def __init__(self,name,account_no,balance,loan,):
         self.name = name
@@ -47,11 +48,13 @@ def create_account():
     
     if type=='1' or type.strip().lower() == 'savings account' or type.strip().lower() == 'savingsaccount' or type.strip().lower() == 'saving account' or type.strip().lower() == 'savingaccount' or type.strip().lower() == 'savings' or type.strip().lower() == 'saving':
         saving_intrest = 10
-        accountno = 1
-        account = savings_account(name,accountno,amount,loan,saving_intrest)
+        accountno = random.randint(1,1000000)
+        accountsnos.append(accountno)
+        df = pandas.DataFrame(accountsnos)
+        df.to_excel(f"03 Banking System Simulation/accounts.xlsx",index=False)
     
 
-
+accountsnos = [1,10,11]
 
 def main():
     print("""
@@ -93,7 +96,8 @@ def main():
     if user_choice_int !=1 and user_choice_int !=2 and user_choice_int !=3 and user_choice_int !=4 and user_choice_int !=5 and user_choice_int !=6 and user_choice_int !=7:
         print("PLEASE ONLY ENTER FROM ABOVE CHOICES")
     
-    
+    if user_choice_int == 1:
+        create_account()
     
 if __name__ == '__main__':
     main()
