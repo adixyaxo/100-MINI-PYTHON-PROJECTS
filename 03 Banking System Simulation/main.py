@@ -1,3 +1,4 @@
+from turtle import pd
 import pandas
 import time
 import datetime
@@ -107,10 +108,11 @@ def login():
         account_name = account_name.strip().lower().capitalize()
         account_pin = account_file['PIN'][0]
         if user_name == account_name and user_pin == int(account_pin):
-            print("LOGIN SUCCESSFUL")
+            return "LOGIN SUCCESSFUL"
         else:
-            print("LOGIN FAILED PLEASE CHECK YOUR CREDENTIALS")
+            return "LOGIN FAILED PLEASE CHECK YOUR CREDENTIALS"
     except Exception as e:
+        return None
         print(e)
         print("ACCOUNT NOT FOUND PLEASE CHECK YOUR ACCOUNT NO")
     
@@ -120,9 +122,11 @@ def deposit():
         account_file = pandas.read_excel(user_path)
         account_balance = account_file['BALANCE'][0]
         account_balance = int(account_balance) + int(deposit_amount)
-        transaction = f"DEPOSITED {deposit_amount} TO ACCOUNT {user_account_no_global} ON {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
         account_file['BALANCE'][0] = account_balance
-        account_file[f'{datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}'][0] = transaction
+        transaction = f"DEPOSITED {deposit_amount} TO ACCOUNT {user_account_no_global} ON {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
+        new_column_name = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        account_file[new_column_name] = pd.NA
+        account_file[new_column_name][0] = transaction
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY DEPOSITED {deposit_amount} TO YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
         
@@ -136,7 +140,9 @@ def withdraw():
         account_balance = account_file['BALANCE'][0]
         account_balance = int(account_balance) - int(withdraw_amount)
         transaction = f"WITHDRAWN {withdraw_amount} FROM ACCOUNT {user_account_no_global} ON {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
-        account_file[f'{datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}'][0] = transaction
+        new_column_name = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        account_file[new_column_name] = pd.NA
+        account_file[new_column_name][0] = transaction
         account_file['BALANCE'][0] = account_balance
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY WITHDRAWN {withdraw_amount} FROM YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
@@ -204,7 +210,7 @@ def main():
         if user_choice_int == 1:
             create_account()
         elif user_choice_int == 2:
-            login()
+            print(login())
         elif user_choice_int == 3:
             deposit()
         elif user_choice_int == 4:
