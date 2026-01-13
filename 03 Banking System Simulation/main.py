@@ -129,6 +129,12 @@ def withdraw():
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY WITHDRAWN {withdraw_amount} FROM YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
 
+def check_balance():
+    if login() == "LOGIN SUCCESSFUL":
+        account_file = pandas.read_excel(user_path)
+        account_balance = account_file['BALANCE'][0]
+        print(f"YOUR CURRENT BALANCE IS :: {account_balance}")
+
 
 
 def save_account_nos():
@@ -185,7 +191,7 @@ def main():
         elif user_choice_int == 4:
             withdraw()
         elif user_choice_int == 5:
-            pass
+            check_balance()
         elif user_choice_int == 6:
             pass
         elif user_choice_int == 7:
