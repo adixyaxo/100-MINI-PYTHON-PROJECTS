@@ -148,7 +148,13 @@ def check_balance():
         account_balance = account_file['BALANCE'][0]
         print(f"YOUR CURRENT BALANCE IS :: {account_balance}")
 
-
+def transaction_log():
+    if login() == "LOGIN SUCCESSFUL":
+        account_file = pandas.read_excel(user_path)
+        print("YOUR TRANSACTION LOG IS AS FOLLOWS :: ")
+        for col in account_file.columns:
+            if col not in ['NAME','ACCOUNT NO','BALANCE','LOAN','PIN','Account Type','CREATED AT']:
+                print(account_file[col][0])
 
 def save_account_nos():
     accountno_df = pandas.DataFrame(accountnos)
@@ -206,7 +212,7 @@ def main():
         elif user_choice_int == 5:
             check_balance()
         elif user_choice_int == 6:
-            pass
+            transaction_log()
         elif user_choice_int == 7:
             print("THANK YOU FOR USING IRON BANK SYSTEM")
             time.sleep(2)
