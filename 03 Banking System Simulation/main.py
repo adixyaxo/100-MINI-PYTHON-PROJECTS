@@ -122,7 +122,7 @@ def deposit():
         account_file = pandas.read_excel(user_path)
         account_balance = account_file['BALANCE'][0]
         account_balance = int(account_balance) + int(deposit_amount)
-        account_file[0,'BALANCE'] = account_balance
+        account_file.loc[0, "BALANCE"] = account_balance
         transaction = f"DEPOSITED {deposit_amount} TO ACCOUNT {user_account_no_global} ON {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
         new_column_name = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         account_file[new_column_name] = pandas.NA
@@ -146,7 +146,7 @@ def withdraw():
         new_column_name = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         account_file[new_column_name] = pandas.NA
         account_file.loc[0, new_column_name] = transaction
-        account_file.loc[0, 'BALANCE'] = account_balance
+        account_file.loc[0, "BALANCE"] = account_balance
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY WITHDRAWN {withdraw_amount} FROM YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
         
@@ -180,7 +180,7 @@ def main():
         |   1. Create Account      2. Login            |
         |   3. Deposit             4. Withdraw         |
         |   5. Check Balance       6. Transaction Log  |
-        |   7. Exit                                    |
+        |   7. Logout              8. Exit             |
         |______________________________________________|
         """)
 
@@ -204,8 +204,10 @@ def main():
             user_choice_int = 5
         elif user_choice.lower() == 'transaction log' or user_choice.lower() == 'transactionlog':
             user_choice_int = 6
-        elif user_choice.lower() == 'exit':
+        elif user_choice.lower() == 'logout':
             user_choice_int = 7
+        elif user_choice.lower() == 'exit':
+            user_choice_int = 8
         
         if user_choice_int !=1 and user_choice_int !=2 and user_choice_int !=3 and user_choice_int !=4 and user_choice_int !=5 and user_choice_int !=6 and user_choice_int !=7:
             print("PLEASE ONLY ENTER FROM ABOVE CHOICES")
@@ -223,6 +225,9 @@ def main():
         elif user_choice_int == 6:
             transaction_log()
         elif user_choice_int == 7:
+            print("YOU HAVE BEEN LOGGED OUT SUCCESSFULLY")
+            time.sleep(2)
+        elif user_choice_int == 8:
             print("THANK YOU FOR USING IRON BANK SYSTEM")
             time.sleep(2)
             exit()
