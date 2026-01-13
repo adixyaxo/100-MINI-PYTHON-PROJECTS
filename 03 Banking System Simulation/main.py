@@ -122,15 +122,18 @@ def deposit():
         account_file = pandas.read_excel(user_path)
         account_balance = account_file['BALANCE'][0]
         account_balance = int(account_balance) + int(deposit_amount)
-        account_file['BALANCE'][0] = account_balance
+        account_file[0,'BALANCE'] = account_balance
         transaction = f"DEPOSITED {deposit_amount} TO ACCOUNT {user_account_no_global} ON {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
         new_column_name = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-        account_file[new_column_name] = pd.NA
-        account_file[new_column_name][0] = transaction
+        account_file[new_column_name] = pandas.NA
+        account_file.loc[0, new_column_name] = transaction
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY DEPOSITED {deposit_amount} TO YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
         
+# learning from it Whenever you want to set a value in Pandas, avoid [column][row]. Always use .loc[row, column].
+# Find and rename whatever function you named pd in your code.
 
+# Update your assignment syntax to use .loc.
         
         
 def withdraw():
@@ -141,9 +144,9 @@ def withdraw():
         account_balance = int(account_balance) - int(withdraw_amount)
         transaction = f"WITHDRAWN {withdraw_amount} FROM ACCOUNT {user_account_no_global} ON {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
         new_column_name = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-        account_file[new_column_name] = pd.NA
-        account_file[new_column_name][0] = transaction
-        account_file['BALANCE'][0] = account_balance
+        account_file[new_column_name] = pandas.NA
+        account_file.loc[0, new_column_name] = transaction
+        account_file.loc[0, 'BALANCE'] = account_balance
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY WITHDRAWN {withdraw_amount} FROM YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
         
