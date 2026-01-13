@@ -119,6 +119,17 @@ def deposit():
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY DEPOSITED {deposit_amount} TO YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
 
+def withdraw():
+    if login() == "LOGIN SUCCESSFUL":
+        withdraw_amount = input("ENTER THE AMOUNT YOU WANT TO WITHDRAW  ::  ")
+        account_file = pandas.read_excel(user_path)
+        account_balance = account_file['BALANCE'][0]
+        account_balance = int(account_balance) - int(withdraw_amount)
+        account_file['BALANCE'][0] = account_balance
+        account_file.to_excel(user_path,index=False)
+        print(f"YOU HAVE SUCCESSFULLY WITHDRAWN {withdraw_amount} FROM YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
+
+
 
 def save_account_nos():
     accountno_df = pandas.DataFrame(accountnos)
@@ -172,7 +183,7 @@ def main():
         elif user_choice_int == 3:
             deposit()
         elif user_choice_int == 4:
-            pass   
+            withdraw()
         elif user_choice_int == 5:
             pass
         elif user_choice_int == 6:
