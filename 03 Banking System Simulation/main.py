@@ -86,10 +86,15 @@ def create_account():
         
 def login():
     user_name = input("ENTER YOUR NAME  ::  ")
+    user_name = user_name.strip().lower().capitalize()
     global user_account_no_global
-    user_account_no_global = input("ENTER YOUR ACCOUNT NO  ::  ")
-    user_account_no_global = int(user_account_no_global.strip().lower().replace(" ","").replace(",",""))
+    try :
+        user_account_no_global = input("ENTER YOUR ACCOUNT NO  ::  ")
+        user_account_no_global = int((user_account_no_global.strip()).lower())
+    except Exception as e:
+        print(e)
     user_pin = input("ENTER YOUR 4 DIGIT PIN  ::  ")
+    user_pin = int(user_pin.strip().lower())
     type = input("ENTER YOUR ACCOUNT TYPE\n1. Savings Account\n2. Current Account\nYOUR CHOICE  ::  ")
     global user_path
     if type=='1' or type.strip().lower() == 'savings account' or type.strip().lower() == 'savingsaccount' or type.strip().lower() == 'saving account' or type.strip().lower() == 'savingaccount' or type.strip().lower() == 'savings' or type.strip().lower() == 'saving':
@@ -99,14 +104,14 @@ def login():
     try:
         account_file = pandas.read_excel(user_path)
         account_name = account_file['NAME'][0]
+        account_name = account_name.strip().lower().capitalize()
         account_pin = account_file['PIN'][0]
-        account_pin = account_pin.strip().lower().replace(" ","").replace(",","")
-        account_pin = int(account_pin)
-        if user_name == account_name and user_pin == account_pin:
+        if user_name == account_name and user_pin == int(account_pin):
             print("LOGIN SUCCESSFUL")
         else:
             print("LOGIN FAILED PLEASE CHECK YOUR CREDENTIALS")
     except Exception as e:
+        print(e)
         print("ACCOUNT NOT FOUND PLEASE CHECK YOUR ACCOUNT NO")
     
 def deposit():
@@ -115,19 +120,27 @@ def deposit():
         account_file = pandas.read_excel(user_path)
         account_balance = account_file['BALANCE'][0]
         account_balance = int(account_balance) + int(deposit_amount)
+        transaction = f"DEPOSITED {deposit_amount} TO ACCOUNT {user_account_no_global} ON {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
         account_file['BALANCE'][0] = account_balance
+        account_file[f'{datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}'][0] = transaction
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY DEPOSITED {deposit_amount} TO YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
+        
 
+        
+        
 def withdraw():
     if login() == "LOGIN SUCCESSFUL":
         withdraw_amount = input("ENTER THE AMOUNT YOU WANT TO WITHDRAW  ::  ")
         account_file = pandas.read_excel(user_path)
         account_balance = account_file['BALANCE'][0]
         account_balance = int(account_balance) - int(withdraw_amount)
+        transaction = f"WITHDRAWN {withdraw_amount} FROM ACCOUNT {user_account_no_global} ON {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
+        account_file[f'{datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}'][0] = transaction
         account_file['BALANCE'][0] = account_balance
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY WITHDRAWN {withdraw_amount} FROM YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
+        
 
 def check_balance():
     if login() == "LOGIN SUCCESSFUL":
