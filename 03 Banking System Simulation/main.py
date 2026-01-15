@@ -85,6 +85,8 @@ def create_account():
     else:
         print("WRONG CHOICE TRY AGAIN LATER")
         
+user_login_status = False
+        
 def login():
     user_name = input("ENTER YOUR NAME  ::  ")
     user_name = user_name.strip().lower().capitalize()
@@ -108,6 +110,8 @@ def login():
         account_name = account_name.strip().lower().capitalize()
         account_pin = account_file['PIN'][0]
         if user_name == account_name and user_pin == int(account_pin):
+            global user_login_status
+            user_login_status = True
             return "LOGIN SUCCESSFUL"
         else:
             return "LOGIN FAILED PLEASE CHECK YOUR CREDENTIALS"
@@ -115,9 +119,11 @@ def login():
         return None
         print(e)
         print("ACCOUNT NOT FOUND PLEASE CHECK YOUR ACCOUNT NO")
+
+    
     
 def deposit():
-    if login() == "LOGIN SUCCESSFUL":
+    if user_login_status == True:
         deposit_amount = input("ENTER THE AMOUNT YOU WANT TO DEPOSIT  ::  ")
         account_file = pandas.read_excel(user_path)
         account_balance = account_file['BALANCE'][0]
@@ -129,6 +135,9 @@ def deposit():
         account_file.loc[0, new_column_name] = transaction
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY DEPOSITED {deposit_amount} TO YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
+    elif user_login_status == False:
+        login()
+        deposit()
         
 # learning from it Whenever you want to set a value in Pandas, avoid [column][row]. Always use .loc[row, column].
 # Find and rename whatever function you named pd in your code.
@@ -137,7 +146,7 @@ def deposit():
         
         
 def withdraw():
-    if login() == "LOGIN SUCCESSFUL":
+    if user_login_status == True:
         withdraw_amount = input("ENTER THE AMOUNT YOU WANT TO WITHDRAW  ::  ")
         account_file = pandas.read_excel(user_path)
         account_balance = account_file['BALANCE'][0]
@@ -149,26 +158,39 @@ def withdraw():
         account_file.loc[0, "BALANCE"] = account_balance
         account_file.to_excel(user_path,index=False)
         print(f"YOU HAVE SUCCESSFULLY WITHDRAWN {withdraw_amount} FROM YOUR ACCOUNT :: {user_account_no_global}\nYOUR NEW BALANCE IS :: {account_balance}")
+    elif user_login_status == False:
+        login()
+        withdraw()
         
 
 def check_balance():
-    if login() == "LOGIN SUCCESSFUL":
+    if user_login_status == True:
         account_file = pandas.read_excel(user_path)
         account_balance = account_file['BALANCE'][0]
         print(f"YOUR CURRENT BALANCE IS :: {account_balance}")
+    elif user_login_status == False:
+        login()
+        check_balance()
 
 def transaction_log():
-    if login() == "LOGIN SUCCESSFUL":
+    if user_login_status == True:
         account_file = pandas.read_excel(user_path)
         print("YOUR TRANSACTION LOG IS AS FOLLOWS :: ")
         for col in account_file.columns:
             if col not in ['NAME','ACCOUNT NO','BALANCE','LOAN','PIN','Account Type','CREATED AT']:
                 print(account_file[col][0])
+    elif user_login_status == False:
+        login()
+        transaction_log()
 
 def save_account_nos():
     accountno_df = pandas.DataFrame(accountnos)
     accountno_df.to_excel(f"accounts.xlsx",index=False)
 
+def logout():
+    global user_login_status
+    user_login_status = False
+    
 def main():
     while True:
         print("""
@@ -225,9 +247,15 @@ def main():
         elif user_choice_int == 6:
             transaction_log()
         elif user_choice_int == 7:
+            logout()
             print("YOU HAVE BEEN LOGGED OUT SUCCESSFULLY")
             time.sleep(2)
         elif user_choice_int == 8:
+            save_account_nos()
+            try:
+                logout()
+            except:
+                pass
             print("THANK YOU FOR USING IRON BANK SYSTEM")
             time.sleep(2)
             exit()
