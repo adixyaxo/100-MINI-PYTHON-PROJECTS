@@ -31,7 +31,7 @@ Each project is contained in its own folder (or file) with a descriptive name. I
       - Classes: Book (title, author, isbn, status), Member (name, borrowed_list), Library.
       - Features: add_book, lend_book (check status), return_book.
 
-  - [ ] 03. Banking System Simulation
+  - [x] 03. Banking System Simulation
     
       - Classes: Account (parent), SavingsAccount (min balance), CurrentAccount (overdraft).
       - Features: deposit, withdraw, secure __balance encapsulation.
