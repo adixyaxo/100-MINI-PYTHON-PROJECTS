@@ -25,10 +25,20 @@ class vehicle:
     
     def save_info_excel(self):
         df = {"PLATE" : self.plate , "type" : self.type, "color" : self.color, "model" : self.model, "owner" : self.owner_name, "entry_time" : self.entry_time, "ticket_id" : self.ticket_id}
-        df.to_excel("parking_lot.xlsx",index=False)
+        
+        df = pd.DataFrame(df, index=[0]) # converting the dictionary to a pandas dataframe
+        df.to_excel("parking_lot.xlsx",index=0) # saving the dataframe to an excel file
         
 test_car = vehicle("1234567890", "car", "red", "Toyota", "John Doe")
 test_car.save_info_excel()
+test_car_2 = vehicle("123",)
+def check_for_car():
+    plate = input("Enter the vehicle plate no : ")
+    df = pd.read_excel("parking_lot.xlsx")
+    if plate in df['PLATE'].values:
+        print("Vehicle found in the parking lot")
+    else:
+        print("Vehicle not found in the parking lot")
 
 def entry():
     plate = input("Enter the vehicle plate no : ")
@@ -70,7 +80,7 @@ def main():
             entry()
         elif user_choice == "2":
             exit()
-        elif user_choice == "5":
+        elif user_choice == "5":    
             print("Exiting system...")
             break
         else:
