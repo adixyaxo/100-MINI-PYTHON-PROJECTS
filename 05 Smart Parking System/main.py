@@ -8,7 +8,7 @@ import random
 import pandas as pd
 import openpyxl
 
-
+n = 1
 fee_per_second = 1
 #  The cost of the ticket would be calculated on the based of the entry and exit time of the vechicle also taking in consideration the type of vehicle.
 
@@ -25,13 +25,15 @@ class vehicle:
     
     def save_info_excel(self):
         df = {"PLATE" : self.plate , "type" : self.type, "color" : self.color, "model" : self.model, "owner" : self.owner_name, "entry_time" : self.entry_time, "ticket_id" : self.ticket_id}
-        
-        df = pd.DataFrame(df, index=[0]) # converting the dictionary to a pandas dataframe
-        df.to_excel("parking_lot.xlsx",index=0) # saving the dataframe to an excel file
+        global n 
+        df = pd.DataFrame(df, index=[n]) # converting the dictionary to a pandas dataframe
+        df.to_excel("parking_lot.xlsx",index=n) # saving the dataframe to an excel file
+        n = n+1
         
 test_car = vehicle("1234567890", "car", "red", "Toyota", "John Doe")
 test_car.save_info_excel()
-test_car_2 = vehicle("123",)
+
+
 def check_for_car():
     plate = input("Enter the vehicle plate no : ")
     df = pd.read_excel("parking_lot.xlsx")
