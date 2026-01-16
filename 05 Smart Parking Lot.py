@@ -5,7 +5,11 @@
 
 import time
 import random
+import pandas as pd
+import openpyxl
 
+
+fee_per_second = 1
 #  The cost of the ticket would be calculated on the based of the entry and exit time of the vechicle also taking in consideration the type of vehicle.
 
 class vehicle:
@@ -18,7 +22,11 @@ class vehicle:
         self.entry_time = time.time()
         self.ticket_id = f"{self.plate}-{random.randint(1000,9999)}"
         self.exit_time = None
+    
+    def save_info_excel(self):
+        df = {"PLATE" : self.plate , "type" : self.type, "color"}
         
+
 
 def entry():
     plate = input("Enter your plate no : ")
@@ -31,6 +39,10 @@ def entry():
 
 def exit():
     plate = input("Enter your plate no : ")
+    ticket_id_user = input("Enter your ticket id : ")
+    
     return vehicle.exit_time
 
 def calculate_fee(entry_time, exit_time):
+    fee = (exit_time - entry_time) * fee_per_second
+    
