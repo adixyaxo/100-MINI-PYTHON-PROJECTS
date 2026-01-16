@@ -10,7 +10,11 @@ import openpyxl
 
 file_path = "parking_lot.xlsx"
 fee_per_second = 1
+max_parking_slots = 1000
 #  The cost of the ticket would be calculated on the based of the entry and exit time of the vechicle also taking in consideration the type of vehicle.
+
+
+
 start_sheet_row_max = 0
 def loading_workbook():
     book = openpyxl.load_workbook("parking_lot.xlsx")
@@ -18,6 +22,11 @@ def loading_workbook():
     sheet = book.active
     start_sheet_row_max = sheet.max_row
     
+def check_limit():
+    if start_sheet_row_max >= max_parking_slots:
+        return 1
+    else:
+        return 0
 
 class vehicle:
     def __init__(self, plate, type, color, model, owner_name):
@@ -53,8 +62,10 @@ def check_for_car():
     df = pd.read_excel("parking_lot.xlsx")
     if plate in df['PLATE'].values:
         print("Vehicle found in the parking lot")
+        return 1
     else:
         print("Vehicle not found in the parking lot")
+        return 0
 
 def entry():
     plate = input("Enter the vehicle plate no : ")
@@ -65,7 +76,7 @@ def entry():
     print(f"Vehicle {plate} has been parked at {time.time()} by {owner_name}")
     return vehicle(plate, type, color, model, owner_name)
 
-def exit():
+def exit_car():
     plate = input("Enter the vehicle plate no : ")
     ticket_id_user = input("Enter the ticket id : ")
     
@@ -93,13 +104,38 @@ def main():
         |______________________________________________|
         """)
         
+        
         user_choice = input("ENTER YOUR CHOICE :: ")
-        if user_choice == "1":
+        
+        user_choice = user_choice.strip().lower()
+        
+        if user_choice in ["1", "register", "register new entry", "register a new entry", "registernewentry", "registeranewentry", "new"]:
+            user_choice = 1
+        elif user_choice in ["2", "exit", "exit vehicle", "exitvehicle", "exitavehicle", "exit a vehicle", "leave", "checkout"]:
+            user_choice = 2
+        elif user_choice in ["3", "check", "check for a car", "check car", "find car", "search car", "search", "find"]:
+            user_choice = 3
+        elif user_choice in ["4", "verify", "verify ticket", "ticket", "check ticket"]:
+            user_choice = 4
+        elif user_choice in ["5", "exit system", "quit", "close", "end", "stop"]:
+            user_choice = 5
+
+        if user_choice == 1:
+            if check_limit() == 1:
+                print("THERE ARE NO MORE SLOTS AVAILABLE FOR PARKING")
+                continue
             entry()
-        elif user_choice == "2":
-            exit()
-        elif user_choice == "5":    
+        elif user_choice == 2:
+            if check_for_car() == 1 :
+                exit_car()
+        elif user_choice == 3:
+            check_for_car()
+        elif user_choice == 4:
+            print("Feature not implemented yet.")
+        elif user_choice == 5:    
             print("Exiting system...")
+            time.sleep(2)        
+            print("Goodbye!")
             break
         else:
             print("Invalid choice. Please try again.")
