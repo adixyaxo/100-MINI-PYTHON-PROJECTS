@@ -8,9 +8,16 @@ import random
 import pandas as pd
 import openpyxl
 
-n = 1
+file_path = "parking_lot.xlsx"
 fee_per_second = 1
 #  The cost of the ticket would be calculated on the based of the entry and exit time of the vechicle also taking in consideration the type of vehicle.
+start_sheet_row_max = 0
+def loading_workbook():
+    book = openpyxl.load_workbook("parking_lot.xlsx")
+    global start_sheet_row_max
+    sheet = book.active
+    start_sheet_row_max = sheet.max_row
+    
 
 class vehicle:
     def __init__(self, plate, type, color, model, owner_name):
@@ -25,13 +32,19 @@ class vehicle:
     
     def save_info_excel(self):
         df = {"PLATE" : self.plate , "type" : self.type, "color" : self.color, "model" : self.model, "owner" : self.owner_name, "entry_time" : self.entry_time, "ticket_id" : self.ticket_id}
-        global n 
-        df = pd.DataFrame(df, index=[n]) # converting the dictionary to a pandas dataframe
-        df.to_excel("parking_lot.xlsx",index=n) # saving the dataframe to an excel file
-        n = n+1
-        
-test_car = vehicle("1234567890", "car", "red", "Toyota", "John Doe")
-test_car.save_info_excel()
+        df = pd.DataFrame()
+        try:
+            with pd.ExcelWriter(file_path,engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
+                df.to_excel(writer,index=False,header=False,startrow=start_sheet_row_max)
+                start_sheet_row_max = start_sheet_row_max + 1
+        except Exception as e:
+            return e
+   
+def test():
+    test_car = vehicle("1234567890", "car", "red", "Toyota", "John Doe")
+    test_car.save_info_excel()
+    test_car_2 = vehicle("test car", "car", "red", "Toyota", "John Doe")
+    test_car_2.save_info_excel()
 
 
 def check_for_car():
@@ -62,6 +75,8 @@ def calculate_fee(entry_time, exit_time):
     
     
 def main():
+    loading_workbook()
+    test()
     while True:
         print("""
         ________________________________________________
