@@ -31,10 +31,11 @@ class vehicle:
         self.exit_time = None
     
     def save_info_excel(self):
-        df = {"PLATE" : self.plate , "type" : self.type, "color" : self.color, "model" : self.model, "owner" : self.owner_name, "entry_time" : self.entry_time, "ticket_id" : self.ticket_id}
-        df = pd.DataFrame()
+        _dict = {"PLATE" : self.plate , "type" : self.type, "color" : self.color, "model" : self.model, "owner" : self.owner_name, "entry_time" : self.entry_time, "ticket_id" : self.ticket_id}
+        df = pd.DataFrame(_dict , index=[0])
         try:
             with pd.ExcelWriter(file_path,engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
+                global start_sheet_row_max
                 df.to_excel(writer,index=False,header=False,startrow=start_sheet_row_max)
                 start_sheet_row_max = start_sheet_row_max + 1
         except Exception as e:
