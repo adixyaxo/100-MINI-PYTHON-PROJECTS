@@ -1,0 +1,81 @@
+#   - [ ] 05. Smart Parking Lot
+    
+#       - Classes: Vehicle (plate, type), Ticket (timestamp), ParkingLot.
+#       - Features: Calculate fee based on time, manage spot availability.
+
+import time
+import random
+import pandas as pd
+import openpyxl
+
+
+fee_per_second = 1
+#  The cost of the ticket would be calculated on the based of the entry and exit time of the vechicle also taking in consideration the type of vehicle.
+
+class vehicle:
+    def __init__(self, plate, type, color, model, owner_name):
+        self.plate = plate
+        self.type = type #this will register the type of vehicle eg car, bike, truck
+        self.color = color
+        self.model = model
+        self.owner_name = owner_name
+        self.entry_time = time.time()
+        self.ticket_id = f"{self.plate}-{random.randint(1000,9999)}"
+        self.exit_time = None
+    
+    def save_info_excel(self):
+        df = {"PLATE" : self.plate , "type" : self.type, "color" : self.color, "model" : self.model, "owner" : self.owner_name, "entry_time" : self.entry_time, "ticket_id" : self.ticket_id}
+        df.to_excel("parking_lot.xlsx",index=False)
+        
+test_car = vehicle("1234567890", "car", "red", "Toyota", "John Doe")
+test_car.save_info_excel()
+
+def entry():
+    plate = input("Enter the vehicle plate no : ")
+    type = input("Enter the vehicle type : ")
+    color = input("Enter the vehicle color : ")
+    model = input("Enter the vehicle model : ")
+    owner_name = input("Enter the owner name : ")
+    print(f"Vehicle {plate} has been parked at {time.time()} by {owner_name}")
+    return vehicle(plate, type, color, model, owner_name)
+
+def exit():
+    plate = input("Enter the vehicle plate no : ")
+    ticket_id_user = input("Enter the ticket id : ")
+    
+    return vehicle.exit_time
+
+def calculate_fee(entry_time, exit_time):
+    fee = (exit_time - entry_time) * fee_per_second
+    
+    
+def main():
+    while True:
+        print("""
+        ________________________________________________
+        |                                              |
+        |       $$$  SMART PARKING SYSTEM  $$$         |
+        |______________________________________________|
+        |                                              |
+        |   1. Register New Entry                      |
+        |   2. Exit a Vehicle                          |
+        |   3. Check for a Car                         |
+        |   4. Verify Ticket                           |
+        |   5. Exit System                             |
+        |______________________________________________|
+        """)
+        
+        user_choice = input("ENTER YOUR CHOICE :: ")
+        if user_choice == "1":
+            entry()
+        elif user_choice == "2":
+            exit()
+        elif user_choice == "5":
+            print("Exiting system...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
