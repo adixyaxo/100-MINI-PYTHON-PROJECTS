@@ -15,5 +15,9 @@ class vehicle:
         self.model = model
         self.owner_name = owner_name
         self.entry_time = time.time()
+        self.ticket_id = f"{plate} - {self.entry_time} - {owner_name}"
+        self.exit_time = None
+        
 
-class ticket:
+def entry():
+    plate = input("Enter the plate no ")
