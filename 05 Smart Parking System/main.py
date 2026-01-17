@@ -17,11 +17,17 @@ max_parking_slots = 1000
 
 start_sheet_row_max = 0
 def loading_workbook():
-    book = openpyxl.load_workbook("parking_lot.xlsx")
-    global start_sheet_row_max
-    sheet = book.active
-    start_sheet_row_max = sheet.max_row
-    
+    try:
+        book = openpyxl.load_workbook("parking_lot.xlsx")
+        global start_sheet_row_max
+        sheet = book.active
+        start_sheet_row_max = sheet.max_row
+    except [FileNotFoundError,FileExistsError] as e:
+        print("File not found creating new file parking_lot.xlsx to save data")
+        empty_df = pd.DataFrame(columns=["PLATE", "type", "color", "model", "owner", "entry_time", "ticket_id"])
+        empty_df.to_excel("parking_lot.xlsx",index=False)
+        start_sheet_row_max = 0
+        
 def check_limit():
     if start_sheet_row_max >= max_parking_slots:
         return 1
@@ -49,12 +55,7 @@ class vehicle:
                 start_sheet_row_max = start_sheet_row_max + 1
         except Exception as e:
             return e
-   
-def test():
-    test_car = vehicle("1234567890", "car", "red", "Toyota", "John Doe")
-    test_car.save_info_excel()
-    test_car_2 = vehicle("test car", "car", "red", "Toyota", "John Doe")
-    test_car_2.save_info_excel()
+
 
 
 def check_for_car():
@@ -126,7 +127,6 @@ def calculate_fee(entry_time, exit_time):
     
 def main():
     loading_workbook()
-    test()
     while True:
         print("""
         ________________________________________________
