@@ -73,10 +73,10 @@ def check_for_car():
 def verify():
     ticket_id = input("Enter the ticket id : ")
     vehicle_row = check_for_car()
-    if vehicle_row[0] == 0:
+    if isinstance(vehicle_row, int) and vehicle_row[0] == 0:
         return 0
     else:
-        if ticket_id == vehicle_row[0]["ticket_id"]:
+        if ticket_id == str(vehicle_row[0]["ticket_id"].iloc[0]):
             return vehicle_row
         else:
             return -1
@@ -119,7 +119,7 @@ def exit_car():
 
 def calculate_fee(entry_time, exit_time):
     fee = (exit_time - entry_time) * fee_per_second
-    
+    return fee
     
 def main():
     loading_workbook()
