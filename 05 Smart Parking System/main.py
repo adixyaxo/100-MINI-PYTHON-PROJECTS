@@ -89,7 +89,10 @@ def entry():
     model = input("Enter the vehicle model : ")
     owner_name = input("Enter the owner name : ")
     print(f"Vehicle {plate} has been parked at {time.time()} by {owner_name}")
-    return vehicle(plate, type, color, model, owner_name)
+    vehicle_obj = vehicle(plate, type, color, model, owner_name)
+    vehicle_obj.save_info_excel()
+    print("Your ticket id is : ", vehicle_obj.ticket_id)
+    print("Your entry time is : ", vehicle_obj.entry_time)
 
 def exit_car():
     plate = input("Enter the vehicle plate no : ")
