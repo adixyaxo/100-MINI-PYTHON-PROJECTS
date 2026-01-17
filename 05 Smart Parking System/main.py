@@ -61,11 +61,24 @@ def check_for_car():
     plate = input("Enter the vehicle plate no : ")
     df = pd.read_excel("parking_lot.xlsx")
     if plate in df['PLATE'].values:
+        row = df[df['PLATE'] == plate]
         print("Vehicle found in the parking lot")
-        return 1
+        return row
     else:
         print("Vehicle not found in the parking lot")
         return 0
+
+def verify():
+    ticket_id = input("Enter the ticket id : ")
+    vehicle_row = check_for_car()
+    if vehicle_row == 0:
+        return 0
+    else:
+        if ticket_id == vehicle_row["ticket_id"]:
+            return vehicle_row
+        else:
+            return -1
+
 
 def entry():
     plate = input("Enter the vehicle plate no : ")
@@ -79,8 +92,9 @@ def entry():
 def exit_car():
     plate = input("Enter the vehicle plate no : ")
     ticket_id_user = input("Enter the ticket id : ")
-    
-    return vehicle.exit_time
+    if verify() != 0 and verify() != -1:
+        
+
 
 def calculate_fee(entry_time, exit_time):
     fee = (exit_time - entry_time) * fee_per_second
@@ -113,11 +127,11 @@ def main():
             user_choice = 1
         elif user_choice in ["2", "exit", "exit vehicle", "exitvehicle", "exitavehicle", "exit a vehicle", "leave", "checkout"]:
             user_choice = 2
-        elif user_choice in ["3", "check", "check for a car", "check car", "find car", "search car", "search", "find"]:
+        elif user_choice in ["3", "check", "check for a car", "check car", "find car", "search car", "search", "find", "findcar", "checkcar", "checkforcar", "checkforacar"]:
             user_choice = 3
-        elif user_choice in ["4", "verify", "verify ticket", "ticket", "check ticket"]:
+        elif user_choice in ["4", "verify", "verify ticket", "ticket", "check ticket","verifyticket", "checkticket"]:
             user_choice = 4
-        elif user_choice in ["5", "exit system", "quit", "close", "end", "stop"]:
+        elif user_choice in ["5", "exit system", "quit", "close", "end", "stop","exit", "leave", "logout", "sign out", "signout","exitsystem"]:
             user_choice = 5
 
         if user_choice == 1:
@@ -126,7 +140,7 @@ def main():
                 continue
             entry()
         elif user_choice == 2:
-            if check_for_car() == 1 :
+            if check_for_car() != 0 :
                 exit_car()
         elif user_choice == 3:
             check_for_car()
