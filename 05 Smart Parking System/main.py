@@ -63,7 +63,9 @@ def check_for_car():
     if plate in df['PLATE'].values:
         row = df[df['PLATE'] == plate]
         print("Vehicle found in the parking lot")
-        return row
+        pandas_index = row.index
+        pandas_index = pandas_index + 2
+        return [row , pandas_index]
     else:
         print("Vehicle not found in the parking lot")
         return 0
@@ -71,10 +73,10 @@ def check_for_car():
 def verify():
     ticket_id = input("Enter the ticket id : ")
     vehicle_row = check_for_car()
-    if vehicle_row == 0:
+    if vehicle_row[0] == 0:
         return 0
     else:
-        if ticket_id == vehicle_row["ticket_id"]:
+        if ticket_id == vehicle_row[0]["ticket_id"]:
             return vehicle_row
         else:
             return -1
@@ -92,7 +94,26 @@ def entry():
 def exit_car():
     plate = input("Enter the vehicle plate no : ")
     ticket_id_user = input("Enter the ticket id : ")
-    if verify() != 0 and verify() != -1:
+    verify_var_dict = verify()
+    verify_var = verify_var_dict[0]
+    if verify_var == -1:
+        print("Invalid ticket id")
+        return 0
+    elif verify_var == 0:
+        print("Vehicle not found in the parking lot")
+    else:
+        verify_var = verify_var.to_dict('records')[0]
+        verify_var["exit_time"] = time.time()
+        verify_var["fee"] = calculate_fee(verify_var["entry_time"], verify_var["exit_time"])
+        print("Your fees is : ", verify_var["fee"])
+        print("Your exit time is : ", verify_var["exit_time"])
+        verify_var = pd.DataFrame(verify_var, index=[0])
+        try:
+            with pd.ExcelWriter(verify_var,engine='openpyxl', mode='w', if_sheet_exists='overlay') as writer:
+                df = pd.read_excel("parking_lot.xlsx")
+                df.to_excel(writer,index=False,header=False,startrow=verify_var_dict[1])
+        except Exception as e:
+            return e
         
 
 
