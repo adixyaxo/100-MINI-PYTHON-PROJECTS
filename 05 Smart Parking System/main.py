@@ -97,26 +97,25 @@ def entry():
 
 def exit_car():
     verify_var_dict = verify()
-    verify_var = verify_var_dict[0]
-    row_to_put = verify_var_dict[1]
-    if verify_var == -1:
+    if verify_var_dict == -1:
         print("Invalid ticket id")
         return 0
-    elif verify_var == 0:
+    elif verify_var_dict == 0:
         print("Vehicle not found in the parking lot")
     else:
-        verify_var = verify_var.to_dict('records')[0]
-        verify_var["exit_time"] = time.time()
-        verify_var["fee"] = calculate_fee(verify_var["entry_time"], verify_var["exit_time"])
-        print("Your fees is : ", verify_var["fee"])
-        print("Your exit time is : ", verify_var["exit_time"])
-        verify_var = pd.DataFrame(verify_var, index=[0])
         try:
-            with pd.ExcelWriter("parking_lot.xlsx",engine='openpyxl', mode='w', if_sheet_exists='overlay') as writer:
-                data = pd.read_excel("parking_lot.xlsx")
-                data.loc[row_to_put, "exit_time"] = verify_var["exit_time"]
-                data.loc[row_to_put, "fee"] = verify_var["fee"]
-                data.to_excel(writer,index=False)
+            verify_var = verify_var_dict[0]
+            row_to_put = verify_var_dict[1]
+            verify_var = verify_var.to_dict('records')[0]
+            verify_var["exit_time"] = time.time()
+            verify_var["fee"] = calculate_fee(verify_var["entry_time"], verify_var["exit_time"])
+            print("Your fees is : ", verify_var["fee"])
+            print("Your exit time is : ", verify_var["exit_time"])
+            verify_var = pd.DataFrame(verify_var, index=[0])
+            data = pd.read_excel("parking_lot.xlsx")
+            data.loc[row_to_put, "exit_time"] = verify_var["exit_time"]
+            data.loc[row_to_put, "fee"] = verify_var["fee"]
+            data.to_excel("parking_lot.xlsx",index=False)
         except Exception as e:
             return e
         
@@ -165,8 +164,7 @@ def main():
                 continue
             entry()
         elif user_choice == 2:
-            if check_for_car() != 0 :
-                exit_car()
+            exit_car()
         elif user_choice == 3:
             check_for_car()
         elif user_choice == 4:
