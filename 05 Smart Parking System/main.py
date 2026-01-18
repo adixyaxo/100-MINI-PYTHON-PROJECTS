@@ -96,10 +96,9 @@ def entry():
     print("Your entry time is : ", vehicle_obj.entry_time)
 
 def exit_car():
-    plate = input("Enter the vehicle plate no : ")
-    ticket_id_user = input("Enter the ticket id : ")
     verify_var_dict = verify()
     verify_var = verify_var_dict[0]
+    row_to_put = verify_var_dict[1]
     if verify_var == -1:
         print("Invalid ticket id")
         return 0
@@ -114,8 +113,10 @@ def exit_car():
         verify_var = pd.DataFrame(verify_var, index=[0])
         try:
             with pd.ExcelWriter("parking_lot.xlsx",engine='openpyxl', mode='w', if_sheet_exists='overlay') as writer:
-                df = verify_var
-                df.to_excel(writer,index=False,header=False,startrow=verify_var_dict[1])
+                data = pd.read_excel("parking_lot.xlsx")
+                data.loc[row_to_put, "exit_time"] = verify_var["exit_time"]
+                data.loc[row_to_put, "fee"] = verify_var["fee"]
+                data.to_excel(writer,index=False)
         except Exception as e:
             return e
         
