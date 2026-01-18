@@ -22,7 +22,7 @@ def loading_workbook():
         global start_sheet_row_max
         sheet = book.active
         start_sheet_row_max = sheet.max_row
-    except [FileNotFoundError,FileExistsError] as e:
+    except Exception as e:
         print("File not found creating new file parking_lot.xlsx to save data")
         empty_df = pd.DataFrame(columns=["PLATE", "type", "color", "model", "owner", "entry_time", "ticket_id"])
         empty_df.to_excel("parking_lot.xlsx",index=False)
