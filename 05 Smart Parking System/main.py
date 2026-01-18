@@ -113,8 +113,8 @@ def exit_car():
         print("Your exit time is : ", verify_var["exit_time"])
         verify_var = pd.DataFrame(verify_var, index=[0])
         try:
-            with pd.ExcelWriter(verify_var,engine='openpyxl', mode='w', if_sheet_exists='overlay') as writer:
-                df = pd.read_excel("parking_lot.xlsx")
+            with pd.ExcelWriter("parking_lot.xlsx",engine='openpyxl', mode='w', if_sheet_exists='overlay') as writer:
+                df = verify_var
                 df.to_excel(writer,index=False,header=False,startrow=verify_var_dict[1])
         except Exception as e:
             return e
@@ -169,7 +169,7 @@ def main():
         elif user_choice == 3:
             check_for_car()
         elif user_choice == 4:
-            print("Feature not implemented yet.")
+            verify()
         elif user_choice == 5:    
             print("Exiting system...")
             time.sleep(2)        
