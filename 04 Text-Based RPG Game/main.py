@@ -111,18 +111,23 @@ class monster:
         self.defense = defense 
         
 class user:
-    def __init__(self, username, password):
+    def __init__(self, username, password, stage=1, coins=0):
         self.username = username
         self.password = password
+        self.stage = stage
+        self.coins = coins
         self.file = f"{username}_data.xlsx"
     
 def login(username, password):
     new_old = input("Are you a new user? (yes/no): ").strip().lower()
     if new_old == 'yes':
-        user_data = pd.DataFrame({'Username': [username], 'Password': [password]})
+        user_data = pd.DataFrame({'Username': [username], 'Password': [password], 'Stage' : [1], 'Coins' : [0]})
         user_data.to_excel(f"{username}_data.xlsx", index=False)
         print("User registered successfully.")
         return True
+    elif new_old != 'no':
+        print("Invalid input. Please enter 'yes' or 'no'.")
+        return login(username, password)
     try:
         with pd.read_excel(f"{username}_data.xlsx") as df:
             stored_password = df.at[0, 'Password']
@@ -135,6 +140,9 @@ def login(username, password):
     except FileNotFoundError:
         print("User not found.")
         return False
+    
+def logout():
+    pass
 
 def choose_hero():
     print("Choose your hero:")
@@ -158,10 +166,28 @@ def choose_hero():
         print("Invalid choice. Please choose a valid hero number.")
         return choose_hero()
 
+def menu():
+    print("Welcome to the Text-Based RPG Game!")
+    print("1. Login")
+    print("2. Logout")
+    print("3. Exit")
+    print("---------------------------")
+    choice = input("Choose an option: ")
+    if choice == '1':
+        return login(input("Enter your username: "), input("Enter your password: "))
+    elif choice == '2':
+        logout()
+        print("You have been logged out.")
+        return menu()
+    elif choice == '3':
+        print("Exiting the game. Goodbye!")
+        exit()
+    else:
+        print("Invalid choice. Please choose a valid option.")
+        return menu()
+
 def main():
-    username = input("Enter your username: ")
-    password = input("Enter your password: ")
-    login(username, password)
+    menu()
     hero_choosed = choose_hero()
     hero_name = list(heroes.keys())[hero_choosed]
     hero_stats = heroes[hero_name]
