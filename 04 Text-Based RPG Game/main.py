@@ -119,6 +119,10 @@ class user:
         self.stage = stage
         self.coins = coins
         self.file = f"{username}_data.xlsx"
+        
+    def save_data(self):
+        user_data = pd.DataFrame({'Username': [self.username], 'Password': [self.password], 'Stage' : [self.stage], 'Coins' : [self.coins]})
+        user_data.to_excel(self.file, index=False)
     
 def login(username, password):
     new_old = input("Are you a new user? (yes/no): ").strip().lower()
