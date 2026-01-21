@@ -1,3 +1,7 @@
+import random 
+import pandas as pd
+import openpyxl as oxl
+
 heroes = {
     "Knight King": {
         "health": 100,
@@ -66,7 +70,7 @@ items = {
         "value": 20,
         "available": 5
     },
-    "Strength Potion": {
+    "Rage": {
         "effect": "strength",
         "value": 20,
         "available": 5
@@ -74,11 +78,12 @@ items = {
 }
 
 class hero:
-    def __init__(self, name, health, attack, defense):
+    def __init__(self, name, health, attack, defense, items_show={}):
         self.name = name
         self.health = health
         self.attack = attack
         self.defense = defense
+        self.items_show = items_show or {"Health Potion": 0, "Shield": 0, "Rage": 0}
         
     def item_use(self, item):
         if item["available"] <= 0:
@@ -96,14 +101,40 @@ class hero:
         print(f"Health: {self.health}")
         print(f"Attack: {self.attack}")
         print(f"Defense: {self.defense}")
+        print(f"Items: {self.items_show}")
+  
+class monster:
+    def __init__(self, name, health, attack, defense):
+        self.name = name
+        self.health = health
+        self.attack = attack
+        self.defense = defense 
         
 class user:
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        self.file = f"{username}_data.txt"
+        self.file = f"{username}_data.xlsx"
     
-    
+def login(username, password):
+    new_old = input("Are you a new user? (yes/no): ").strip().lower()
+    if new_old == 'yes':
+        user_data = pd.DataFrame({'Username': [username], 'Password': [password]})
+        user_data.to_excel(f"{username}_data.xlsx", index=False)
+        print("User registered successfully.")
+        return True
+    try:
+        with pd.read_excel(f"{username}_data.xlsx") as df:
+            stored_password = df.at[0, 'Password']
+            if stored_password == password:
+                print("Login successful.")
+                return True
+            else:
+                print("Incorrect password.")
+                return False
+    except FileNotFoundError:
+        print("User not found.")
+        return False
 
 def choose_hero():
     print("Choose your hero:")
@@ -128,6 +159,9 @@ def choose_hero():
         return choose_hero()
 
 def main():
+    username = input("Enter your username: ")
+    password = input("Enter your password: ")
+    login(username, password)
     hero_choosed = choose_hero()
     hero_name = list(heroes.keys())[hero_choosed]
     hero_stats = heroes[hero_name]
@@ -136,5 +170,4 @@ def main():
 
     
 if __name__ == "__main__":
-    choose_hero()
     main()
