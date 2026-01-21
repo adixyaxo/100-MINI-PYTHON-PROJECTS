@@ -180,15 +180,33 @@ class game_info:
         print("Use items wisely to enhance your hero's performance in battles.")
         print("Good luck on your adventure!")
         print("---------------------------")
-        choice = input("\n 1. Main Menu \n 2. How to Play\n3. Game Rules\n Choose an option: ")
-        if choice == '1':
-            return menu.menu_on_login()
-        elif choice == '2':
+        print("Game Info Menu:")
+        print("1. Return to main menu")
+        print("2. How to Play")
+        print("3. Game Rules")
+        print("4. Game Tips")
+        print("5. Heroes Info")
+        print("6. Monsters Info")
+        print("7. Monster Bosses Info")
+        print("---------------------------")
+        info_choice = input("Choose an option: ")
+        if info_choice == '1':
+            return menu.main_menu()
+        elif info_choice == '2':
             game_info.how_to_play()
-        elif choice == '3':
+        elif info_choice == '3':
             game_info.game_rules()
+        elif info_choice == '4':
+            game_info.game_tips()
+        elif info_choice == '5':
+            game_info.heros_info()
+        elif info_choice == '6':
+            game_info.monsters_info()
+        elif info_choice == '7':
+            game_info.monster_bosses_info()
         else:
             print("Invalid choice. Please choose a valid option.")
+        return menu.menu_on_login()
     
     @staticmethod
     def how_to_play():
@@ -242,22 +260,25 @@ class game_info:
 class menu:
     @staticmethod
     def main_menu():
-        print("Welcome to the Text-Based RPG Game!")
-        print("1. Login")
-        print("2. Learn about game")
-        print("3. Exit")
-        print("---------------------------")
-        choice = input("Choose an option: ")
-        if choice == '1':
-            return login(input("Enter your username: "), input("Enter your password: "))
-        elif choice == '2':
-            game_info.about_game()
-        elif choice == '3':
-            print("Exiting the game. Goodbye!")
-            exit()
+        if login_status:
+            return menu.menu_on_login()
         else:
-            print("Invalid choice. Please choose a valid option.")
-            return menu()
+            print("Welcome to the Text-Based RPG Game!")
+            print("1. Login")
+            print("2. Learn about game")
+            print("3. Exit")
+            print("---------------------------")
+            choice = input("Choose an option: ")
+            if choice == '1':
+                return login(input("Enter your username: "), input("Enter your password: "))
+            elif choice == '2':
+                game_info.about_game()
+            elif choice == '3':
+                print("Exiting the game. Goodbye!")
+                exit()
+            else:
+                print("Invalid choice. Please choose a valid option.")
+                return menu.main_menu()
     
     @staticmethod
     def menu_on_login():
@@ -274,33 +295,7 @@ class menu:
         if choice == '1':
             return start_game()
         elif choice == '2':
-            print("Game Info Menu:")
-            print("1. About Game")
-            print("2. How to Play")
-            print("3. Game Rules")
-            print("4. Game Tips")
-            print("5. Heroes Info")
-            print("6. Monsters Info")
-            print("7. Monster Bosses Info")
-            print("---------------------------")
-            info_choice = input("Choose an option: ")
-            if info_choice == '1':
-                game_info.about_game()
-            elif info_choice == '2':
-                game_info.how_to_play()
-            elif info_choice == '3':
-                game_info.game_rules()
-            elif info_choice == '4':
-                game_info.game_tips()
-            elif info_choice == '5':
-                game_info.heros_info()
-            elif info_choice == '6':
-                game_info.monsters_info()
-            elif info_choice == '7':
-                game_info.monster_bosses_info()
-            else:
-                print("Invalid choice. Please choose a valid option.")
-            return menu.menu_on_login()
+            return game_info.about_game()
         elif choice == '3':
             print("Your Stats feature is under development.")
             return menu.menu_on_login()
