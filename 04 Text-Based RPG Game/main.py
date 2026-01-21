@@ -248,8 +248,64 @@ class menu:
         if not login_status:
             print("You need to login first.")
             return menu.main_menu()
-        
-    
+        print("Main Menu:")
+        print("1. Start Game")
+        print("2. Game Info")
+        print("3. Your Stats")
+        print("4. Logout")
+        print("---------------------------")
+        choice = input("Choose an option: ")
+        if choice == '1':
+            return start_game()
+        elif choice == '2':
+            print("Game Info Menu:")
+            print("1. About Game")
+            print("2. How to Play")
+            print("3. Game Rules")
+            print("4. Game Tips")
+            print("5. Heroes Info")
+            print("6. Monsters Info")
+            print("7. Monster Bosses Info")
+            print("---------------------------")
+            info_choice = input("Choose an option: ")
+            if info_choice == '1':
+                game_info.about_game()
+            elif info_choice == '2':
+                game_info.how_to_play()
+            elif info_choice == '3':
+                game_info.game_rules()
+            elif info_choice == '4':
+                game_info.game_tips()
+            elif info_choice == '5':
+                game_info.heros_info()
+            elif info_choice == '6':
+                game_info.monsters_info()
+            elif info_choice == '7':
+                game_info.monster_bosses_info()
+            else:
+                print("Invalid choice. Please choose a valid option.")
+            return menu.menu_on_login()
+        elif choice == '3':
+            print("Your Stats feature is under development.")
+            return menu.menu_on_login()
+        elif choice == '4':
+            logout()
+            print("You have been logged out.")
+            return menu.main_menu()
+        else :
+            print("Invalid choice. Please choose a valid option.")
+            return menu.menu_on_login()
+
+def start_game():
+    print("Game started!")
+    chosen_hero_index = choose_hero()
+    hero_name = list(heroes.keys())[chosen_hero_index]
+    hero_stats = heroes[hero_name]
+    player_hero = hero(hero_name, hero_stats['health'], hero_stats['attack'], hero_stats['defense'])
+    player_hero.display_stats()
+    # Add more game logic here
+    return menu.menu_on_login()
+
 def fight():
     pass
 
