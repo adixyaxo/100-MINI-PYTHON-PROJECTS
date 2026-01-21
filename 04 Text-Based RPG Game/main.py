@@ -2,6 +2,7 @@ import random
 import pandas as pd
 import openpyxl as oxl
 
+global login_status
 login_status = False
 
 heroes = {
@@ -80,7 +81,7 @@ items = {
 }
 
 class hero:
-    def __init__(self, name, health, attack, defense, items_show={}):
+    def __init__(self, name, health, attack, defense, items_show=None): # used none instead of default {} to avoid mutable default argument issue . The Problem: In Python, if you use {} as a default argument, every single hero you create will share the exact same inventory. If the Knight drinks a potion, the Archer loses one too!
         self.name = name
         self.health = health
         self.attack = attack
@@ -125,34 +126,34 @@ class user:
         user_data.to_excel(self.file, index=False)
     
 def login(username, password):
+    global login_status
     new_old = input("Are you a new user? (yes/no): ").strip().lower()
     if new_old == 'yes':
         user_data = pd.DataFrame({'Username': [username], 'Password': [password], 'Stage' : [1], 'Coins' : [0]})
         user_data.to_excel(f"{username}_data.xlsx", index=False)
         print("User registered successfully.")
-        global login_status
         login_status = True
         return True
     elif new_old != 'no':
         print("Invalid input. Please enter 'yes' or 'no'.")
         return login(username, password)
     try:
-        with pd.read_excel(f"{username}_data.xlsx") as df:
-            stored_password = df.at[0, 'Password']
-            if stored_password == password:
-                print("Login successful.")
-                global login_status
-                login_status = True
-                return True
-            else:
-                print("Incorrect password.")
-                return False
+        df = pd.read_excel(f"{username}_data.xlsx") # TypeError: 'pandas.core.frame.DataFrame' object does not support the context manager protocol (missed __exit__ method)
+        stored_password = df.at[0, 'Password']
+        if stored_password == password:
+            print("Login successful.")
+            login_status = True
+            return True
+        else:
+            print("Incorrect password.")
+            return False
     except FileNotFoundError:
         print("User not found.")
         return False
     
 def logout():
-    pass
+    global login_status
+    login_status = False
 
 def choose_hero():
     print("Choose your hero:")
@@ -259,12 +260,13 @@ class game_info:
         print("Monster Bosses Information:")
         for boss_name, boss_stats in monster_bosses.items():
             print(f"{boss_name}\n  Health: {boss_stats['health']}, Attack: {boss_stats['attack']}, Defense: {boss_stats['defense']}\n")
-        print("---------------------------")
+        print("---------------------------")  
         
 class menu:
     @staticmethod
     def main_menu():
-        if login_status:
+        global login_status
+        if login_status == True:
             return menu.menu_on_login()
         else:
             print("Welcome to the Text-Based RPG Game!")
@@ -274,7 +276,13 @@ class menu:
             print("---------------------------")
             choice = input("Choose an option: ")
             if choice == '1':
-                return login(input("Enter your username: "), input("Enter your password: "))
+                @decorator
+                def decorator():
+                    def wrapper():
+                        login(input("Enter your username: "), input("Enter your password: "))
+                        menu.main_menu()
+                    return wrapper
+                return decorator()
             elif choice == '2':
                 game_info.about_game()
             elif choice == '3':
