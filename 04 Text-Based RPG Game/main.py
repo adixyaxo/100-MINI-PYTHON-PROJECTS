@@ -2,6 +2,8 @@ import random
 import pandas as pd
 import openpyxl as oxl
 
+login_status = False
+
 heroes = {
     "Knight King": {
         "health": 100,
@@ -124,6 +126,8 @@ def login(username, password):
         user_data = pd.DataFrame({'Username': [username], 'Password': [password], 'Stage' : [1], 'Coins' : [0]})
         user_data.to_excel(f"{username}_data.xlsx", index=False)
         print("User registered successfully.")
+        global login_status
+        login_status = True
         return True
     elif new_old != 'no':
         print("Invalid input. Please enter 'yes' or 'no'.")
@@ -133,6 +137,8 @@ def login(username, password):
             stored_password = df.at[0, 'Password']
             if stored_password == password:
                 print("Login successful.")
+                global login_status
+                login_status = True
                 return True
             else:
                 print("Incorrect password.")
@@ -165,34 +171,90 @@ def choose_hero():
     else:
         print("Invalid choice. Please choose a valid hero number.")
         return choose_hero()
+    
+class game_info:
+    def about_game():
+        print("This is a Text-Based RPG Game where you can choose heroes, fight monsters, and progress through stages.")
+        print("Each hero has unique stats and abilities. Defeat monsters to earn coins and advance.")
+        print("Use items wisely to enhance your hero's performance in battles.")
+        print("Good luck on your adventure!")
+        print("---------------------------")
+    
+    def how_to_play():
+        print("1. Login or register as a new user.")
+        print("2. Choose your hero from the available options.")
+        print("3. Fight monsters to earn coins and progress through stages.")
+        print("4. Use items to heal, boost defense, or increase attack power.")
+        print("5. Advance through stages by defeating monsters and bosses.")
+        print("6. Enjoy the game and have fun!")
+        print("---------------------------")
+    
+    def game_rules():
+        print("1. Each hero has unique stats: health, attack, and defense.")
+        print("2. Monsters have their own stats and can be defeated to earn coins.")
+        print("3. Use items strategically to enhance your hero's abilities.")
+        print("4. Progress through stages by defeating monsters and bosses.")
+        print("5. Save your progress by logging in with your username and password.")
+        print("---------------------------")
+    
+    def game_tips():
+        print("1. Choose a hero that suits your playstyle.")
+        print("2. Use items wisely to maximize their benefits.")
+        print("3. Pay attention to monster stats and plan your attacks accordingly.")
+        print("4. Save your progress frequently by logging in.")
+        print("5. Experiment with different strategies to defeat tougher monsters.")
+        print("---------------------------")
+        
+    def heros_info():
+        print("Hero Information:")
+        for hero_name, hero_stats in heroes.items():
+            print(f"{hero_name} - {hero_stats['summary']}\n  Health: {hero_stats['health']}, Attack: {hero_stats['attack']}, Defense: {hero_stats['defense']}\n")
+        print("---------------------------")
 
-def menu():
-    print("Welcome to the Text-Based RPG Game!")
-    print("1. Login")
-    print("2. Logout")
-    print("3. Exit")
-    print("---------------------------")
-    choice = input("Choose an option: ")
-    if choice == '1':
-        return login(input("Enter your username: "), input("Enter your password: "))
-    elif choice == '2':
-        logout()
-        print("You have been logged out.")
-        return menu()
-    elif choice == '3':
-        print("Exiting the game. Goodbye!")
-        exit()
-    else:
-        print("Invalid choice. Please choose a valid option.")
-        return menu()
+    def monsters_info():
+        print("Monster Information:")
+        for monster_name, monster_stats in monsters.items():
+            print(f"{monster_name}\n  Health: {monster_stats['health']}, Attack: {monster_stats['attack']}, Defense: {monster_stats['defense']}\n")
+        print("---------------------------")
+        
+    def monster_bosses_info():
+        print("Monster Bosses Information:")
+        for boss_name, boss_stats in monster_bosses.items():
+            print(f"{boss_name}\n  Health: {boss_stats['health']}, Attack: {boss_stats['attack']}, Defense: {boss_stats['defense']}\n")
+        print("---------------------------")
+        
+class menu:
+    def main_menu():
+        print("Welcome to the Text-Based RPG Game!")
+        print("1. Login")
+        print("2. Learn about game")
+        print("3. Exit")
+        print("---------------------------")
+        choice = input("Choose an option: ")
+        if choice == '1':
+            return login(input("Enter your username: "), input("Enter your password: "))
+        elif choice == '2':
+            logout()
+            print("You have been logged out.")
+            return menu()
+        elif choice == '3':
+            print("Exiting the game. Goodbye!")
+            exit()
+        else:
+            print("Invalid choice. Please choose a valid option.")
+            return menu()
+    
+    def menu_on_login():
+        if not login_status:
+            print("You need to login first.")
+            return menu.main_menu()
+        
+    
+def fight():
+    pass
 
 def main():
-    menu()
-    hero_choosed = choose_hero()
-    hero_name = list(heroes.keys())[hero_choosed]
-    hero_stats = heroes[hero_name]
-    player_hero = hero(hero_name, hero_stats["health"], hero_stats["attack"], hero_stats["defense"])
-    player_hero.display_stats()
+    menu.main_menu()
 
     
 if __name__ == "__main__":
