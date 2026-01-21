@@ -276,12 +276,8 @@ class menu:
             print("---------------------------")
             choice = input("Choose an option: ")
             if choice == '1':
-                def login_decorator():
-                    def wrapper():
-                        login(input("Enter your username: "), input("Enter your password: "))
-                        menu.main_menu()
-                    return wrapper
-                return login_decorator()
+                    login(input("Enter your username: "), input("Enter your password: "))
+                    menu.main_menu()
             elif choice == '2':
                 game_info.about_game()
             elif choice == '3':
