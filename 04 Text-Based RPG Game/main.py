@@ -101,15 +101,30 @@ class hero:
 def choose_hero():
     print("Choose your hero:")
     for i, (hero_name, hero_stats) in enumerate(heroes.items(), start=1):
-        print(f"{i}. {hero_name} - {hero_stats['summary']}")
+        print(f"{i}. {hero_name} - {hero_stats['summary']}\n  Health: {hero_stats['health']}, Attack: {hero_stats['attack']}, Defense: {hero_stats['defense']}\n")
     
-    choice = int(input("Enter the number of your choice: ")) - 1
-    hero_name = list(heroes.keys())[choice]
-    hero_stats = heroes[hero_name]
+    choice = input("Choose your hero : ")
+    choice = choice.strip()
+    choice = choice.lower()
+
+    if choice == '1' or choice == "knight king" or choice == "knight" or choice == "knightking":
+        print("You have chosen Knight King!\nTip : Knights have balanced stats, making them versatile in battle.")
+        return 0
+    elif choice == '2' or choice == "archer king" or choice == "archer" or choice == "archerking":
+        print("You have chosen Archer King!\nTip : Archers have high attack power and low defense.")
+        return 1
+    elif choice == '3' or choice == "bomber king" or choice == "bomber" or choice == "bomberking":
+        print("You have chosen Bomber King!\nTip : Bombers have high attack power and moderate defense.")
+        return 2
+    else:
+        print("Invalid choice. Please choose a valid hero number.")
+        return choose_hero()
+
+def main():
+    hero_choosed = choose_hero()
+    hero_names = list(heroes.keys())
+
     
-    return hero(
-        name=hero_name,
-        health=hero_stats["health"],
-        attack=hero_stats["attack"],
-        defense=hero_stats["defense"]
-    )
+if __name__ == "__main__":
+    choose_hero()
+    main()
