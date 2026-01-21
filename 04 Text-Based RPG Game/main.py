@@ -97,6 +97,13 @@ class hero:
         print(f"Attack: {self.attack}")
         print(f"Defense: {self.defense}")
         
+class user:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        self.file = f"{username}_data.txt"
+    
+    
 
 def choose_hero():
     print("Choose your hero:")
@@ -122,7 +129,10 @@ def choose_hero():
 
 def main():
     hero_choosed = choose_hero()
-    hero_names = list(heroes.keys())
+    hero_name = list(heroes.keys())[hero_choosed]
+    hero_stats = heroes[hero_name]
+    player_hero = hero(hero_name, hero_stats["health"], hero_stats["attack"], hero_stats["defense"])
+    player_hero.display_stats()
 
     
 if __name__ == "__main__":
