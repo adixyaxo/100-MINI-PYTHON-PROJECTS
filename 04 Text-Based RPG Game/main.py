@@ -173,13 +173,24 @@ def choose_hero():
         return choose_hero()
     
 class game_info:
+    @staticmethod
     def about_game():
         print("This is a Text-Based RPG Game where you can choose heroes, fight monsters, and progress through stages.")
         print("Each hero has unique stats and abilities. Defeat monsters to earn coins and advance.")
         print("Use items wisely to enhance your hero's performance in battles.")
         print("Good luck on your adventure!")
         print("---------------------------")
+        choice = input("\n 1. Main Menu \n 2. How to Play\n3. Game Rules\n Choose an option: ")
+        if choice == '1':
+            return menu.menu_on_login()
+        elif choice == '2':
+            game_info.how_to_play()
+        elif choice == '3':
+            game_info.game_rules()
+        else:
+            print("Invalid choice. Please choose a valid option.")
     
+    @staticmethod
     def how_to_play():
         print("1. Login or register as a new user.")
         print("2. Choose your hero from the available options.")
@@ -189,6 +200,7 @@ class game_info:
         print("6. Enjoy the game and have fun!")
         print("---------------------------")
     
+    @staticmethod
     def game_rules():
         print("1. Each hero has unique stats: health, attack, and defense.")
         print("2. Monsters have their own stats and can be defeated to earn coins.")
@@ -197,6 +209,7 @@ class game_info:
         print("5. Save your progress by logging in with your username and password.")
         print("---------------------------")
     
+    @staticmethod
     def game_tips():
         print("1. Choose a hero that suits your playstyle.")
         print("2. Use items wisely to maximize their benefits.")
@@ -205,18 +218,21 @@ class game_info:
         print("5. Experiment with different strategies to defeat tougher monsters.")
         print("---------------------------")
         
+    @staticmethod
     def heros_info():
         print("Hero Information:")
         for hero_name, hero_stats in heroes.items():
             print(f"{hero_name} - {hero_stats['summary']}\n  Health: {hero_stats['health']}, Attack: {hero_stats['attack']}, Defense: {hero_stats['defense']}\n")
         print("---------------------------")
 
+    @staticmethod
     def monsters_info():
         print("Monster Information:")
         for monster_name, monster_stats in monsters.items():
             print(f"{monster_name}\n  Health: {monster_stats['health']}, Attack: {monster_stats['attack']}, Defense: {monster_stats['defense']}\n")
         print("---------------------------")
         
+    @staticmethod
     def monster_bosses_info():
         print("Monster Bosses Information:")
         for boss_name, boss_stats in monster_bosses.items():
@@ -224,6 +240,7 @@ class game_info:
         print("---------------------------")
         
 class menu:
+    @staticmethod
     def main_menu():
         print("Welcome to the Text-Based RPG Game!")
         print("1. Login")
@@ -234,9 +251,7 @@ class menu:
         if choice == '1':
             return login(input("Enter your username: "), input("Enter your password: "))
         elif choice == '2':
-            logout()
-            print("You have been logged out.")
-            return menu()
+            game_info.about_game()
         elif choice == '3':
             print("Exiting the game. Goodbye!")
             exit()
@@ -244,6 +259,7 @@ class menu:
             print("Invalid choice. Please choose a valid option.")
             return menu()
     
+    @staticmethod
     def menu_on_login():
         if not login_status:
             print("You need to login first.")
