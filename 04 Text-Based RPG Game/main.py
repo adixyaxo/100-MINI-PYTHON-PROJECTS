@@ -62,6 +62,16 @@ monster_bosses = {
     }
 }
 
+
+# Defining stages with help of monsters and bosses 
+
+stage = {
+    1: {"monsters": monsters["Goblin"], "boss": monster_bosses["Goblin King"]},
+    2: {"monsters": monsters["Orc"], "boss": monster_bosses["Orc King"]},
+    3: {"monsters": monsters["Dragon"], "boss": monster_bosses["Dragon King"]}
+}
+
+
 items = {
     "Health Potion": {
         "effect": "heal",
@@ -148,6 +158,8 @@ def login(username, password):
         if stored_password == password:
             print("\n✓ Login successful.\n")
             login_status = True
+            global current_user
+            current_user = user(username, password, df.at[0, 'Stage'], df.at[0, 'Coins'])
             return True
         else:
             print("\n✗ Incorrect password.\n")
@@ -389,7 +401,23 @@ def start_game():
     player_hero = hero(hero_name, hero_stats['health'], hero_stats['attack'], hero_stats['defense'])
     player_hero.display_stats()
     
-    # Add more game logic here
+    user_stage = current_user.stage
+    print(f"✓ Your Stage {stage}.\n")
+    
+    for stage_no,dict in stage.items():
+        if stage_no < user_stage:
+            continue
+        print(f"--- Stage {stage_no} ---\n")
+        print("Monsters to fight:")
+        for monster_data in dict["monsters"]:
+            print(f"  • {monster_data['name']} (Health: {monster_data['health']}, Attack: {monster_data['attack']}, Defense: {monster_data['defense']})")
+        print(f"\nBoss to fight:")
+        boss_data = dict["boss"]
+        print(f"  • {boss_data['name']} (Health: {boss_data['health']}, Attack: {boss_data['attack']}, Defense: {boss_data['defense']})\n")
+        fight()
+        print("Fight logic is under development.\n")
+    
+
     return menu.menu_on_login()
 
 def fight():
