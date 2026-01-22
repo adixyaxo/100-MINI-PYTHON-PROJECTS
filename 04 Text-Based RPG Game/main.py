@@ -100,11 +100,14 @@ class hero:
             self.attack += item["value"]
     
     def display_stats(self):
+        print(f"\n{'='*50}")
         print(f"Hero: {self.name}")
-        print(f"Health: {self.health}")
-        print(f"Attack: {self.attack}")
+        print(f"{'='*50}")
+        print(f"Health:  {self.health}")
+        print(f"Attack:  {self.attack}")
         print(f"Defense: {self.defense}")
-        print(f"Items: {self.items_show}")
+        print(f"Items:   {self.items_show}")
+        print(f"{'='*50}\n")
   
 class monster:
     def __init__(self, name, health, attack, defense):
@@ -128,27 +131,29 @@ class user:
 def login(username, password):
     global login_status
     new_old = input("Are you a new user? (yes/no): ").strip().lower()
+    
     if new_old == 'yes':
         user_data = pd.DataFrame({'Username': [username], 'Password': [password], 'Stage' : [1], 'Coins' : [0]})
         user_data.to_excel(f"{username}_data.xlsx", index=False)
-        print("User registered successfully.")
+        print("\n✓ User registered successfully.\n")
         login_status = True
         return True
     elif new_old != 'no':
         print("Invalid input. Please enter 'yes' or 'no'.")
         return login(username, password)
+    
     try:
         df = pd.read_excel(f"{username}_data.xlsx") # TypeError: 'pandas.core.frame.DataFrame' object does not support the context manager protocol (missed __exit__ method)
         stored_password = df.at[0, 'Password']
         if stored_password == password:
-            print("Login successful.")
+            print("\n✓ Login successful.\n")
             login_status = True
             return True
         else:
-            print("Incorrect password.")
+            print("\n✗ Incorrect password.\n")
             return False
     except FileNotFoundError:
-        print("User not found.")
+        print("\n✗ User not found.\n")
         return False
     
 def logout():
@@ -156,36 +161,51 @@ def logout():
     login_status = False
 
 def choose_hero():
-    print("Choose your hero:")
-    for i, (hero_name, hero_stats) in enumerate(heroes.items(), start=1):
-        print(f"{i}. {hero_name} - {hero_stats['summary']}\n  Health: {hero_stats['health']}, Attack: {hero_stats['attack']}, Defense: {hero_stats['defense']}\n")
+    print(f"\n{'='*60}")
+    print("CHOOSE YOUR HERO")
+    print(f"{'='*60}\n")
     
-    choice = input("Choose your hero : ")
-    choice = choice.strip()
-    choice = choice.lower()
+    for i, (hero_name, hero_stats) in enumerate(heroes.items(), start=1):
+        print(f"{i}. {hero_name}")
+        print(f"   {hero_stats['summary']}")
+        print(f"   ├─ Health: {hero_stats['health']}")
+        print(f"   ├─ Attack: {hero_stats['attack']}")
+        print(f"   └─ Defense: {hero_stats['defense']}\n")
+    
+    choice = input("Choose your hero (number or name): ").strip().lower()
 
     if choice == '1' or choice == "knight king" or choice == "knight" or choice == "knightking":
-        print("You have chosen Knight King!\nTip : Knights have balanced stats, making them versatile in battle.")
+        print("\n✓ You have chosen Knight King!")
+        print("   Tip: Knights have balanced stats, making them versatile in battle.\n")
         return 0
     elif choice == '2' or choice == "archer king" or choice == "archer" or choice == "archerking":
-        print("You have chosen Archer King!\nTip : Archers have high attack power and low defense.")
+        print("\n✓ You have chosen Archer King!")
+        print("   Tip: Archers have high attack power and low defense.\n")
         return 1
     elif choice == '3' or choice == "bomber king" or choice == "bomber" or choice == "bomberking":
-        print("You have chosen Bomber King!\nTip : Bombers have high attack power and moderate defense.")
+        print("\n✓ You have chosen Bomber King!")
+        print("   Tip: Bombers have high attack power and moderate defense.\n")
         return 2
     else:
-        print("Invalid choice. Please choose a valid hero number.")
+        print("\n✗ Invalid choice. Please choose a valid hero number.\n")
         return choose_hero()
     
 class game_info:
     @staticmethod
     def about_game():
-        print("This is a Text-Based RPG Game where you can choose heroes, fight monsters, and progress through stages.")
-        print("Each hero has unique stats and abilities. Defeat monsters to earn coins and advance.")
-        print("Use items wisely to enhance your hero's performance in battles.")
-        print("Good luck on your adventure!")
-        print("---------------------------")
-        print("Game Info Menu:")
+        print(f"\n{'='*60}")
+        print("ABOUT THE GAME")
+        print(f"{'='*60}\n")
+        print("This is a Text-Based RPG Game where you can:")
+        print("  • Choose from unique heroes")
+        print("  • Fight monsters and earn coins")
+        print("  • Progress through challenging stages")
+        print("  • Use items to enhance your abilities\n")
+        print("Each hero has unique stats and abilities.")
+        print("Use items wisely to maximize your potential!\n")
+        print(f"{'-'*60}")
+        print("GAME INFO MENU:")
+        print(f"{'-'*60}")
         print("1. Return to main menu")
         print("2. How to Play")
         print("3. Game Rules")
@@ -193,8 +213,10 @@ class game_info:
         print("5. Heroes Info")
         print("6. Monsters Info")
         print("7. Monster Bosses Info")
-        print("---------------------------")
-        info_choice = input("Choose an option: ")
+        print(f"{'-'*60}\n")
+        
+        info_choice = input("Choose an option: ").strip()
+        
         if info_choice == '1':
             return menu.main_menu()
         elif info_choice == '2':
@@ -211,80 +233,117 @@ class game_info:
             game_info.monster_bosses_info()
         else:
             print("Invalid choice. Please choose a valid option.")
+        
         return menu.menu_on_login()
     
     @staticmethod
     def how_to_play():
-        print("1. Login or register as a new user.")
-        print("2. Choose your hero from the available options.")
-        print("3. Fight monsters to earn coins and progress through stages.")
-        print("4. Use items to heal, boost defense, or increase attack power.")
-        print("5. Advance through stages by defeating monsters and bosses.")
-        print("6. Enjoy the game and have fun!")
-        print("---------------------------")
+        print(f"\n{'='*60}")
+        print("HOW TO PLAY")
+        print(f"{'='*60}\n")
+        print("1. Login or register as a new user")
+        print("2. Choose your hero from the available options")
+        print("3. Fight monsters to earn coins and progress through stages")
+        print("4. Use items to heal, boost defense, or increase attack power")
+        print("5. Advance through stages by defeating monsters and bosses")
+        print("6. Enjoy the game and have fun!\n")
+        print(f"{'-'*60}\n")
     
     @staticmethod
     def game_rules():
-        print("1. Each hero has unique stats: health, attack, and defense.")
-        print("2. Monsters have their own stats and can be defeated to earn coins.")
-        print("3. Use items strategically to enhance your hero's abilities.")
-        print("4. Progress through stages by defeating monsters and bosses.")
-        print("5. Save your progress by logging in with your username and password.")
-        print("---------------------------")
+        print(f"\n{'='*60}")
+        print("GAME RULES")
+        print(f"{'='*60}\n")
+        print("1. Each hero has unique stats: health, attack, and defense")
+        print("2. Monsters have their own stats and can be defeated to earn coins")
+        print("3. Use items strategically to enhance your hero's abilities")
+        print("4. Progress through stages by defeating monsters and bosses")
+        print("5. Save your progress by logging in with your username and password\n")
+        print(f"{'-'*60}\n")
     
     @staticmethod
     def game_tips():
-        print("1. Choose a hero that suits your playstyle.")
-        print("2. Use items wisely to maximize their benefits.")
-        print("3. Pay attention to monster stats and plan your attacks accordingly.")
-        print("4. Save your progress frequently by logging in.")
-        print("5. Experiment with different strategies to defeat tougher monsters.")
-        print("---------------------------")
+        print(f"\n{'='*60}")
+        print("GAME TIPS")
+        print(f"{'='*60}\n")
+        print("1. Choose a hero that suits your playstyle")
+        print("2. Use items wisely to maximize their benefits")
+        print("3. Pay attention to monster stats and plan your attacks accordingly")
+        print("4. Save your progress frequently by logging in")
+        print("5. Experiment with different strategies to defeat tougher monsters\n")
+        print(f"{'-'*60}\n")
         
     @staticmethod
     def heros_info():
-        print("Hero Information:")
+        print(f"\n{'='*60}")
+        print("HERO INFORMATION")
+        print(f"{'='*60}\n")
+        
         for hero_name, hero_stats in heroes.items():
-            print(f"{hero_name} - {hero_stats['summary']}\n  Health: {hero_stats['health']}, Attack: {hero_stats['attack']}, Defense: {hero_stats['defense']}\n")
-        print("---------------------------")
+            print(f"{hero_name}")
+            print(f"  {hero_stats['summary']}")
+            print(f"  ├─ Health: {hero_stats['health']}")
+            print(f"  ├─ Attack: {hero_stats['attack']}")
+            print(f"  └─ Defense: {hero_stats['defense']}\n")
+        
+        print(f"{'-'*60}\n")
 
     @staticmethod
     def monsters_info():
-        print("Monster Information:")
+        print(f"\n{'='*60}")
+        print("MONSTER INFORMATION")
+        print(f"{'='*60}\n")
+        
         for monster_name, monster_stats in monsters.items():
-            print(f"{monster_name}\n  Health: {monster_stats['health']}, Attack: {monster_stats['attack']}, Defense: {monster_stats['defense']}\n")
-        print("---------------------------")
+            print(f"{monster_name}")
+            print(f"  ├─ Health: {monster_stats['health']}")
+            print(f"  ├─ Attack: {monster_stats['attack']}")
+            print(f"  └─ Defense: {monster_stats['defense']}\n")
+        
+        print(f"{'-'*60}\n")
         
     @staticmethod
     def monster_bosses_info():
-        print("Monster Bosses Information:")
+        print(f"\n{'='*60}")
+        print("MONSTER BOSSES INFORMATION")
+        print(f"{'='*60}\n")
+        
         for boss_name, boss_stats in monster_bosses.items():
-            print(f"{boss_name}\n  Health: {boss_stats['health']}, Attack: {boss_stats['attack']}, Defense: {boss_stats['defense']}\n")
-        print("---------------------------")  
+            print(f"{boss_name}")
+            print(f"  ├─ Health: {boss_stats['health']}")
+            print(f"  ├─ Attack: {boss_stats['attack']}")
+            print(f"  └─ Defense: {boss_stats['defense']}\n")
+        
+        print(f"{'-'*60}\n")
         
 class menu:
     @staticmethod
     def main_menu():
         global login_status
+        
         if login_status == True:
             return menu.menu_on_login()
         else:
-            print("Welcome to the Text-Based RPG Game!")
+            print(f"\n{'='*60}")
+            print("WELCOME TO THE TEXT-BASED RPG GAME")
+            print(f"{'='*60}\n")
             print("1. Login")
             print("2. Learn about game")
             print("3. Exit")
-            print("---------------------------")
-            choice = input("Choose an option: ")
+            print(f"{'-'*60}\n")
+            
+            choice = input("Choose an option: ").strip()
+            
             if choice == '1':
-                    login(input("Enter your username: "), input("Enter your password: "))
-                    menu.main_menu()
+                login(input("\nEnter your username: "), input("Enter your password: "))
+                menu.main_menu()
             elif choice == '2':
                 game_info.about_game()
             elif choice == '3':
-                print("Exiting the game. Goodbye!")
+                print("\nExiting the game. Goodbye!\n")
                 exit()
             else:
-                print("Invalid choice. Please choose a valid option.")
+                print("\n✗ Invalid choice. Please choose a valid option.\n")
                 return menu.main_menu()
     
     @staticmethod
@@ -292,35 +351,44 @@ class menu:
         if not login_status:
             print("You need to login first.")
             return menu.main_menu()
-        print("Main Menu:")
+        
+        print(f"\n{'='*60}")
+        print("MAIN MENU")
+        print(f"{'='*60}\n")
         print("1. Start Game")
         print("2. Game Info")
         print("3. Your Stats")
         print("4. Logout")
-        print("---------------------------")
-        choice = input("Choose an option: ")
+        print(f"{'-'*60}\n")
+        
+        choice = input("Choose an option: ").strip()
+        
         if choice == '1':
             return start_game()
         elif choice == '2':
             return game_info.about_game()
         elif choice == '3':
-            print("Your Stats feature is under development.")
+            print("\nYour Stats feature is under development.\n")
             return menu.menu_on_login()
         elif choice == '4':
             logout()
-            print("You have been logged out.")
+            print("✓ You have been logged out.\n")
             return menu.main_menu()
-        else :
-            print("Invalid choice. Please choose a valid option.")
+        else:
+            print("\n✗ Invalid choice. Please choose a valid option.\n")
             return menu.menu_on_login()
 
 def start_game():
-    print("Game started!")
+    print("\n" + "="*60)
+    print("GAME STARTED!")
+    print("="*60 + "\n")
+    
     chosen_hero_index = choose_hero()
     hero_name = list(heroes.keys())[chosen_hero_index]
     hero_stats = heroes[hero_name]
     player_hero = hero(hero_name, hero_stats['health'], hero_stats['attack'], hero_stats['defense'])
     player_hero.display_stats()
+    
     # Add more game logic here
     return menu.menu_on_login()
 
