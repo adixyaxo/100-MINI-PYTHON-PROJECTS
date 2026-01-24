@@ -438,10 +438,14 @@ def stage():
     user_stage += 1
     current_user.stage = user_stage
 
-def waves(wave_number,stage):
+def waves(wave_number,stage_no):
     global player_hero
-    no_of_monsters = waves[wave_number]*stage
-    damage = monsters["Goblin"]["attack"] - player_hero.defense
+    monster_info = stage[stage_no]["monsters"]
+    monster_instance = monster(list(monsters.keys())[list(monsters.values()).index(monster_info)], monster_info["health"], monster_info["attack"], monster_info["defense"])
+    no_of_monsters = waves[wave_number]*stage_no
+    multi_fight(monster_instance, no_of_monsters)
+    
+    
     
 def multi_fight(_monster, no_of_monsters):
     global player_hero
