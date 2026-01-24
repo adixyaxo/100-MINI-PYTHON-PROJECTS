@@ -438,7 +438,7 @@ def stage_game():
         if stage_no < user_stage:
             continue
         print(f"\n{'═'*60}")
-        print(f"║ {'STAGE ' + str(stage_no)}.center(56)} ║")
+        print(f"║ {'STAGE ' + str(stage_no)}.center(56) ║")
         print(f"{'═'*60}\n")
         for i in range(1,4):
             print(f"┌ WAVE {i} ─────────────────────────────────────────────────┐")
