@@ -71,6 +71,12 @@ stage = {
     3: {"monsters": monsters["Dragon"], "boss": monster_bosses["Dragon King"]}
 }
 
+waves = {
+    1: 3,
+    2: 4,
+    3: 5
+}
+
 
 items = {
     "Health Potion": {
@@ -390,37 +396,48 @@ class menu:
             print("\n✗ Invalid choice. Please choose a valid option.\n")
             return menu.menu_on_login()
 
+player_hero = None
+user_stage = 1
+
 def start_game():
+    global player_hero
+    global user_stage
     print("\n" + "="*60)
     print("GAME STARTED!")
     print("="*60 + "\n")
     
+    user_stage = current_user.stage
+    print(f"✓ Your Stage {user_stage}.\n")
+    
     chosen_hero_index = choose_hero()
     hero_name = list(heroes.keys())[chosen_hero_index]
     hero_stats = heroes[hero_name]
-    player_hero = hero(hero_name, hero_stats['health'], hero_stats['attack'], hero_stats['defense'])
+    player_hero = hero(hero_name,int(hero_stats['health'])*user_stage, int(hero_stats['attack'])*user_stage, int(hero_stats['defense'])*user_stage)
     player_hero.display_stats()
-    
-    user_stage = current_user.stage
-    print(f"✓ Your Stage {stage}.\n")
-    
-    for stage_no,dict in stage.items():
-        if stage_no < user_stage:
-            continue
-        print(f"--- Stage {stage_no} ---\n")
-        print("Monsters to fight:")
-        for monster_data in dict["monsters"]:
-            print(f"  • {monster_data['name']} (Health: {monster_data['health']}, Attack: {monster_data['attack']}, Defense: {monster_data['defense']})")
-        print(f"\nBoss to fight:")
-        boss_data = dict["boss"]
-        print(f"  • {boss_data['name']} (Health: {boss_data['health']}, Attack: {boss_data['attack']}, Defense: {boss_data['defense']})\n")
-        fight()
-        print("Fight logic is under development.\n")
     
 
     return menu.menu_on_login()
 
-def fight():
+def stage():
+    global user_stage
+    for stage_no,dict in stage.items():
+        if stage_no < user_stage:
+            continue
+        print(f"--- Stage {stage_no} ---\n")
+        for i in range(1,4): # 3 waves per stage
+            print(f"Wave {i}:\n")
+            waves(i,stage_no)
+        bossfight()
+
+def waves(wave_number,stage):
+    global player_hero
+    no_of_monsters = waves[wave_number]*stage
+    damage = monsters["Goblin"]["attack"] - player_hero.defense
+    
+def bossfight(stage):
+    pass
+
+def fight(number,stage):
     pass
 
 def main():
