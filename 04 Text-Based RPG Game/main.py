@@ -139,7 +139,7 @@ class monster_boss:
         self.health = health
         self.attack = attack
         self.defense = defense
-        
+               
 class user:
     def __init__(self, username, password, stage=1, coins=0):
         self.username = username
@@ -443,6 +443,100 @@ def waves(wave_number,stage):
     no_of_monsters = waves[wave_number]*stage
     damage = monsters["Goblin"]["attack"] - player_hero.defense
     
+def multi_fight(_monster, no_of_monsters):
+    global player_hero
+    print(f"\n{no_of_monsters} {_monster.name}s appear!\n")
+    
+    monsters_defeated = 0
+    current_monster_health = monsters[_monster.name]["health"]
+    
+    while no_of_monsters > 0 and player_hero.health > 0:
+        print(f"\n{'='*50}")
+        print(f"Monsters remaining: {no_of_monsters} | Defeated: {monsters_defeated}")
+        print(f"Your Health: {player_hero.health} | Monster Health: {current_monster_health}")
+        print(f"{'='*50}\n")
+        
+        user_input = input("Press Enter to attack\nH to heal\nS to add shield\nR to rage\nE to return to main menu\n\nYour choice: ").strip().lower()
+        
+        if user_input.lower() == 'e':
+            print("\nReturning to main menu...\n")
+            return menu.main_menu()
+            
+        elif user_input == 'h':
+            # Heal
+            if items["Health Potion"]["available"] > 0:
+                items["Health Potion"]["available"] -= 1
+                player_hero.item_use(items["Health Potion"])
+                print(f"\n✓ You used Health Potion! Health restored by 20. Current health: {player_hero.health}")
+            else:
+                print("\n✗ No health potions available!")
+                continue
+        
+        elif user_input == 's':
+            # Shield
+            if items["Shield"]["available"] > 0:
+                items["Shield"]["available"] -= 1
+                player_hero.item_use(items["Shield"])
+                print(f"\n✓ You used Shield! Defense increased by 20. Current defense: {player_hero.defense}")
+            else:
+                print("\n✗ No shields available!")
+                continue
+        
+        elif user_input == 'r':
+            # Rage
+            if items["Rage"]["available"] > 0:
+                items["Rage"]["available"] -= 1
+                player_hero.item_use(items["Rage"])
+                print(f"\n✓ You used Rage! Attack increased by 20. Current attack: {player_hero.attack}")
+            else:
+                print("\n✗ No rage potions available!")
+                continue
+        
+
+        
+        # Check if monster defeated
+        while current_monster_health >= 0:
+            if current_monster_health <= 0:
+                damage_to_monster = player_hero.attack - monsters[_monster.name]["defense"]
+                current_monster_health -= damage_to_monster
+                if current_monster_health == 0:
+                    monsters_defeated += 1 # To avoid infinite loop if damage is 0
+                    no_of_monsters -= 1
+                    break
+                print(f"\n✓ You attacked! Dealt {damage_to_monster} damage.")
+                overflow_damage = current_monster_health
+                if overflow_damage > 0:
+                    current_monster_health = overflow_damage
+                    print(f"\n✓ You have defeated a {_monster.name}!")
+                    break
+                elif overflow_damage < 0:
+                    while overflow_damage < 0 and no_of_monsters > 0:
+                        overflow_damage += monsters[_monster.name]["health"]
+                        monsters_defeated += 1
+                        no_of_monsters -= 1
+                if overflow_damage == 0:
+                    current_monster_health = _monster.health
+                else:
+                    current_monster_health = overflow_damage 
+
+        print(f"\n✓ You have defeated {monsters_defeated} {_monster.name}!")
+                
+        
+        # Monster counter attack
+        damage_to_hero = monsters[_monster.name]["attack"] - player_hero.defense
+        player_hero.health -= damage_to_hero
+        print(f"\n✗ {_monster.name} dealt {damage_to_hero} damage to you.")
+        
+        if player_hero.health <= 0:
+            print(f"\n✗ You have been defeated! Game Over.")
+            print(f"Monsters defeated: {monsters_defeated}/{monsters_defeated + no_of_monsters}\n")
+            return menu.main_menu()
+    
+    print(f"\n✓ Wave complete! You defeated all {monsters_defeated} monsters!\n")
+    return monsters_defeated
+
+
+
 def bossfight(stage):
     global player_hero
     boss = monster_boss("Boss", monster_bosses[list(monster_bosses.keys())[stage-1]]["health"], monster_bosses[list(monster_bosses.keys())[stage-1]]["attack"], monster_bosses[list(monster_bosses.keys())[stage-1]]["defense"])
