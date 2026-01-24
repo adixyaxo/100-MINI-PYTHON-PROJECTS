@@ -444,11 +444,29 @@ def waves(wave_number,stage):
     damage = monsters["Goblin"]["attack"] - player_hero.defense
     
 def bossfight(stage):
-    boss = monste
-    pass
+    global player_hero
+    boss = monster_boss("Boss", monster_bosses[list(monster_bosses.keys())[stage-1]]["health"], monster_bosses[list(monster_bosses.keys())[stage-1]]["attack"], monster_bosses[list(monster_bosses.keys())[stage-1]]["defense"])
+    fight(boss)
+    print(f"\n✓ You have cleared Stage {stage}!\n")
 
-def fight(number,stage):
-    pass
+def fight(_monster):
+    global player_hero
+    print(f"\n{_monster.name} appears!\n")
+    while _monster.health > 0 and player_hero.health > 0:
+        damage_to_monster = player_hero.attack - _monster.defense
+        _monster.health -= damage_to_monster
+        print(f"You dealt {damage_to_monster} damage to {_monster.name}. {_monster.name}'s health is now {_monster.health}.")
+        if _monster.health <= 0:
+            print(f"\n✓ You have defeated {_monster.name}!\n")
+            return 1
+
+        damage_to_hero =  _monster.attack - player_hero.defense
+        player_hero.health -= damage_to_hero
+        print(f"{_monster.name} dealt {damage_to_hero} damage to you. Your health is now {player_hero.health}.")
+
+        if player_hero.health <= 0:
+            print("\n✗ You have been defeated! Game Over.\n")
+            return menu.main_menu()
 
 def main():
     menu.main_menu()
