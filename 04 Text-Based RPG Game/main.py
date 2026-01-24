@@ -132,6 +132,13 @@ class monster:
         self.attack = attack
         self.defense = defense 
         
+class monster_boss:
+    def __init__(self, name, health, attack, defense):
+        self.name = name
+        self.health = health
+        self.attack = attack
+        self.defense = defense
+        
 class user:
     def __init__(self, username, password, stage=1, coins=0):
         self.username = username
@@ -427,7 +434,9 @@ def stage():
         for i in range(1,4): # 3 waves per stage
             print(f"Wave {i}:\n")
             waves(i,stage_no)
-        bossfight()
+        bossfight(stage_no)
+    user_stage += 1
+    current_user.stage = user_stage
 
 def waves(wave_number,stage):
     global player_hero
@@ -435,6 +444,7 @@ def waves(wave_number,stage):
     damage = monsters["Goblin"]["attack"] - player_hero.defense
     
 def bossfight(stage):
+    boss = monste
     pass
 
 def fight(number,stage):
