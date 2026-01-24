@@ -1,5 +1,6 @@
 import random 
 import pandas as pd
+import keyboard as kb
 import openpyxl as oxl
 
 global login_status
@@ -421,8 +422,7 @@ def start_game():
     hero_stats = heroes[hero_name]
     player_hero = hero(hero_name,int(hero_stats['health'])*user_stage, int(hero_stats['attack'])*user_stage, int(hero_stats['defense'])*user_stage)
     player_hero.display_stats()
-    
-
+    stage()
     return menu.menu_on_login()
 
 def stage():
@@ -453,6 +453,11 @@ def fight(_monster):
     global player_hero
     print(f"\n{_monster.name} appears!\n")
     while _monster.health > 0 and player_hero.health > 0:
+        print("Press Enter to attack Press esc to return to main menu...")
+        event = kb.read_event()
+        if event.event_type == kb.KEY_DOWN and event.name == 'esc':
+            print("\nReturning to main menu...\n")
+            return menu.main_menu()
         damage_to_monster = player_hero.attack - _monster.defense
         _monster.health -= damage_to_monster
         print(f"You dealt {damage_to_monster} damage to {_monster.name}. {_monster.name}'s health is now {_monster.health}.")
