@@ -115,14 +115,14 @@ class hero:
             self.attack += item["value"]
     
     def display_stats(self):
-        print(f"\n{'='*50}")
-        print(f"Hero: {self.name}")
-        print(f"{'='*50}")
-        print(f"Health:  {self.health}")
-        print(f"Attack:  {self.attack}")
-        print(f"Defense: {self.defense}")
-        print(f"Items:   {self.items_show}")
-        print(f"{'='*50}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'HERO STATS'.center(56)} ║")
+        print(f"{'█'*60}")
+        print(f"║ Hero Name:  {self.name.ljust(44)} ║")
+        print(f"║ Health:     {str(self.health).ljust(44)} ║")
+        print(f"║ Attack:     {str(self.attack).ljust(44)} ║")
+        print(f"║ Defense:    {str(self.defense).ljust(44)} ║")
+        print(f"{'█'*60}\n")
   
 class monster:
     def __init__(self, name, health, attack, defense):
@@ -188,16 +188,16 @@ def logout():
     login_status = False
 
 def choose_hero():
-    print(f"\n{'='*60}")
-    print("CHOOSE YOUR HERO")
-    print(f"{'='*60}\n")
+    print(f"\n{'█'*60}")
+    print(f"║ {'CHOOSE YOUR HERO'.center(56)} ║")
+    print(f"{'█'*60}\n")
     
     for i, (hero_name, hero_stats) in enumerate(heroes_dict.items(), start=1):
-        print(f"{i}. {hero_name}")
-        print(f"   {hero_stats['summary']}")
-        print(f"   ├─ Health: {hero_stats['health']}")
-        print(f"   ├─ Attack: {hero_stats['attack']}")
-        print(f"   └─ Defense: {hero_stats['defense']}\n")
+        print(f"   {i}. {hero_name}")
+        print(f"      {hero_stats['summary']}")
+        print(f"      ├─ Health:  {hero_stats['health']}")
+        print(f"      ├─ Attack:  {hero_stats['attack']}")
+        print(f"      └─ Defense: {hero_stats['defense']}\n")
     
     choice = input("Choose your hero (number or name): ").strip().lower()
 
@@ -220,9 +220,9 @@ def choose_hero():
 class game_info:
     @staticmethod
     def about_game():
-        print(f"\n{'='*60}")
-        print("ABOUT THE GAME")
-        print(f"{'='*60}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'ABOUT THE GAME'.center(56)} ║")
+        print(f"{'█'*60}\n")
         print("This is a Text-Based RPG Game where you can:")
         print("  • Choose from unique heroes")
         print("  • Fight monsters and earn coins")
@@ -230,17 +230,19 @@ class game_info:
         print("  • Use items to enhance your abilities\n")
         print("Each hero has unique stats and abilities.")
         print("Use items wisely to maximize your potential!\n")
-        print(f"{'-'*60}")
-        print("GAME INFO MENU:")
-        print(f"{'-'*60}")
-        print("1. Return to main menu")
-        print("2. How to Play")
-        print("3. Game Rules")
-        print("4. Game Tips")
-        print("5. Heroes Info")
-        print("6. Monsters Info")
-        print("7. Monster Bosses Info")
-        print(f"{'-'*60}\n")
+        print(f"{'═'*60}")
+        print(f"║ {'GAME INFO MENU'.center(56)} ║")
+        print(f"{'═'*60}")
+        print("║                                                            ║")
+        print("║  1. Return to main menu                                    ║")
+        print("║  2. How to Play                                            ║")
+        print("║  3. Game Rules                                             ║")
+        print("║  4. Game Tips                                              ║")
+        print("║  5. Heroes Info                                            ║")
+        print("║  6. Monsters Info                                          ║")
+        print("║  7. Monster Bosses Info                                    ║")
+        print("║                                                            ║")
+        print(f"{'═'*60}\n")
         
         info_choice = input("Choose an option: ").strip()
         
@@ -265,83 +267,83 @@ class game_info:
     
     @staticmethod
     def how_to_play():
-        print(f"\n{'='*60}")
-        print("HOW TO PLAY")
-        print(f"{'='*60}\n")
-        print("1. Login or register as a new user")
-        print("2. Choose your hero from the available options")
-        print("3. Fight monsters to earn coins and progress through stages")
-        print("4. Use items to heal, boost defense, or increase attack power")
-        print("5. Advance through stages by defeating monsters and bosses")
-        print("6. Enjoy the game and have fun!\n")
-        print(f"{'-'*60}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'HOW TO PLAY'.center(56)} ║")
+        print(f"{'█'*60}\n")
+        print("  1. Login or register as a new user")
+        print("  2. Choose your hero from the available options")
+        print("  3. Fight monsters to earn coins and progress through stages")
+        print("  4. Use items to heal, boost defense, or increase attack power")
+        print("  5. Advance through stages by defeating monsters and bosses")
+        print("  6. Enjoy the game and have fun!\n")
+        print(f"{'═'*60}\n")
     
     @staticmethod
     def game_rules():
-        print(f"\n{'='*60}")
-        print("GAME RULES")
-        print(f"{'='*60}\n")
-        print("1. Each hero has unique stats: health, attack, and defense")
-        print("2. Monsters have their own stats and can be defeated to earn coins")
-        print("3. Use items strategically to enhance your hero's abilities")
-        print("4. Progress through stages by defeating monsters and bosses")
-        print("5. Save your progress by logging in with your username and password\n")
-        print(f"{'-'*60}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'GAME RULES'.center(56)} ║")
+        print(f"{'█'*60}\n")
+        print("  1. Each hero has unique stats: health, attack, and defense")
+        print("  2. Monsters have their own stats and can be defeated to earn coins")
+        print("  3. Use items strategically to enhance your hero's abilities")
+        print("  4. Progress through stages by defeating monsters and bosses")
+        print("  5. Save your progress by logging in with your username and password\n")
+        print(f"{'═'*60}\n")
     
     @staticmethod
     def game_tips():
-        print(f"\n{'='*60}")
-        print("GAME TIPS")
-        print(f"{'='*60}\n")
-        print("1. Choose a hero that suits your playstyle")
-        print("2. Use items wisely to maximize their benefits")
-        print("3. Pay attention to monster stats and plan your attacks accordingly")
-        print("4. Save your progress frequently by logging in")
-        print("5. Experiment with different strategies to defeat tougher monsters\n")
-        print(f"{'-'*60}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'GAME TIPS'.center(56)} ║")
+        print(f"{'█'*60}\n")
+        print("  1. Choose a hero that suits your playstyle")
+        print("  2. Use items wisely to maximize their benefits")
+        print("  3. Pay attention to monster stats and plan your attacks accordingly")
+        print("  4. Save your progress frequently by logging in")
+        print("  5. Experiment with different strategies to defeat tougher monsters\n")
+        print(f"{'═'*60}\n")
         
     @staticmethod
     def heros_info():
-        print(f"\n{'='*60}")
-        print("HERO INFORMATION")
-        print(f"{'='*60}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'HERO INFORMATION'.center(56)} ║")
+        print(f"{'█'*60}\n")
         
         for hero_name, hero_stats in heroes_dict.items():
-            print(f"{hero_name}")
-            print(f"  {hero_stats['summary']}")
-            print(f"  ├─ Health: {hero_stats['health']}")
-            print(f"  ├─ Attack: {hero_stats['attack']}")
-            print(f"  └─ Defense: {hero_stats['defense']}\n")
+            print(f"   {hero_name}")
+            print(f"   {hero_stats['summary']}")
+            print(f"   ├─ Health:  {hero_stats['health']}")
+            print(f"   ├─ Attack:  {hero_stats['attack']}")
+            print(f"   └─ Defense: {hero_stats['defense']}\n")
         
-        print(f"{'-'*60}\n")
+        print(f"{'═'*60}\n")
 
     @staticmethod
     def monsters_info():
-        print(f"\n{'='*60}")
-        print("MONSTER INFORMATION")
-        print(f"{'='*60}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'MONSTER INFORMATION'.center(56)} ║")
+        print(f"{'█'*60}\n")
         
         for monster_name, monster_stats in monsters_dict.items():
-            print(f"{monster_name}")
-            print(f"  ├─ Health: {monster_stats['health']}")
-            print(f"  ├─ Attack: {monster_stats['attack']}")
-            print(f"  └─ Defense: {monster_stats['defense']}\n")
+            print(f"   {monster_name}")
+            print(f"   ├─ Health:  {monster_stats['health']}")
+            print(f"   ├─ Attack:  {monster_stats['attack']}")
+            print(f"   └─ Defense: {monster_stats['defense']}\n")
         
-        print(f"{'-'*60}\n")
+        print(f"{'═'*60}\n")
         
     @staticmethod
     def monster_bosses_info():
-        print(f"\n{'='*60}")
-        print("MONSTER BOSSES INFORMATION")
-        print(f"{'='*60}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'MONSTER BOSSES INFORMATION'.center(56)} ║")
+        print(f"{'█'*60}\n")
         
         for boss_name, boss_stats in monster_bosses_dict.items():
-            print(f"{boss_name}")
-            print(f"  ├─ Health: {boss_stats['health']}")
-            print(f"  ├─ Attack: {boss_stats['attack']}")
-            print(f"  └─ Defense: {boss_stats['defense']}\n")
+            print(f"   {boss_name}")
+            print(f"   ├─ Health:  {boss_stats['health']}")
+            print(f"   ├─ Attack:  {boss_stats['attack']}")
+            print(f"   └─ Defense: {boss_stats['defense']}\n")
         
-        print(f"{'-'*60}\n")
+        print(f"{'═'*60}\n")
         
 class menu:
     @staticmethod
@@ -351,13 +353,15 @@ class menu:
         if login_status == True:
             return menu.menu_on_login()
         else:
-            print(f"\n{'='*60}")
-            print("WELCOME TO THE TEXT-BASED RPG GAME")
-            print(f"{'='*60}\n")
-            print("1. Login")
-            print("2. Learn about game")
-            print("3. Exit")
-            print(f"{'-'*60}\n")
+            print(f"\n{'█'*60}")
+            print(f"║ {'WELCOME TO TEXT-BASED RPG GAME'.center(56)} ║")
+            print(f"{'█'*60}")
+            print("║                                                            ║")
+            print("║  1. Login                                                  ║")
+            print("║  2. Learn about game                                       ║")
+            print("║  3. Exit                                                   ║")
+            print("║                                                            ║")
+            print(f"{'═'*60}\n")
             
             choice = input("Choose an option: ").strip()
             
@@ -367,7 +371,7 @@ class menu:
             elif choice == '2':
                 game_info.about_game()
             elif choice == '3':
-                print("\nExiting the game. Goodbye!\n")
+                print("\n✓ Exiting the game. Goodbye!\n")
                 exit()
             else:
                 print("\n✗ Invalid choice. Please choose a valid option.\n")
@@ -379,14 +383,16 @@ class menu:
             print("You need to login first.")
             return menu.main_menu()
         
-        print(f"\n{'='*60}")
-        print("MAIN MENU")
-        print(f"{'='*60}\n")
-        print("1. Start Game")
-        print("2. Game Info")
-        print("3. Your Stats")
-        print("4. Logout")
-        print(f"{'-'*60}\n")
+        print(f"\n{'█'*60}")
+        print(f"║ {'MAIN MENU'.center(56)} ║")
+        print(f"{'█'*60}")
+        print("║                                                            ║")
+        print("║  1. Start Game                                             ║")
+        print("║  2. Game Info                                              ║")
+        print("║  3. Your Stats                                             ║")
+        print("║  4. Logout                                                 ║")
+        print("║                                                            ║")
+        print(f"{'═'*60}\n")
         
         choice = input("Choose an option: ").strip()
         
@@ -411,12 +417,12 @@ user_stage = 1
 def start_game():
     global player_hero
     global user_stage
-    print("\n" + "="*60)
-    print("GAME STARTED!")
-    print("="*60 + "\n")
+    print(f"\n{'█'*60}")
+    print(f"║ {'GAME STARTED!'.center(56)} ║")
+    print(f"{'█'*60}\n")
     
     user_stage = current_user.stage
-    print(f"✓ Your Stage {user_stage}.\n")
+    print(f"✓ Your Stage: {user_stage}\n")
     
     chosen_hero_index = choose_hero()
     hero_name = list(heroes_dict.keys())[chosen_hero_index]
@@ -431,11 +437,16 @@ def stage_game():
     for stage_no, stage_data in stage_dict.items():
         if stage_no < user_stage:
             continue
-        print(f"--- Stage {stage_no} ---\n")
+        print(f"\n{'═'*60}")
+        print(f"║ {'STAGE ' + str(stage_no)}.center(56)} ║")
+        print(f"{'═'*60}\n")
         for i in range(1,4):
-            print(f"Wave {i}:\n")
+            print(f"┌ WAVE {i} ─────────────────────────────────────────────────┐")
+            print(f"└─────────────────────────────────────────────────────────┘\n")
             waves_game(i, stage_no)
+            print(f"\n{'─'*60}\n")
         bossfight(stage_no)
+        print(f"\n{'█'*60}\n")
     user_stage += 1
     current_user.stage = user_stage
 
@@ -448,35 +459,35 @@ def waves_game(wave_number, stage_no):
     
 def multi_fight(_monster, no_of_monsters):
     global player_hero
-    print(f"\n{no_of_monsters} {_monster.name}s appear!\n")
+    print(f"⚔️  {no_of_monsters} {_monster.name}(s) appear!\n")
     
     monsters_defeated = 0
     current_monster_health = monsters_dict[_monster.name]["health"]
     
     while no_of_monsters > 0 and player_hero.health > 0:
-        print(f"\n{'='*50}")
-        print(f"Monsters remaining: {no_of_monsters} | Defeated: {monsters_defeated}")
-        print(f"Your Health: {player_hero.health} | Monster Health: {current_monster_health}")
-        print(f"{'='*50}\n")
+        print(f"{'─'*60}")
+        print(f"│ Remaining: {str(no_of_monsters).ljust(5)} │ Defeated: {str(monsters_defeated).ljust(5)} │ Your HP: {str(player_hero.health).ljust(8)} │")
+        print(f"│ Monster HP: {str(current_monster_health).ljust(47)} │")
+        print(f"{'─'*60}\n")
         
-        user_input = input("Press Enter to attack\nH to heal\nS to add shield\nR to rage\nE to return to main menu\n\nYour choice: ").strip().lower()
+        user_input = input("Enter to attack | H to heal | S to shield | R to rage | E to exit\n\nYour choice: ").strip().lower()
         
         if user_input == 'e':
-            print("\nReturning to main menu...\n")
+            print("\n✗ Exiting to main menu...\n")
             return menu.main_menu()
         
         elif user_input == '' or user_input == 'enter':
             # Normal attack
             damage_to_monster = player_hero.attack - monsters_dict[_monster.name]["defense"]
             current_monster_health -= damage_to_monster
-            print(f"\n✓ You attacked! Dealt {damage_to_monster} damage.")
+            print(f"\n⚡ You attacked! Dealt {damage_to_monster} damage to {_monster.name}.")
             
         elif user_input == 'h':
             # Heal
             if items_dict["Health Potion"]["available"] > 0:
                 items_dict["Health Potion"]["available"] -= 1
                 player_hero.item_use(items_dict["Health Potion"])
-                print(f"\n✓ You used Health Potion! Health restored by 20. Current health: {player_hero.health}")
+                print(f"\n💊 You used Health Potion! Health restored by 20. Current HP: {player_hero.health}")
             else:
                 print("\n✗ No health potions available!")
                 continue
@@ -486,7 +497,7 @@ def multi_fight(_monster, no_of_monsters):
             if items_dict["Shield"]["available"] > 0:
                 items_dict["Shield"]["available"] -= 1
                 player_hero.item_use(items_dict["Shield"])
-                print(f"\n✓ You used Shield! Defense increased by 20. Current defense: {player_hero.defense}")
+                print(f"\n🛡️  You used Shield! Defense increased by 20. Current DEF: {player_hero.defense}")
             else:
                 print("\n✗ No shields available!")
                 continue
@@ -496,7 +507,7 @@ def multi_fight(_monster, no_of_monsters):
             if items_dict["Rage"]["available"] > 0:
                 items_dict["Rage"]["available"] -= 1
                 player_hero.item_use(items_dict["Rage"])
-                print(f"\n✓ You used Rage! Attack increased by 20. Current attack: {player_hero.attack}")
+                print(f"\n🔥 You used Rage! Attack increased by 20. Current ATK: {player_hero.attack}")
             else:
                 print("\n✗ No rage potions available!")
                 continue
@@ -514,22 +525,24 @@ def multi_fight(_monster, no_of_monsters):
             
             if no_of_monsters > 0:
                 current_monster_health = monsters_dict[_monster.name]["health"] - overflow_damage
-                print(f"✓ Defeated a {_monster.name}! Next monster appears with {current_monster_health} health remaining!")
+                print(f"\n✓ Defeated a {_monster.name}! Next monster appears with {current_monster_health} HP!\n")
             else:
-                print(f"✓ You defeated {monsters_defeated} {_monster.name}(s)!")
+                print(f"\n✓ All {monsters_defeated} {_monster.name}(s) defeated!\n")
             continue
         
         # Monster counter attack
         damage_to_hero = monsters_dict[_monster.name]["attack"] - player_hero.defense
         player_hero.health -= damage_to_hero
-        print(f"\n✗ {_monster.name} dealt {damage_to_hero} damage to you.")
+        print(f"\n💥 {_monster.name} dealt {damage_to_hero} damage to you!\n")
         
         if player_hero.health <= 0:
-            print(f"\n✗ You have been defeated! Game Over.")
+            print(f"{'█'*60}")
+            print(f"║ {'GAME OVER!'.center(56)} ║")
+            print(f"{'█'*60}")
             print(f"Monsters defeated: {monsters_defeated}/{monsters_defeated + no_of_monsters}\n")
             return menu.main_menu()
     
-    print(f"\n✓ Wave complete! You defeated {monsters_defeated} {_monster.name}(s)!\n")
+    print(f"\n✓ Wave complete! {monsters_defeated} {_monster.name}(s) defeated!\n")
     return monsters_defeated
 
 def bossfight(stage_no):
@@ -537,31 +550,42 @@ def bossfight(stage_no):
     boss_name = list(monster_bosses_dict.keys())[stage_no-1]
     boss_stats = monster_bosses_dict[boss_name]
     boss = monster_boss(boss_name, boss_stats["health"], boss_stats["attack"], boss_stats["defense"])
+    print(f"\n{'█'*60}")
+    print(f"║ {'BOSS FIGHT!'.center(56)} ║")
+    print(f"{'█'*60}\n")
     fight(boss)
-    print(f"\n✓ You have cleared Stage {stage_no}!\n")
+    print(f"\n{'█'*60}")
+    print(f"║ {'STAGE ' + str(stage_no) + ' CLEARED!'.center(56)} ║")
+    print(f"{'█'*60}\n")
 
 def fight(_monster):
     global player_hero
-    print(f"\n{_monster.name} appears!\n")
+    print(f"⚔️  {_monster.name} appears!\n")
     while _monster.health > 0 and player_hero.health > 0:
-        print("Press Enter to attack Press esc to return to main menu...")
+        print(f"{'─'*60}")
+        print(f"│ {_monster.name} HP: {str(_monster.health).ljust(46)} │")
+        print(f"│ Your HP: {str(player_hero.health).ljust(49)} │")
+        print(f"{'─'*60}\n")
+        print("Press Enter to attack or ESC to return to main menu...")
         event = kb.read_event()
         if event.event_type == kb.KEY_DOWN and event.name == 'esc':
-            print("\nReturning to main menu...\n")
+            print("\n✗ Returning to main menu...\n")
             return menu.main_menu()
         damage_to_monster = player_hero.attack - _monster.defense
         _monster.health -= damage_to_monster
-        print(f"You dealt {damage_to_monster} damage to {_monster.name}. {_monster.name}'s health is now {_monster.health}.")
+        print(f"\n⚡ You dealt {damage_to_monster} damage to {_monster.name}. {_monster.name}'s HP is now {_monster.health}.")
         if _monster.health <= 0:
             print(f"\n✓ You have defeated {_monster.name}!\n")
             return 1
 
         damage_to_hero =  _monster.attack - player_hero.defense
         player_hero.health -= damage_to_hero
-        print(f"{_monster.name} dealt {damage_to_hero} damage to you. Your health is now {player_hero.health}.")
+        print(f"\n💥 {_monster.name} dealt {damage_to_hero} damage to you. Your HP is now {player_hero.health}.\n")
 
         if player_hero.health <= 0:
-            print("\n✗ You have been defeated! Game Over.\n")
+            print(f"{'█'*60}")
+            print(f"║ {'GAME OVER!'.center(56)} ║")
+            print(f"{'█'*60}\n")
             return menu.main_menu()
 
 def main():
