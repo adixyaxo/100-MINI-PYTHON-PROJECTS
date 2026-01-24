@@ -6,7 +6,7 @@ import openpyxl as oxl
 global login_status
 login_status = False
 
-heroes = {
+heroes_dict = {
     "Knight King": {
         "health": 100,
         "attack": 20,
@@ -27,7 +27,7 @@ heroes = {
     }
 }
 
-monsters = {
+monsters_dict = {
     "Goblin": {
         "health": 50,
         "attack": 10,
@@ -45,7 +45,7 @@ monsters = {
     }
 }
 
-monster_bosses = {
+monster_bosses_dict = {
     "Goblin King": {
         "health": 150,
         "attack": 25,
@@ -63,23 +63,21 @@ monster_bosses = {
     }
 }
 
-
 # Defining stages with help of monsters and bosses 
 
-stage = {
-    1: {"monsters": monsters["Goblin"], "boss": monster_bosses["Goblin King"]},
-    2: {"monsters": monsters["Orc"], "boss": monster_bosses["Orc King"]},
-    3: {"monsters": monsters["Dragon"], "boss": monster_bosses["Dragon King"]}
+stage_dict = {
+    1: {"monsters": monsters_dict["Goblin"], "boss": monster_bosses_dict["Goblin King"]},
+    2: {"monsters": monsters_dict["Orc"], "boss": monster_bosses_dict["Orc King"]},
+    3: {"monsters": monsters_dict["Dragon"], "boss": monster_bosses_dict["Dragon King"]}
 }
 
-waves = {
+waves_dict = {
     1: 3,
     2: 4,
     3: 5
 }
 
-
-items = {
+items_dict = {
     "Health Potion": {
         "effect": "heal",
         "value": 20,
@@ -98,7 +96,7 @@ items = {
 }
 
 class hero:
-    def __init__(self, name, health, attack, defense, items_show=None): # used none instead of default {} to avoid mutable default argument issue . The Problem: In Python, if you use {} as a default argument, every single hero you create will share the exact same inventory. If the Knight drinks a potion, the Archer loses one too!
+    def __init__(self, name, health, attack, defense, items_show=None):
         self.name = name
         self.health = health
         self.attack = attack
@@ -167,13 +165,16 @@ def login(username, password):
         return login(username, password)
     
     try:
-        df = pd.read_excel(f"{username}_data.xlsx") # TypeError: 'pandas.core.frame.DataFrame' object does not support the context manager protocol (missed __exit__ method)
+        df = pd.read_excel(f"{username}_data.xlsx")
         stored_password = df.at[0, 'Password']
         if stored_password == password:
             print("\n✓ Login successful.\n")
             login_status = True
             global current_user
-            current_user = user(username, password, df.at[0, 'Stage'], df.at[0, 'Coins'])
+            try:
+                current_user = user(username, password, df.at[0, 'Stage'], df.at[0, 'Coins'])
+            except KeyError:
+                current_user = user(username, password)
             return True
         else:
             print("\n✗ Incorrect password.\n")
@@ -191,7 +192,7 @@ def choose_hero():
     print("CHOOSE YOUR HERO")
     print(f"{'='*60}\n")
     
-    for i, (hero_name, hero_stats) in enumerate(heroes.items(), start=1):
+    for i, (hero_name, hero_stats) in enumerate(heroes_dict.items(), start=1):
         print(f"{i}. {hero_name}")
         print(f"   {hero_stats['summary']}")
         print(f"   ├─ Health: {hero_stats['health']}")
@@ -305,7 +306,7 @@ class game_info:
         print("HERO INFORMATION")
         print(f"{'='*60}\n")
         
-        for hero_name, hero_stats in heroes.items():
+        for hero_name, hero_stats in heroes_dict.items():
             print(f"{hero_name}")
             print(f"  {hero_stats['summary']}")
             print(f"  ├─ Health: {hero_stats['health']}")
@@ -320,7 +321,7 @@ class game_info:
         print("MONSTER INFORMATION")
         print(f"{'='*60}\n")
         
-        for monster_name, monster_stats in monsters.items():
+        for monster_name, monster_stats in monsters_dict.items():
             print(f"{monster_name}")
             print(f"  ├─ Health: {monster_stats['health']}")
             print(f"  ├─ Attack: {monster_stats['attack']}")
@@ -334,7 +335,7 @@ class game_info:
         print("MONSTER BOSSES INFORMATION")
         print(f"{'='*60}\n")
         
-        for boss_name, boss_stats in monster_bosses.items():
+        for boss_name, boss_stats in monster_bosses_dict.items():
             print(f"{boss_name}")
             print(f"  ├─ Health: {boss_stats['health']}")
             print(f"  ├─ Attack: {boss_stats['attack']}")
@@ -418,41 +419,39 @@ def start_game():
     print(f"✓ Your Stage {user_stage}.\n")
     
     chosen_hero_index = choose_hero()
-    hero_name = list(heroes.keys())[chosen_hero_index]
-    hero_stats = heroes[hero_name]
+    hero_name = list(heroes_dict.keys())[chosen_hero_index]
+    hero_stats = heroes_dict[hero_name]
     player_hero = hero(hero_name,int(hero_stats['health'])*user_stage, int(hero_stats['attack'])*user_stage, int(hero_stats['defense'])*user_stage)
     player_hero.display_stats()
-    stage()
+    stage_game()
     return menu.menu_on_login()
 
-def stage():
+def stage_game():
     global user_stage
-    for stage_no,dict in stage.items():
+    for stage_no, stage_data in stage_dict.items():
         if stage_no < user_stage:
             continue
         print(f"--- Stage {stage_no} ---\n")
-        for i in range(1,4): # 3 waves per stage
+        for i in range(1,4):
             print(f"Wave {i}:\n")
-            waves(i,stage_no)
+            waves_game(i, stage_no)
         bossfight(stage_no)
     user_stage += 1
     current_user.stage = user_stage
 
-def waves(wave_number,stage_no):
+def waves_game(wave_number, stage_no):
     global player_hero
-    monster_info = stage[stage_no]["monsters"]
-    monster_instance = monster(list(monsters.keys())[list(monsters.values()).index(monster_info)], monster_info["health"], monster_info["attack"], monster_info["defense"])
-    no_of_monsters = waves[wave_number]*stage_no
+    monster_info = stage_dict[stage_no]["monsters"]
+    monster_instance = monster(list(monsters_dict.keys())[list(monsters_dict.values()).index(monster_info)], monster_info["health"], monster_info["attack"], monster_info["defense"])
+    no_of_monsters = waves_dict[wave_number]*stage_no
     multi_fight(monster_instance, no_of_monsters)
-    
-    
     
 def multi_fight(_monster, no_of_monsters):
     global player_hero
     print(f"\n{no_of_monsters} {_monster.name}s appear!\n")
     
     monsters_defeated = 0
-    current_monster_health = monsters[_monster.name]["health"]
+    current_monster_health = monsters_dict[_monster.name]["health"]
     
     while no_of_monsters > 0 and player_hero.health > 0:
         print(f"\n{'='*50}")
@@ -462,15 +461,21 @@ def multi_fight(_monster, no_of_monsters):
         
         user_input = input("Press Enter to attack\nH to heal\nS to add shield\nR to rage\nE to return to main menu\n\nYour choice: ").strip().lower()
         
-        if user_input.lower() == 'e':
+        if user_input == 'e':
             print("\nReturning to main menu...\n")
             return menu.main_menu()
+        
+        elif user_input == '' or user_input == 'enter':
+            # Normal attack
+            damage_to_monster = player_hero.attack - monsters_dict[_monster.name]["defense"]
+            current_monster_health -= damage_to_monster
+            print(f"\n✓ You attacked! Dealt {damage_to_monster} damage.")
             
         elif user_input == 'h':
             # Heal
-            if items["Health Potion"]["available"] > 0:
-                items["Health Potion"]["available"] -= 1
-                player_hero.item_use(items["Health Potion"])
+            if items_dict["Health Potion"]["available"] > 0:
+                items_dict["Health Potion"]["available"] -= 1
+                player_hero.item_use(items_dict["Health Potion"])
                 print(f"\n✓ You used Health Potion! Health restored by 20. Current health: {player_hero.health}")
             else:
                 print("\n✗ No health potions available!")
@@ -478,9 +483,9 @@ def multi_fight(_monster, no_of_monsters):
         
         elif user_input == 's':
             # Shield
-            if items["Shield"]["available"] > 0:
-                items["Shield"]["available"] -= 1
-                player_hero.item_use(items["Shield"])
+            if items_dict["Shield"]["available"] > 0:
+                items_dict["Shield"]["available"] -= 1
+                player_hero.item_use(items_dict["Shield"])
                 print(f"\n✓ You used Shield! Defense increased by 20. Current defense: {player_hero.defense}")
             else:
                 print("\n✗ No shields available!")
@@ -488,46 +493,34 @@ def multi_fight(_monster, no_of_monsters):
         
         elif user_input == 'r':
             # Rage
-            if items["Rage"]["available"] > 0:
-                items["Rage"]["available"] -= 1
-                player_hero.item_use(items["Rage"])
+            if items_dict["Rage"]["available"] > 0:
+                items_dict["Rage"]["available"] -= 1
+                player_hero.item_use(items_dict["Rage"])
                 print(f"\n✓ You used Rage! Attack increased by 20. Current attack: {player_hero.attack}")
             else:
                 print("\n✗ No rage potions available!")
                 continue
+        else:
+            print("\n✗ Invalid input. Please try again.")
+            continue
         
-
-        
-        # Check if monster defeated
-        while current_monster_health >= 0:
-            if current_monster_health <= 0:
-                damage_to_monster = player_hero.attack - monsters[_monster.name]["defense"]
-                current_monster_health -= damage_to_monster
-                if current_monster_health == 0:
-                    monsters_defeated += 1 # To avoid infinite loop if damage is 0
-                    no_of_monsters -= 1
-                    break
-                print(f"\n✓ You attacked! Dealt {damage_to_monster} damage.")
-                overflow_damage = current_monster_health
-                if overflow_damage > 0:
-                    current_monster_health = overflow_damage
-                    print(f"\n✓ You have defeated a {_monster.name}!")
-                    break
-                elif overflow_damage < 0:
-                    while overflow_damage < 0 and no_of_monsters > 0:
-                        overflow_damage += monsters[_monster.name]["health"]
-                        monsters_defeated += 1
-                        no_of_monsters -= 1
-                if overflow_damage == 0:
-                    current_monster_health = _monster.health
-                else:
-                    current_monster_health = overflow_damage 
-
-        print(f"\n✓ You have defeated {monsters_defeated} {_monster.name}!")
-                
+        # Check if monster defeated with damage carryover
+        if current_monster_health <= 0:
+            overflow_damage = abs(current_monster_health)
+            while overflow_damage > 0 and no_of_monsters > 0:
+                monsters_defeated += 1
+                no_of_monsters -= 1
+                overflow_damage -= monsters_dict[_monster.name]["health"]
+            
+            if no_of_monsters > 0:
+                current_monster_health = monsters_dict[_monster.name]["health"] - overflow_damage
+                print(f"✓ Defeated a {_monster.name}! Next monster appears with {current_monster_health} health remaining!")
+            else:
+                print(f"✓ You defeated {monsters_defeated} {_monster.name}(s)!")
+            continue
         
         # Monster counter attack
-        damage_to_hero = monsters[_monster.name]["attack"] - player_hero.defense
+        damage_to_hero = monsters_dict[_monster.name]["attack"] - player_hero.defense
         player_hero.health -= damage_to_hero
         print(f"\n✗ {_monster.name} dealt {damage_to_hero} damage to you.")
         
@@ -536,16 +529,16 @@ def multi_fight(_monster, no_of_monsters):
             print(f"Monsters defeated: {monsters_defeated}/{monsters_defeated + no_of_monsters}\n")
             return menu.main_menu()
     
-    print(f"\n✓ Wave complete! You defeated all {monsters_defeated} monsters!\n")
+    print(f"\n✓ Wave complete! You defeated {monsters_defeated} {_monster.name}(s)!\n")
     return monsters_defeated
 
-
-
-def bossfight(stage):
+def bossfight(stage_no):
     global player_hero
-    boss = monster_boss("Boss", monster_bosses[list(monster_bosses.keys())[stage-1]]["health"], monster_bosses[list(monster_bosses.keys())[stage-1]]["attack"], monster_bosses[list(monster_bosses.keys())[stage-1]]["defense"])
+    boss_name = list(monster_bosses_dict.keys())[stage_no-1]
+    boss_stats = monster_bosses_dict[boss_name]
+    boss = monster_boss(boss_name, boss_stats["health"], boss_stats["attack"], boss_stats["defense"])
     fight(boss)
-    print(f"\n✓ You have cleared Stage {stage}!\n")
+    print(f"\n✓ You have cleared Stage {stage_no}!\n")
 
 def fight(_monster):
     global player_hero
