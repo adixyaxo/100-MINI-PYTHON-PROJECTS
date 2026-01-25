@@ -35,7 +35,7 @@ def main():
                 publishedAt = article['publishedAt']
                 content = article['content']
                 content = content.replace("[+", "")
-                content = content.replace(" ]", "")
+                content = content.replace("]", "")
                 print(f"\nArticle {i+1}:".center(50, '-'))
                 print(f"Source: {source}")
                 print(f"Author: {author}")
