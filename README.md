@@ -27,213 +27,180 @@ This roadmap integrates practical management systems, text-based simulations, an
 
 ---
 
-## 1. Basic Management Systems (OOP Foundations)
-**Focus:** Classes, Object interactions, and State management.
+# Python Project Mastery Roadmap
 
-- [x] **01. Hello World with a Twist**
-  - **Goal:** Input user name/age, output specific greetings based on time of day (using `datetime`).
-- [x] **02. Library Management System**
-  - **Classes:** `Book` (title, author, isbn, status), `Member`, `Library`.
-  - **Features:** `add_book`, `lend_book`, `return_book`.
-- [x] **03. Banking System Simulation**
-  - **Classes:** `Account` (parent), `SavingsAccount` (min balance), `CurrentAccount` (overdraft).
-  - **Features:** Encapsulation (`__balance`), polymorphic `withdraw` methods.
-- [ ] **04. Employee Payroll System**
-  - **Classes:** `Employee` (abstract), `FullTime` (fixed), `Contract` (hourly).
-  - **Features:** Calculate monthly salary, tax deduction logic.
-- [ ] **05. Smart Parking Lot**
-  - **Classes:** `Vehicle` (plate, type), `Ticket` (timestamp), `ParkingLot`.
-  - **Features:** Hourly fee calculation, spot availability tracking.
+## 1. Basic Management Systems (OOP Foundations)
+*Focus: Classes, Object interactions, and State management.*
+
+- [x] **01. Hello World with a Twist** - Input user name/age, output specific greetings based on time of day.
+- [x] **02. Library Management System** - Classes: `Book`, `Member`. Features: `lend_book`, `return_book`.
+- [x] **03. Banking System Simulation** - Encapsulation (`__balance`), polymorphic `withdraw` methods.
+- [ ] **04. NEWZ APP** - Use of api to get news from newsapi.org.
+- [x] **05. Smart Parking Lot** - Hourly fee calculation and spot availability tracking.
 
 ## 2. Python Games (Logic & Loops)
-**Focus:** Game loops, Conditionals, and Randomness.
+*Focus: Game loops, Conditionals, and Randomness.*
 
-- [ ] **06. Text-Based RPG Game**
-  - **Classes:** `Character` (parent), `Hero`, `Monster`.
-  - **Features:** Turn-based combat loop, random damage calculation, inventory.
-- [ ] **07. Deck of Cards (Blackjack/War)**
-  - **Classes:** `Card` (suit, rank), `Deck` (list handling), `Hand`.
-  - **Features:** `shuffle()`, `deal()`, value comparison logic.
-- [ ] **08. Quiz Application**
-  - **Classes:** `Question` (text, answer), `Quiz` (score tracking).
-  - **Features:** Input validation (A/B/C/D), final percentage score.
-- [ ] **09. Vending Machine Simulation**
-  - **Classes:** `Item`, `Machine` (State Machine).
-  - **Features:** Balance tracking, change dispensing algorithm.
-- [ ] **10. Tic-Tac-Toe AI**
-  - **Focus:** Grid management (2D Lists) and a simple Minimax algorithm or random bot.
+- [ ] **06. Text-Based RPG Game** - Turn-based combat loop, random damage, inventory.
+- [ ] **07. Deck of Cards (Blackjack)** - `shuffle()`, `deal()`, and value comparison logic.
+- [ ] **08. Quiz Application** - Input validation (A/B/C/D) and final score calculation.
+- [ ] **09. Vending Machine Simulation** - Balance tracking and change dispensing algorithm.
+- [ ] **10. Tic-Tac-Toe AI** - Grid management (2D Lists) and a simple Minimax algorithm.
 
 ## 3. Python Scripts (Data & File I/O)
-**Focus:** Persistence (Saving data) and Automation.
+*Focus: Persistence (Saving data) and Automation.*
 
-- [ ] **11. Inventory Management System**
-  - **Features:** JSON/CSV file saving. Add products, update stock levels, alert when low.
-- [ ] **12. Expense Tracker**
-  - **Features:** Log daily expenses to a file, categorize (Food, Travel), and read file to sum totals.
-- [ ] **13. Junk File Cleaner**
-  - **Features:** Recursively scan a directory and delete `.tmp` files older than 30 days.
-- [ ] **14. Auto-Backup Script**
-  - **Features:** Zip a specific folder and move it to a backup directory with a timestamped filename.
-- [ ] **15. Clipboard Manager**
-  - **Features:** Runs in background; saves the last 10 things you copied to a text file.
+- [ ] **11. Inventory Management System** - JSON/CSV file saving. Add products, update stock.
+- [ ] **12. Expense Tracker** - Log daily expenses to a file, categorize, and sum totals.
+- [ ] **13. Junk File Cleaner** - Recursively scan directory and delete `.tmp` files > 30 days.
+- [ ] **14. Auto-Backup Script** - Zip a specific folder and move it to a backup directory.
+- [ ] **15. Clipboard Manager** - Runs in background; saves last 10 copied items to a file.
 
 ## 4. Text Processing & RegEx (NLP Basics)
-**Focus:** String manipulation and pattern matching.
+*Focus: String manipulation and pattern matching.*
 
-- [ ] **16. Plagiarism Checker**
-  - **Features:** Compare two text files and calculate percentage similarity (Jaccard).
-- [ ] **17. Email Extractor**
-  - **Features:** Scan a text block and extract all valid emails using RegEx.
-- [ ] **18. Markdown to HTML Converter**
-  - **Features:** Parse `# Heading` and `**bold**` syntax into HTML tags.
-- [ ] **19. Profanity Filter**
-  - **Features:** Replace banned words in a sentence with `****` while preserving case.
-- [ ] **20. Syntax Highlighter**
-  - **Features:** Print Python code with keywords in color using ANSI escape codes.
+- [ ] **16. Plagiarism Checker** - Compare text files and calculate percentage similarity.
+- [ ] **17. Email Extractor** - Scan text block and extract valid emails using RegEx.
+- [ ] **18. Markdown to HTML Converter** - Parse `# Heading` and `**bold**` syntax.
+- [ ] **19. Profanity Filter** - Replace banned words with `****` while preserving case.
+- [ ] **20. Syntax Highlighter** - Print Python code with keywords in color using ANSI.
 
-## 5. Network Programming (Sockets)
-**Focus:** How the internet works.
+## 5. Web Development Mastery (New Additions)
+*Focus: HTTP, APIs, Databases, and Full-Stack Frameworks.*
 
-- [ ] **21. Local Chat Room:** Server/Client scripts for messaging.
-- [ ] **22. Port Scanner:** Scan IP for open ports (21, 80, etc.).
-- [ ] **23. P2P File Transfer:** Send an image from one script to another.
-- [ ] **24. DDOS Simulator (Educational):** Stress test a local dummy server.
-- [ ] **25. WiFi Password Extractor:** Retrieve saved system WiFi passwords.
+### Level 1: Basic Web Apps (Python/Lightweight)
+- [ ] **21. Classic To-Do List App (Flask)** - CRUD operations with SQLite database.
+- [ ] **22. Weather Dashboard (Flask)** - Consuming 3rd party APIs (OpenWeatherMap).
+- [ ] **23. URL Shortener (Flask)** - Database mapping of unique IDs to long URLs.
+- [ ] **24. QR Code Generator (Flask)** - Converting text to image streams (`io.BytesIO`).
+- [ ] **25. Viral Short/Reel Generator (Flask + MoviePy)** - Automating video creation/overlay logic.
+
+### Level 2: Intermediate Backend (Flask)
+- [ ] **26. RESTful API for Library (Flask)** - JWT Authentication and JSON responses.
+- [ ] **27. Real-Time Chat Application (Flask + SocketIO)** - WebSockets for instant messaging.
+- [ ] **28. Blog Platform (Flask)** - Rich text editor, comments, and user profiles.
+- [ ] **29. SaaS Subscription Manager (Flask + Stripe)** - Payment processing and webhooks.
+- [ ] **30. Microblogging System (Flask)** - "Follow" logic and feed generation algorithms.
+
+### Level 3: Full-Stack Scalable Apps (Django)
+- [ ] **31. E-Commerce Marketplace (Django)** - Complex ORM, shopping cart sessions.
+- [ ] **32. Learning Management System (Django)** - Video handling, quizzes, and progress tracking.
+- [ ] **33. Project Management Tool (Django)** - Kanban boards and team permissions.
+- [ ] **34. Hospital Management System (Django)** - High security, scheduling, and report generation.
+- [ ] **35. Real Estate Portal (Django + GeoDjango)** - Map integration and spatial queries.
 
 ## 6. Cybersecurity & Encryption
-**Focus:** Protecting data.
+*Focus: Protecting data.*
 
-- [ ] **26. Password Strength Checker:** Score entropy and character variety.
-- [ ] **27. Caesar Cipher Tool:** Shift ASCII values to encrypt text.
-- [ ] **28. Steganography:** Hide a text message inside an image file's bits.
-- [ ] **29. Hash Verifier:** Compare MD5/SHA256 hashes for file integrity.
-- [ ] **30. Keylogger (Ethical):** Log keystrokes to a local file for study.
+- [ ] **36. Password Strength Checker** - Score entropy and character variety.
+- [ ] **37. Caesar Cipher Tool** - Shift ASCII values to encrypt text.
+- [ ] **38. Steganography** - Hide a text message inside an image file's bits.
+- [ ] **39. Hash Verifier** - Compare MD5/SHA256 hashes for file integrity.
+- [ ] **40. Keylogger (Ethical)** - Log keystrokes to a local file for study.
 
 ## 7. Web Scraping (Data Harvesting)
-**Focus:** Automating the web.
+*Focus: Automating the web.*
 
-- [ ] **31. Job Post Scraper:** Fetch job titles/links to CSV.
-- [ ] **32. Social Bot (Selenium):** Log in and like posts automatically.
-- [ ] **33. Price Drop Notifier:** Monitor a URL; alert if price < target.
-- [ ] **34. Wiki-Hopper:** Click random links until arriving at "Philosophy".
-- [ ] **35. Image Crawler:** Download all `<img>` tags from a URL.
+- [ ] **41. Job Post Scraper** - Fetch job titles/links to CSV.
+- [ ] **42. Social Bot (Selenium)** - Log in and like posts automatically.
+- [ ] **43. Price Drop Notifier** - Monitor a URL; alert if price < target.
+- [ ] **44. Image Crawler** - Download all `<img>` tags from a URL.
+- [ ] **45. Login System Backend** - Auth implementation with password hashing.
 
-## 8. API Development (Backend)
-**Focus:** Serving data via HTTP.
+## 8. Databases (SQL/NoSQL)
+*Focus: Persistent storage.*
 
-- [ ] **36. Weather API Wrapper:** Class to fetch OpenWeatherMap data.
-- [ ] **37. Currency Converter API:** Flask app for currency exchange rates.
-- [ ] **38. To-Do List API:** REST API (GET, POST, DELETE) for tasks.
-- [ ] **39. URL Shortener:** Backend to map short codes to full URLs.
-- [ ] **40. Login System:** Backend auth with password hashing.
+- [ ] **46. Music Library (SQLAlchemy)** - ORM for Artist/Song relationships.
+- [ ] **47. NoSQL JSON Store** - Save Dictionaries as JSON documents.
+- [ ] **48. CSV to SQL Importer** - Efficiently load massive CSVs to DB.
+- [ ] **49. Leaderboard System** - Redis-style logic for high scores.
+- [ ] **50. Data Cleaning Bot** - Remove duplicates/nulls from CSV using Pandas.
 
-## 9. Databases (SQL/NoSQL)
-**Focus:** Persistent storage.
+## 9. Data Analysis & Visualization
+*Focus: Insights and Plotting.*
 
-- [ ] **41. SQLite Contact Book:** Store Name/Phone using raw SQL.
-- [ ] **42. Music Library (ORM):** SQLAlchemy for Artist/Song relationships.
-- [ ] **43. NoSQL JSON Store:** Save Dictionaries as JSON documents.
-- [ ] **44. CSV to SQL Importer:** Efficiently load massive CSVs to DB.
-- [ ] **45. Leaderboard System:** Redis-style logic for high scores.
+- [ ] **51. Sales Trend Analyzer** - Group data by Month/Region (Pandas).
+- [ ] **52. Stock Correlation** - Calculate movement similarity of two stocks.
+- [ ] **53. Census Demographics** - Analyze population/age averages.
+- [ ] **54. Real-time CPU Graph** - Live plotting of system usage.
+- [ ] **55. Interactive Pie Chart** - Expenses chart with "explode" feature.
+- [ ] **56. Word Cloud Generator** - Visualize most frequent words in text.
 
-## 10. Data Analysis (Pandas)
-**Focus:** Insights from data.
+## 10. Computer Vision (OpenCV)
+*Focus: Image processing.*
 
-- [ ] **46. Data Cleaning Bot:** Remove duplicates/nulls from CSV.
-- [ ] **47. Sales Trend Analyzer:** Group data by Month/Region.
-- [ ] **48. Stock Correlation:** Calculate movement similarity of two stocks.
-- [ ] **49. Census Demographics:** Analyze population/age averages.
-- [ ] **50. Pokemon Stat Analyzer:** Find strongest types via average stats.
+- [ ] **57. Face Detector** - Draw boxes around faces in photos.
+- [ ] **58. Color Picker** - Get RGB/Hex from pixel clicks.
+- [ ] **59. Document Scanner** - Perspective warping for scanned papers.
+- [ ] **60. Motion Detector** - Trigger alarm on webcam pixel changes.
+- [ ] **61. Watermark Adder** - Batch process images to add logos.
 
-## 11. Data Visualization
-**Focus:** Plotting and Charts.
+## 11. Audio & Signals
+*Focus: Sound processing.*
 
-- [ ] **51. Real-time CPU Graph:** Live plotting of system usage.
-- [ ] **52. Heatmap of Activity:** Visualize active hours in a day.
-- [ ] **53. 3D Terrain Plot:** Mathematical surface plotting.
-- [ ] **54. Interactive Pie Chart:** Expenses chart with "explode" feature.
-- [ ] **55. Word Cloud Generator:** Visualize most frequent words in text.
+- [ ] **62. Text-to-Speech** - Read text files aloud.
+- [ ] **63. Audio Visualizer** - Frequency bars for MP3s.
+- [ ] **64. Voice Recorder** - Record mic input to `.wav`.
+- [ ] **65. Noise Remover** - Filter static from audio using Scipy.
 
-## 12. Computer Vision (OpenCV)
-**Focus:** Image processing.
+## 12. Mathematics & Physics Simulations
+*Focus: Modeling the physical/mathematical world.*
 
-- [ ] **56. Face Detector:** Draw boxes around faces in photos.
-- [ ] **57. Color Picker:** Get RGB/Hex from pixel clicks.
-- [ ] **58. Document Scanner:** Perspective warping for scanned papers.
-- [ ] **59. Motion Detector:** Trigger alarm on webcam pixel changes.
-- [ ] **60. Watermark Adder:** Batch process images to add logos.
+- [ ] **66. Pi Estimation (Monte Carlo)** - Throw random "darts" to calculate Pi.
+- [ ] **67. Sudoku Solver** - Backtracking algorithm implementation.
+- [ ] **68. Projectile Motion** - Cannonball trajectory with gravity/wind.
+- [ ] **69. N-Body Gravity** - Solar system orbit simulation.
+- [ ] **70. Gas Particle Simulation** - Ideal Gas Law (atoms bouncing in box).
+- [ ] **71. Soft Body Physics** - Deforming mass-spring systems.
 
-## 13. Audio & Signals
-**Focus:** Sound processing.
+## 13. Game Development (Pygame)
+*Focus: Graphical games.*
 
-- [ ] **61. Text-to-Speech:** Read text files aloud.
-- [ ] **62. Audio Visualizer:** Frequency bars for MP3s.
-- [ ] **63. Voice Recorder:** Record mic input to `.wav`.
-- [ ] **64. Noise Remover:** Filter static from audio using Scipy.
-- [ ] **65. Morse Code Translator:** Text to audio beeps.
+- [ ] **72. Pong** - The classic arcade game.
+- [ ] **73. Snake** - Grid movement and growth logic.
+- [ ] **74. Breakout** - Brick breaking with physics bounces.
+- [ ] **75. Flappy Bird Clone** - Gravity and scrolling obstacles.
+- [ ] **76. Platformer** - Jumping and collision detection.
 
-## 14. Mathematics Simulations
-**Focus:** Pure math and algorithmic visualization.
+## 14. GUI Applications
+*Focus: User Interface (Tkinter/PyQt).*
 
-- [ ] **66. Pi Estimation (Monte Carlo):** Throw random "darts" to calculate Pi.
-- [ ] **67. Prime Spiral (Ulam):** Visualizing prime number patterns on a grid.
-- [ ] **68. Fractals (Julia Set):** Recursive image generation.
-- [ ] **69. Sudoku Solver:** Backtracking algorithm implementation.
-- [ ] **70. Fourier Series Drawing:** Drawing shapes with rotating circles.
+- [ ] **77. Calculator App** - Grid layout GUI.
+- [ ] **78. Notepad Clone** - File menus and text editing.
+- [ ] **79. Music Player** - MP3 playback controls.
+- [ ] **80. Pomodoro Timer** - Countdown with work/break modes.
 
-## 15. Physics Simulations
-**Focus:** Modeling the physical world.
+## 15. Machine Learning (Foundations)
+*Focus: Understanding the math behind AI.*
 
-- [ ] **71. Projectile Motion:** Cannonball trajectory with gravity/wind.
-- [ ] **72. N-Body Gravity:** Solar system orbit simulation.
-- [ ] **73. Pendulum Wave:** Harmonic motion of multiple pendulums.
-- [ ] **74. Gas Particle Simulation:** Ideal Gas Law (atoms bouncing in box).
-- [ ] **75. Soft Body Physics:** Deforming mass-spring systems (jelly).
+- [ ] **81. Linear Regression** - House price prediction (Gradient Descent).
+- [ ] **82. K-Nearest Neighbors** - Classification (Cat vs Dog data).
+- [ ] **83. Sentiment Analysis** - Positive/Negative review classification.
+- [ ] **84. Digit Recognizer** - MNIST handwritten digit identification.
+- [ ] **85. Recommendation Engine** - User similarity logic.
 
-## 16. Game Development (Pygame)
-**Focus:** Graphical games.
+## 16. Generative AI & LLMs
+*Focus: Modern AI APIs.*
 
-- [ ] **76. Pong:** The classic arcade game.
-- [ ] **77. Snake:** Grid movement and growth logic.
-- [ ] **78. Breakout:** Brick breaking with physics bounces.
-- [ ] **79. Flappy Bird Clone:** Gravity and scrolling obstacles.
-- [ ] **80. Platformer:** Jumping and collision detection.
+- [ ] **86. Local Chatbot** - Run a small model (GPT-2/Llama) locally.
+- [ ] **87. Prompt Generator** - Tool to refine user prompts.
+- [ ] **88. AI Summarizer** - API-based article summarization.
+- [ ] **89. Code Explainer** - Explain code snippets via LLM.
+- [ ] **90. PDF RAG System** - Chat with a PDF document.
 
-## 17. GUI Applications
-**Focus:** User Interface (Tkinter/PyQt).
+## 17. Capstone Integration
+*Focus: Combining domains.*
 
-- [ ] **81. Calculator App:** Grid layout GUI.
-- [ ] **82. Notepad Clone:** File menus and text editing.
-- [ ] **83. Music Player:** MP3 playback controls.
-- [ ] **84. Pomodoro Timer:** Countdown with work/break modes.
-- [ ] **85. Currency Converter GUI:** Frontend for your API (#37).
-
-## 18. Machine Learning (No magic libraries)
-**Focus:** Understanding the math behind AI.
-
-- [ ] **86. Linear Regression:** House price prediction (Gradient Descent).
-- [ ] **87. K-Nearest Neighbors:** Classification (Cat vs Dog data).
-- [ ] **88. Sentiment Analysis:** Positive/Negative review classification.
-- [ ] **89. Digit Recognizer:** MNIST handwritten digit identification.
-- [ ] **90. Recommendation Engine:** User similarity logic.
-
-## 19. Generative AI & LLMs
-**Focus:** Modern AI APIs.
-
-- [ ] **91. Local Chatbot:** Run a small model (GPT-2/Llama) locally.
-- [ ] **92. Prompt Generator:** Tool to refine user prompts.
-- [ ] **93. AI Summarizer:** API-based article summarization.
-- [ ] **94. Code Explainer:** Explain code snippets via LLM.
-- [ ] **95. PDF RAG System:** Chat with a PDF document.
-
-## 20. Capstone Integration
-**Focus:** Combining domains.
-
-- [ ] **96. Smart Home Dashboard:** GUI + Network control.
-- [ ] **97. Stock Trading Bot:** Scraper + Analysis + Automation.
-- [ ] **98. Multiplayer Game:** Game + Network Sockets.
-- [ ] **99. AI Voice Assistant:** Speech + LLM + TTS.
-- [ ] **100. The "OS" Simulation:** Text-based OS with login, file system, and apps.
+- [ ] **91. Smart Home Dashboard** - GUI + Network control.
+- [ ] **92. Stock Trading Bot** - Scraper + Analysis + Automation.
+- [ ] **93. Multiplayer Game** - Game + Network Sockets.
+- [ ] **94. AI Voice Assistant** - Speech + LLM + TTS.
+- [ ] **95. Port Scanner** - Scan IP for open ports (moved from sockets).
+- [ ] **96. P2P File Transfer** - Send an image from one script to another.
+- [ ] **97. Password Strength GUI** - Combine logic with Tkinter.
+- [ ] **98. Pokemon Stat Analyzer** - Find strongest types via average stats.
+- [ ] **99. Heatmap of Activity** - Visualize active hours in a day.
+- [ ] **100. 3D Terrain Plot** - Mathematical surface plotting.
       
 ## 🛠️ Getting Started
 
