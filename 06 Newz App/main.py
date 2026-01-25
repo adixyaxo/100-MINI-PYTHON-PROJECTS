@@ -24,27 +24,28 @@ def main():
     totalResults = news_data['totalResults']
     articles = news_data['articles']
     if status == "ok":
-            print(f"Total Results: {news_data['totalResults']}")
-            for i in range(0, no_of_articles):
-                article = articles[i]
-                source = article['source']['name']
-                author = article['author']
-                title = article['title']
-                description = article['description']
-                url = article['url']
-                publishedAt = article['publishedAt']
-                content = article['content']
+        print(f"Total Results: {news_data['totalResults']}")
+        for i in range(0, min(no_of_articles, len(articles))):
+            article = articles[i]
+            source = article['source']['name']
+            author = article.get('author', 'Unknown')
+            title = article['title']
+            description = article['description']
+            url = article['url']
+            publishedAt = article['publishedAt']
+            content = article.get('content', '')
+            if content:
                 content = content.replace("[+", "")
                 content = content.replace("]", "")
-                print(f"\nArticle {i+1}:".center(50, '-'))
-                print(f"Source: {source}")
-                print(f"Author: {author}")
-                print(f"Title: {title}")
-                print(f"Description: {description}")
-                print(f"URL: {url}")
-                print(f"Published At: {publishedAt}")
-                print(f"Content: {content}\n")
+            print(f"\nArticle {i+1}:".center(50, '-'))
+            print(f"Source: {source}")
+            print(f"Author: {author}")
+            print(f"Title: {title}")
+            print(f"Description: {description}")
+            print(f"URL: {url}")
+            print(f"Published At: {publishedAt}")
+            print(f"Content: {content}\n")
     else:
-            print("Failed to fetch news")
+        print("Failed to fetch news")
 if __name__ == "__main__":
     main()
