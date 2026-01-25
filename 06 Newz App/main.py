@@ -24,19 +24,19 @@ def main():
     totalResults = news_data['totalResults']
     articles = news_data['articles']
     if status == "ok":
-        print(f"Total Results: {news_data['totalResults']}")
-        for i in range (0,no_of_articles):
-                dict = articles[i]
-                source = dict['source']['name']
-                author = dict['author']
-                title = dict['title']
-                description = dict['description']
-                url = dict['url']
-                publishedAt = dict['publishedAt']
-                content = dict['content']
-                content = content.remove("[+")
-                content = content.remove(" ]")
-                print(f"\nArticle {i+1}:")
+            print(f"Total Results: {news_data['totalResults']}")
+            for i in range(0, no_of_articles):
+                article = articles[i]
+                source = article['source']['name']
+                author = article['author']
+                title = article['title']
+                description = article['description']
+                url = article['url']
+                publishedAt = article['publishedAt']
+                content = article['content']
+                content = content.replace("[+", "")
+                content = content.replace(" ]", "")
+                print(f"\nArticle {i+1}:".center(50, '-'))
                 print(f"Source: {source}")
                 print(f"Author: {author}")
                 print(f"Title: {title}")
@@ -44,7 +44,7 @@ def main():
                 print(f"URL: {url}")
                 print(f"Published At: {publishedAt}")
                 print(f"Content: {content}\n")
-        else:
+    else:
             print("Failed to fetch news")
 if __name__ == "__main__":
     main()
