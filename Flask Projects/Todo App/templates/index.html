@@ -27,6 +27,41 @@
         <!-- Task List Section -->
         <section class="tasks-container">
             <ul id="task-list">
+                {% for task in tasks %}
+                <li
+                    class="task-item status-{{ task.status | lower | replace(' ', '-') }} {% if task.status == 'Done' %}completed{% endif %}">
+                    <details>
+                        <summary class="task-summary">
+                            <span class="task-text">{{ task.title }}</span>
+                            <div class="actions">
+                                <!-- Status Dropdown Form -->
+                                <form action="/update_status/{{ task.id }}" method="POST" class="status-form">
+                                    <select name="status" onchange="this.form.submit()" title="Change task status">
+                                        <option value="To Do" {% if task.status=='To Do' %}selected{% endif %}>To Do
+                                        </option>
+                                        <option value="In Progress" {% if task.status=='In Progress' %}selected{% endif
+                                            %}>In Progress</option>
+                                        <option value="Done" {% if task.status=='Done' %}selected{% endif %}>Done
+                                        </option>
+                                    </select>
+                                </form>
+                                <a href="/delete/{{ task.id }}" class="btn-delete">Delete</a>
+                            </div>
+                        </summary>
+                        <div class="task-details">
+                            {% if task.description %}
+                            <p class="task-description"><strong>Description:</strong> {{ task.description }}</p>
+                            {% endif %}
+                            {% if task.due_date %}
+                            <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date }}</p>
+                            {% endif %}
+                            <p class="task-added-date"><strong>Date Added:</strong> {{ task.date_added }}</p>
+                        </div>
+                    </details>
+                </li>
+                {% else %}
+                <li class="empty-message">No tasks yet. Let's get productive!</li>
+                {% endfor %}
             </ul>
         </section>
     </div>
