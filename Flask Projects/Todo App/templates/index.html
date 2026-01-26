@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List | Aditya Dagar</title>
+    <!-- CSS linked here as requested (file to be created by you) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>To-Do List</h1>
+            <p class="subtitle">App created by Aditya Dagar</p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-group">
+            <form action="/add" method="POST">
+                <input type="text" name="title" placeholder="Add a new task..." required autocomplete="off">
+                <button type="submit" class="btn-add">Add</button>
+            </form>
+        </section>
+
+        <!-- Task List Section -->
+        <section class="tasks-container">
+            <ul id="task-list">
+                {% for task in tasks %}
+                <li class="task-item {% if task.completed %}completed{% endif %}">
+                    <span class="task-text">{{ task.title }}</span>
+                    <div class="actions">
+                        <a href="/update/{{ task.id }}" class="btn-check">
+                            {% if task.completed %}Undo{% else %}Done{% endif %}
+                        </a>
+                        <a href="/delete/{{ task.id }}" class="btn-delete">Delete</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="empty-message">No tasks yet. Let's get productive!</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+
+    <!-- JS for animations -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

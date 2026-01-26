@@ -1,0 +1,154 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+/* Main Container */
+.container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 0 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* Input Section */
+.input-group form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+
+.input-group input[type="text"] {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    outline: none;
+}
+
+.input-group input[type="text"]:focus {
+    border-color: #3498db;
+}
+
+.btn-add {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+    background-color: #2980b9;
+}
+
+/* Task List */
+#task-list {
+    list-style: none;
+}
+
+.task-item {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.task-text {
+    font-size: 1.05rem;
+    flex: 1;
+    margin-right: 15px;
+    word-break: break-word;
+}
+
+/* Completed State */
+.task-item.completed {
+    background-color: #f8f9fa;
+    opacity: 0.7;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: #95a5a6;
+}
+
+/* Actions Buttons */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.actions a {
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.actions a:hover {
+    opacity: 0.85;
+}
+
+.btn-check {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Empty Message */
+.empty-message {
+    text-align: center;
+    color: #bdc3c7;
+    font-style: italic;
+    margin-top: 20px;
+}
