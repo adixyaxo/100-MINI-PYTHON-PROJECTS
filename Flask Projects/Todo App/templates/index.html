@@ -5,75 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List | Aditya Dagar</title>
-    <!-- CSS linked here as requested (file to be created by you) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>To-Do List</h1>
-            <p class="subtitle">App created by Aditya Dagar</p>
-        </header>
+    <div class="main-wrapper">
+        <div class="container">
+            <header>
+                <h1>To-Do List</h1>
+                <p class="subtitle">App created by Aditya Dagar</p>
+            </header>
 
-        <!-- Input Section -->
-        <section class="input-group">
-            <form action="/add" method="POST">
-                <input type="text" name="name" placeholder="Task Name..." required autocomplete="off">
-                <input type="text" name="description" placeholder="Description (optional)" autocomplete="off">
-                <input type="date" name="due_date" title="Due Date">
-                <button type="submit" class="btn-add">Add</button>
-            </form>
-        </section>
+            <section class="input-group">
+                <form action="/add" method="POST" class="add-task-form">
+                    <input type="text" name="name" placeholder="Task Name..." required autocomplete="off"
+                        class="input-field primary-input">
+                    <input type="text" name="description" placeholder="Description" autocomplete="off"
+                        class="input-field">
+                    <input type="date" name="due_date" title="Due Date" class="input-field date-input">
+                    <button type="submit" class="btn-add">Add</button>
+                </form>
+            </section>
 
-        <!-- Task List Section -->
-        <section class="tasks-container">
-            <ul id="task-list">
-                {% for i in tasks_list['name'] %}
-                <li
-                    class="task-item status-{{ tasks_list['status'][i] | lower | replace(' ', '-') }} {% if tasks_list['status'][i] == 'Done' %}completed{% endif %}">
-                    <details>
-                        <summary class="task-summary">
-                            <span class="task-text">{{ tasks_list['name'][i] }}</span>
-                            <div class="actions">
-                                <!-- Status Dropdown Form -->
-                                <form action="/update_status/{{ i }}" method="POST" class="status-form">
-                                    <select name="status" onchange="this.form.submit()" title="Change task status">
-                                        <option value="To Do" {% if tasks_list['status'][i]=='To Do' %}selected{% endif
-                                            %}>To
-                                            Do
-                                        </option>
-                                        <option value="In Progress" {% if tasks_list['status'][i]=='In Progress'
-                                            %}selected{% endif %}>In Progress</option>
-                                        <option value="Done" {% if tasks_list['status'][i]=='Done' %}selected{% endif
-                                            %}>Done
-                                        </option>
-                                    </select>
-                                </form>
-                                <a href="/delete/{{ i }}" class="btn-delete">Delete</a>
+            <section class="tasks-container">
+                <ul id="task-list">
+                    {% for i in tasks_list['name'] %}
+                    <li class="task-item">
+                        <details>
+                            <summary class="task-summary">
+                                <div class="task-info">
+                                    <span
+                                        class="task-name {% if tasks_list['status'][i] == 'Done' %}completed-text{% endif %}">
+                                        {{ tasks_list['name'][i] }}
+                                    </span>
+                                </div>
+
+                                <div class="actions" onclick="event.stopPropagation();">
+                                    <form action="/update_status/{{ i }}" method="POST" class="status-form">
+                                        <select name="status" onchange="this.form.submit()"
+                                            class="status-select status-{{ tasks_list['status'][i] | lower | replace(' ', '-') }}">
+                                            <option value="To Do" {% if tasks_list['status'][i]=='To Do' %}selected{%
+                                                endif %}>To Do</option>
+                                            <option value="In Progress" {% if tasks_list['status'][i]=='In Progress'
+                                                %}selected{% endif %}>In Progress</option>
+                                            <option value="Done" {% if tasks_list['status'][i]=='Done' %}selected{%
+                                                endif %}>Done</option>
+                                        </select>
+                                    </form>
+                                    <a href="/delete?index={{i}}" class="btn-delete">Delete</a>
+                                </div>
+                            </summary>
+
+                            <div class="task-details">
+                                <div class="detail-row">
+                                    {% if tasks_list['description'][i] %}
+                                    <p><span class="label">Description:</span> {{ tasks_list['description'][i] }}</p>
+                                    {% endif %}
+                                    {% if tasks_list['due_date'][i] %}
+                                    <p><span class="label">Due:</span> {{ tasks_list['due_date'][i] }}</p>
+                                    {% endif %}
+                                    <p><span class="label">Added:</span> {{ tasks_list['date_added'][i] }}</p>
+                                </div>
                             </div>
-                        </summary>
-                        <div class="task-details">
-                            {% if tasks_list['description'][i] %}
-                            <p class="task-description"><strong>Description:</strong> {{ tasks_list['description'][i] }}
-                            </p>
-                            {% endif %}
-                            {% if tasks_list['due_date'][i] %}
-                            <p class="task-due-date"><strong>Due Date:</strong> {{ tasks_list['due_date'][i] }}</p>
-                            {% endif %}
-                            <p class="task-added-date"><strong>Date Added:</strong> {{ tasks_list['date_added'][i] }}
-                            </p>
-                        </div>
-                    </details>
-                </li>
-                {% else %}
-                <li class="empty-message">No tasks yet. Let's get productive!</li>
-                {% endfor %}
-            </ul>
-        </section>
+                        </details>
+                    </li>
+                    {% else %}
+                    <li class="empty-message">No tasks yet. Let's get productive!</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
     </div>
 
-    <!-- JS for animations -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
