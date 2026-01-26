@@ -27,21 +27,22 @@
         <!-- Task List Section -->
         <section class="tasks-container">
             <ul id="task-list">
-                {% for task in tasks %}
+                {% for i in range(0,1) %}
                 <li
                     class="task-item status-{{ task.status | lower | replace(' ', '-') }} {% if task.status == 'Done' %}completed{% endif %}">
                     <details>
                         <summary class="task-summary">
-                            <span class="task-text">{{ task.title }}</span>
+                            <span class="task-text">{{ tasks_list['name'][i] }}</span>
                             <div class="actions">
                                 <!-- Status Dropdown Form -->
                                 <form action="/update_status/{{ task.id }}" method="POST" class="status-form">
                                     <select name="status" onchange="this.form.submit()" title="Change task status">
-                                        <option value="To Do" {% if task.status=='To Do' %}selected{% endif %}>To Do
+                                        <option value="To Do" {% if task['status'][i]=='To Do' %}selected{% endif %}>To
+                                            Do
                                         </option>
-                                        <option value="In Progress" {% if task.status=='In Progress' %}selected{% endif
-                                            %}>In Progress</option>
-                                        <option value="Done" {% if task.status=='Done' %}selected{% endif %}>Done
+                                        <option value="In Progress" {% if task['status'][i]=='In Progress' %}selected{%
+                                            endif %}>In Progress</option>
+                                        <option value="Done" {% if task['status'][i]=='Done' %}selected{% endif %}>Done
                                         </option>
                                     </select>
                                 </form>
@@ -49,13 +50,13 @@
                             </div>
                         </summary>
                         <div class="task-details">
-                            {% if task.description %}
-                            <p class="task-description"><strong>Description:</strong> {{ task.description }}</p>
+                            {% if task['description'][i] %}
+                            <p class="task-description"><strong>Description:</strong> {{ task['description'][i] }}</p>
                             {% endif %}
-                            {% if task.due_date %}
-                            <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date }}</p>
+                            {% if task['due_date'][i] %}
+                            <p class="task-due-date"><strong>Due Date:</strong> {{ task['due_date'][i] }}</p>
                             {% endif %}
-                            <p class="task-added-date"><strong>Date Added:</strong> {{ task.date_added }}</p>
+                            <p class="task-added-date"><strong>Date Added:</strong> {{ task['date_added'][i] }}</p>
                         </div>
                     </details>
                 </li>
