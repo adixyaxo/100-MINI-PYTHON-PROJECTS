@@ -27,36 +27,40 @@
         <!-- Task List Section -->
         <section class="tasks-container">
             <ul id="task-list">
-                {% for i in range(0,1) %}
+                {% for i in tasks_list['name'] %}
                 <li
-                    class="task-item status-{{ task.status | lower | replace(' ', '-') }} {% if task.status == 'Done' %}completed{% endif %}">
+                    class="task-item status-{{ tasks_list['status'][i] | lower | replace(' ', '-') }} {% if tasks_list['status'][i] == 'Done' %}completed{% endif %}">
                     <details>
                         <summary class="task-summary">
                             <span class="task-text">{{ tasks_list['name'][i] }}</span>
                             <div class="actions">
                                 <!-- Status Dropdown Form -->
-                                <form action="/update_status/{{ task.id }}" method="POST" class="status-form">
+                                <form action="/update_status/{{ i }}" method="POST" class="status-form">
                                     <select name="status" onchange="this.form.submit()" title="Change task status">
-                                        <option value="To Do" {% if task['status'][i]=='To Do' %}selected{% endif %}>To
+                                        <option value="To Do" {% if tasks_list['status'][i]=='To Do' %}selected{% endif
+                                            %}>To
                                             Do
                                         </option>
-                                        <option value="In Progress" {% if task['status'][i]=='In Progress' %}selected{%
-                                            endif %}>In Progress</option>
-                                        <option value="Done" {% if task['status'][i]=='Done' %}selected{% endif %}>Done
+                                        <option value="In Progress" {% if tasks_list['status'][i]=='In Progress'
+                                            %}selected{% endif %}>In Progress</option>
+                                        <option value="Done" {% if tasks_list['status'][i]=='Done' %}selected{% endif
+                                            %}>Done
                                         </option>
                                     </select>
                                 </form>
-                                <a href="/delete/{{ task.id }}" class="btn-delete">Delete</a>
+                                <a href="/delete/{{ i }}" class="btn-delete">Delete</a>
                             </div>
                         </summary>
                         <div class="task-details">
-                            {% if task['description'][i] %}
-                            <p class="task-description"><strong>Description:</strong> {{ task['description'][i] }}</p>
+                            {% if tasks_list['description'][i] %}
+                            <p class="task-description"><strong>Description:</strong> {{ tasks_list['description'][i] }}
+                            </p>
                             {% endif %}
-                            {% if task['due_date'][i] %}
-                            <p class="task-due-date"><strong>Due Date:</strong> {{ task['due_date'][i] }}</p>
+                            {% if tasks_list['due_date'][i] %}
+                            <p class="task-due-date"><strong>Due Date:</strong> {{ tasks_list['due_date'][i] }}</p>
                             {% endif %}
-                            <p class="task-added-date"><strong>Date Added:</strong> {{ task['date_added'][i] }}</p>
+                            <p class="task-added-date"><strong>Date Added:</strong> {{ tasks_list['date_added'][i] }}
+                            </p>
                         </div>
                     </details>
                 </li>

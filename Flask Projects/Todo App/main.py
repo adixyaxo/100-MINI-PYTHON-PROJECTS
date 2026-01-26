@@ -19,7 +19,7 @@ class task:
 
 @app.route("/")
 def index():
-    return render_template("index.html",task_list = get_tasks())
+    return render_template("index.html",tasks_list = get_tasks())
 
 @app.route("/add",methods = ["GET","POST"])
 def add():
