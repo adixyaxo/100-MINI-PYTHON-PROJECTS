@@ -19,7 +19,9 @@
         <!-- Input Section -->
         <section class="input-group">
             <form action="/add" method="POST">
-                <input type="text" name="title" placeholder="Add a new task..." required autocomplete="off">
+                <input type="text" name="name" placeholder="Task Name..." required autocomplete="off">
+                <input type="text" name="description" placeholder="Description (optional)" autocomplete="off">
+                <input type="date" name="due_date" title="Due Date">
                 <button type="submit" class="btn-add">Add</button>
             </form>
         </section>
