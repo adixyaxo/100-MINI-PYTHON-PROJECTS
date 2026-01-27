@@ -45,13 +45,13 @@
                                     <form action="/update_status" method="POST" class="status-form">
                                         <select name="status" onchange="this.form.submit()"
                                             class="status-select status-{{ tasks_list['status'][i] | lower | replace(' ', '-') }}">
-                                            <option value=["To Do",{{i}}] {% if tasks_list['status'][i]=='To Do'
-                                                %}selected{% endif %}>To Do</option>
-                                            <option value=["In Progress",{{i}}] {% if
-                                                tasks_list['status'][i]=='In Progress' %}selected{% endif %}>In Progress
+                                            <option value="1 {{i}}" {% if tasks_list['status'][i]=='To Do' %}selected{%
+                                                endif %}>To Do</option>
+                                            <option value="2 {{i}}" {% if tasks_list['status'][i]=='In Progress'
+                                                %}selected{% endif %}>In Progress
                                             </option>
-                                            <option value=["Done",{{i}}] {% if tasks_list['status'][i]=='Done'
-                                                %}selected{% endif %}>Done</option>
+                                            <option value="3 {{i}}" {% if tasks_list['status'][i]=='Done' %}selected{%
+                                                endif %}>Done</option>
                                         </select>
                                     </form>
                                     <a href="/delete?index={{i}}" class="btn-delete">Delete</a>

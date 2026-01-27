@@ -83,10 +83,23 @@ def update_status():
     global no_tasks
     print("update_status action was run")
     if request.method == "POST":
-        status = request.form['status']
-        update_index = status[1]
-        status = status[0]
-        tasks_list['status'][update_index]=status
+        statusdict = request.form['status']
+        statusdict = statusdict.split()
+        print(statusdict)
+        status = statusdict[0]
+        update_index = statusdict[1]
+        update_index = int(update_index)
+        update_index = update_index
+        status = int(status)
+        if status==1:
+            tasks_list['status'][update_index]="To Do"
+        elif status==2:
+            tasks_list['status'][update_index]="In Progress"
+        elif status==3:
+            tasks_list['status'][update_index]="Done"
+
+        df = pd.DataFrame(tasks_list)
+        df.to_csv("tasks.csv",index=False)
     return render_template("index.html",index=None,tasks_list = tasks_list,no_tasks=no_tasks)  
 
 if __name__ == "__main__":

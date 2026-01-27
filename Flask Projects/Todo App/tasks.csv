@@ -1,2 +1,4 @@
 name,description,due_date,date_added,status
-task new,,,2026-01-27 18:52:00,False
+task new,,,2026-01-27 18:52:00,To Do
+second task,,,2026-01-27 19:30:17,Done
+third task,,,2026-01-27 19:30:17,In Progress
