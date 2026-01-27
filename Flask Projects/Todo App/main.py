@@ -83,8 +83,11 @@ def update_status():
     global no_tasks
     print("update_status action was run")
     if request.method == "POST":
-        print(request.form)
-        
+        status = request.form['status']
+        update_index = status[1]
+        status = status[0]
+        tasks_list['status'][update_index]=status
+    return render_template("index.html",index=None,tasks_list = tasks_list,no_tasks=no_tasks)  
 
 if __name__ == "__main__":
     app.run(debug=True)
