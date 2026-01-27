@@ -42,7 +42,7 @@
                                 </div>
 
                                 <div class="actions" onclick="event.stopPropagation();">
-                                    <form action="/update_status/{{ i }}" method="POST" class="status-form">
+                                    <form action="/update_status" method="POST" class="status-form">
                                         <select name="status" onchange="this.form.submit()"
                                             class="status-select status-{{ tasks_list['status'][i] | lower | replace(' ', '-') }}">
                                             <option value="To Do" {% if tasks_list['status'][i]=='To Do' %}selected{%

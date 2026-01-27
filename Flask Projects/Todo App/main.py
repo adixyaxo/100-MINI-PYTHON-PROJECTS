@@ -76,6 +76,14 @@ def delete():
             task.delete(int(index))
             return redirect("/")
     return render_template("index.html",index=None,tasks_list = tasks_list,no_tasks=no_tasks)
+
+@app.route("/update_status",methods = ["GET","POST"])
+def update_status():
+    global tasks_list
+    global no_tasks
+    print("update_status action was run")
+    if request.method == "POST":
+        print(request.form)
         
 
 if __name__ == "__main__":
