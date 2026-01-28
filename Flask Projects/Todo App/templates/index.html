@@ -1,85 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List | Aditya Dagar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+<div class="main-wrapper">
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>My Tasks</h1>
+                <p class="subtitle">Focus on what matters most</p>
+            </div>
+            <div class="user-badge">AD</div>
+        </header>
 
-<body>
-    <div class="main-wrapper">
-        <div class="container">
-            <header>
-                <h1>To-Do List</h1>
-                <p class="subtitle">App created by Aditya Dagar</p>
-            </header>
-
-            <section class="input-group">
-                <form action="/add" method="POST" class="add-task-form">
-                    <input type="text" name="name" placeholder="Task Name..." required autocomplete="off"
+        <section class="input-card">
+            <form action="/add" method="POST" class="add-task-form">
+                <div class="form-row top">
+                    <input type="text" name="name" placeholder="What needs to be done?" required autocomplete="off"
                         class="input-field primary-input">
-                    <input type="text" name="description" placeholder="Description" autocomplete="off"
-                        class="input-field">
-                    <input type="date" name="due_date" title="Due Date" class="input-field date-input">
-                    <button type="submit" class="btn-add">Add</button>
-                </form>
-            </section>
+                    <button type="submit" class="btn-add">
+                        <i class="fas fa-plus"></i> Add Task
+                    </button>
+                </div>
+                <div class="form-row bottom">
+                    <div class="input-with-icon">
+                        <i class="fas fa-align-left"></i>
+                        <input type="text" name="description" placeholder="Add details..." autocomplete="off"
+                            class="input-field">
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fas fa-calendar-day"></i>
+                        <input type="date" name="due_date" class="input-field date-input">
+                    </div>
+                </div>
+            </form>
+        </section>
 
-            <section class="tasks-container">
-                <ul id="task-list">
-                    {% for i in tasks_list['name'] %}
-                    <li class="task-item">
-                        <details>
-                            <summary class="task-summary">
-                                <div class="task-info">
-                                    <span
-                                        class="task-name {% if tasks_list['status'][i] == 'Done' %}completed-text{% endif %}">
-                                        {{ tasks_list['name'][i] }}
-                                    </span>
+        <section class="tasks-container">
+            <div class="task-stats">
+                <span>{{ tasks_list['name']|length }} Tasks Total</span>
+            </div>
+
+            <ul id="task-list">
+                {% for i in tasks_list['name'] %}
+                <li class="task-card status-{{ tasks_list['status'][i] | lower | replace(' ', '-') }}">
+                    <details>
+                        <summary class="task-summary">
+                            <div class="task-main">
+                                <span class="custom-checkbox"></span>
+                                <span
+                                    class="task-name {% if tasks_list['status'][i] == 'Done' %}completed-text{% endif %}">
+                                    {{ tasks_list['name'][i] }}
+                                </span>
+                            </div>
+
+                            <div class="actions" onclick="event.stopPropagation();">
+                                <form action="/update_status" method="POST" class="status-form">
+                                    <select name="status" onchange="this.form.submit()" class="status-select">
+                                        <option value="1 {{i}}" {% if tasks_list['status'][i]=='To Do' %}selected{%
+                                            endif %}>To Do</option>
+                                        <option value="2 {{i}}" {% if tasks_list['status'][i]=='In Progress'
+                                            %}selected{% endif %}>In Progress</option>
+                                        <option value="3 {{i}}" {% if tasks_list['status'][i]=='Done' %}selected{% endif
+                                            %}>Done</option>
+                                    </select>
+                                </form>
+                                <a href="/delete?index={{i}}" class="btn-delete" title="Delete Task">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </summary>
+
+                        <div class="task-details">
+                            <div class="detail-grid">
+                                {% if tasks_list['description'][i] %}
+                                <div class="detail-item">
+                                    <label>Description</label>
+                                    <p>{{ tasks_list['description'][i] }}</p>
                                 </div>
-
-                                <div class="actions" onclick="event.stopPropagation();">
-                                    <form action="/update_status" method="POST" class="status-form">
-                                        <select name="status" onchange="this.form.submit()"
-                                            class="status-select status-{{ tasks_list['status'][i] | lower | replace(' ', '-') }}">
-                                            <option value="1 {{i}}" {% if tasks_list['status'][i]=='To Do' %}selected{%
-                                                endif %}>To Do</option>
-                                            <option value="2 {{i}}" {% if tasks_list['status'][i]=='In Progress'
-                                                %}selected{% endif %}>In Progress
-                                            </option>
-                                            <option value="3 {{i}}" {% if tasks_list['status'][i]=='Done' %}selected{%
-                                                endif %}>Done</option>
-                                        </select>
-                                    </form>
-                                    <a href="/delete?index={{i}}" class="btn-delete">Delete</a>
-                                </div>
-                            </summary>
-
-                            <div class="task-details">
-                                <div class="detail-row">
-                                    {% if tasks_list['description'][i] %}
-                                    <p><span class="label">Description:</span> {{ tasks_list['description'][i] }}</p>
-                                    {% endif %}
+                                {% endif %}
+                                <div class="detail-meta">
+                                    <span><i class="far fa-calendar-plus"></i> Added: {{ tasks_list['date_added'][i]
+                                        }}</span>
                                     {% if tasks_list['due_date'][i] %}
-                                    <p><span class="label">Due:</span> {{ tasks_list['due_date'][i] }}</p>
+                                    <span class="due-pill"><i class="far fa-clock"></i> Due: {{
+                                        tasks_list['due_date'][i] }}</span>
                                     {% endif %}
-                                    <p><span class="label">Added:</span> {{ tasks_list['date_added'][i] }}</p>
                                 </div>
                             </div>
-                        </details>
-                    </li>
-                    {% else %}
-                    <li class="empty-message">No tasks yet. Let's get productive!</li>
-                    {% endfor %}
-                </ul>
-            </section>
-        </div>
+                        </div>
+                    </details>
+                </li>
+                {% else %}
+                <li class="empty-state">
+                    <i class="fas fa-clipboard-list"></i>
+                    <p>All clear! Time to relax.</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
     </div>
-
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
-
-</html>
+</div>
