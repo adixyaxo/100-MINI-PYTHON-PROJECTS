@@ -4,110 +4,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App</title>
+    <title>Today | Task Manager</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
-    <div class="main-wrapper">
-        <div class="container">
-            <header>
-                <div class="header-content">
-                    <h1>My Tasks</h1>
-                    <p class="subtitle">Focus on what matters most</p>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="menu-header">
+                    <h2>Menu</h2>
+                    <i class="fas fa-bars"></i>
                 </div>
-                <div class="user-badge">AD</div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search">
+                </div>
+            </div>
+
+            <nav class="nav-section">
+                <small class="nav-label">TASKS</small>
+                <a href="#" class="nav-item">
+                    <span><i class="fas fa-angles-right"></i> Upcoming</span>
+                    <span class="count">12</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <span><i class="fas fa-list-check"></i> Today</span>
+                    <span class="count">{{ tasks_list['name']|length }}</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span><i class="fas fa-calendar-days"></i> Calendar</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span><i class="fas fa-note-sticky"></i> Sticky Wall</span>
+                </a>
+            </nav>
+
+            <nav class="nav-section">
+                <small class="nav-label">LISTS</small>
+                <a href="#" class="nav-item">
+                    <span class="list-dot personal"></span> Personal <span class="count">3</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="list-dot work"></span> Work <span class="count">6</span>
+                </a>
+                <a href="#" class="nav-item add-list">
+                    <i class="fas fa-plus"></i> Add New List
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#"><i class="fas fa-sliders"></i> Settings</a>
+                <a href="#"><i class="fas fa-right-from-bracket"></i> Sign out</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Today <span class="header-count">{{ tasks_list['name']|length }}</span></h1>
             </header>
 
-            <section class="input-card">
-                <form action="/add" method="POST" class="add-task-form">
-                    <div class="form-row top">
-                        <input type="text" name="name" placeholder="What needs to be done?" required autocomplete="off"
-                            class="input-field primary-input">
-                        <button type="submit" class="btn-add">
-                            <i class="fas fa-plus"></i> Add Task
-                        </button>
-                    </div>
-                    <div class="form-row bottom">
-                        <div class="input-with-icon">
-                            <i class="fas fa-align-left"></i>
-                            <input type="text" name="description" placeholder="Add details..." autocomplete="off"
-                                class="input-field">
-                        </div>
-                        <div class="input-with-icon">
-                            <i class="fas fa-calendar-day"></i>
-                            <input type="date" name="due_date" class="input-field date-input">
-                        </div>
-                    </div>
+            <section class="add-task-inline">
+                <form action="/add" method="POST">
+                    <button type="submit"><i class="fas fa-plus"></i></button>
+                    <input type="text" name="name" placeholder="Add New Task" required>
                 </form>
             </section>
 
-            <section class="tasks-container">
-                <div class="task-stats">
-                    <span>{{ tasks_list['name']|length }} Tasks Total</span>
+            <ul class="task-items-list">
+                {% for i in tasks_list['name'] %}
+                <li class="task-row">
+                    <div class="task-left">
+                        <input type="checkbox" class="task-checkbox" {% if tasks_list['status'][i]=='Done' %}checked{%
+                            endif %}>
+                        <div class="task-text">
+                            <span class="task-title">{{ tasks_list['name'][i] }}</span>
+                            {% if tasks_list['due_date'][i] %}
+                            <div class="task-meta">
+                                <span><i class="far fa-calendar"></i> {{ tasks_list['due_date'][i] }}</span>
+                                <span class="meta-tag personal">Personal</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <a href="#" class="view-detail-link"><i class="fas fa-chevron-right"></i></a>
+                </li>
+                {% endfor %}
+            </ul>
+        </main>
+
+        <section class="detail-panel">
+            <div class="panel-inner">
+                <header class="panel-header">
+                    <h3>Task:</h3>
+                    <button class="close-panel"><i class="fas fa-times"></i></button>
+                </header>
+
+                <div class="panel-content">
+                    <input type="text" class="edit-title" value="Research content ideas">
+                    <textarea class="edit-desc" placeholder="Description"></textarea>
+
+                    <div class="meta-grid">
+                        <div class="meta-row">
+                            <label>List</label>
+                            <select>
+                                <option>Personal</option>
+                                <option>Work</option>
+                            </select>
+                        </div>
+                        <div class="meta-row">
+                            <label>Due date</label>
+                            <input type="date" value="2026-01-29">
+                        </div>
+                        <div class="meta-row">
+                            <label>Tags</label>
+                            <div class="tags-container">
+                                <span class="tag">Tag 1</span>
+                                <button class="add-tag">+ Add Tag</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtasks-section">
+                        <h4>Subtasks:</h4>
+                        <button class="add-subtask">+ Add New Subtask</button>
+                    </div>
                 </div>
 
-                <ul id="task-list">
-                    {% for i in tasks_list['name'] %}
-                    <li class="task-card status-{{ tasks_list['status'][i] | lower | replace(' ', '-') }}">
-                        <details>
-                            <summary class="task-summary">
-                                <div class="task-main">
-                                    <span class="custom-checkbox"></span>
-                                    <span
-                                        class="task-name {% if tasks_list['status'][i] == 'Done' %}completed-text{% endif %}">
-                                        {{ tasks_list['name'][i] }}
-                                    </span>
-                                </div>
-
-                                <div class="actions" onclick="event.stopPropagation();">
-                                    <form action="/update_status" method="POST" class="status-form">
-                                        <select name="status" onchange="this.form.submit()" class="status-select">
-                                            <option value="1 {{i}}" {% if tasks_list['status'][i]=='To Do' %}selected{%
-                                                endif %}>To Do</option>
-                                            <option value="2 {{i}}" {% if tasks_list['status'][i]=='In Progress'
-                                                %}selected{% endif %}>In Progress</option>
-                                            <option value="3 {{i}}" {% if tasks_list['status'][i]=='Done' %}selected{%
-                                                endif %}>Done</option>
-                                        </select>
-                                    </form>
-                                    <a href="/delete?index={{i}}" class="btn-delete" title="Delete Task">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
-                            </summary>
-
-                            <div class="task-details">
-                                <div class="detail-grid">
-                                    {% if tasks_list['description'][i] %}
-                                    <div class="detail-item">
-                                        <label>Description</label>
-                                        <p>{{ tasks_list['description'][i] }}</p>
-                                    </div>
-                                    {% endif %}
-                                    <div class="detail-meta">
-                                        <span><i class="far fa-calendar-plus"></i> Added: {{ tasks_list['date_added'][i]
-                                            }}</span>
-                                        {% if tasks_list['due_date'][i] %}
-                                        <span class="due-pill"><i class="far fa-clock"></i> Due: {{
-                                            tasks_list['due_date'][i] }}</span>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </details>
-                    </li>
-                    {% else %}
-                    <li class="empty-state">
-                        <i class="fas fa-clipboard-list"></i>
-                        <p>All clear! Time to relax.</p>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </section>
-        </div>
+                <div class="panel-footer">
+                    <button class="btn-delete">Delete Task</button>
+                    <button class="btn-save">Save changes</button>
+                </div>
+            </div>
+        </section>
     </div>
+
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
